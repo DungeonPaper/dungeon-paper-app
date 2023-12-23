@@ -2030,6 +2030,18 @@ class AlignmentMessages {
             'lawful': 'Lawful',
             'neutral': 'Neutral',
           })}""";
+  AlignmentValuesAlignmentMessages get alignmentValues =>
+      AlignmentValuesAlignmentMessages(this);
+}
+
+class AlignmentValuesAlignmentMessages {
+  final AlignmentMessages _parent;
+  const AlignmentValuesAlignmentMessages(this._parent);
+
+  /// ```dart
+  /// "Alignment Values"
+  /// ```
+  String get title => """Alignment Values""";
 }
 
 class BioMessages {
@@ -3832,6 +3844,7 @@ Map<String, String> get messagesMap => {
       """notes.emptyState.subtitle""":
           """You can record your progress, memos, lists, maps and more using the journal.""",
       """notes.emptyState.button""": """Create Note""",
+      """alignment.alignmentValues.title""": """Alignment Values""",
       """bio.dialog.title""": """Character Biography""",
       """bio.dialog.description.label""":
           """Character & background description""",

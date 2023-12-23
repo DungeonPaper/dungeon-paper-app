@@ -1,5 +1,8 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
+import 'package:dungeon_paper/app/widgets/atoms/alignment_values_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
@@ -24,14 +27,16 @@ class CharacterClassForm extends StatelessWidget {
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   label: Text(
-                      tr.generic.entityName(tr.entity(tn(CharacterClass)))),
+                    tr.generic.entityName(tr.entity(tn(CharacterClass))),
+                  ),
                 ),
               ),
           () => const SizedBox(height: 16),
           () => RichTextField(
                 controller: controller.description,
-                label:
-                    tr.generic.entityDescription(tr.entity(tn(CharacterClass))),
+                label: tr.generic.entityDescription(
+                  tr.entity(tn(CharacterClass)),
+                ),
                 maxLines: 10,
                 minLines: 5,
                 textCapitalization: TextCapitalization.sentences,
@@ -50,6 +55,7 @@ class CharacterClassForm extends StatelessWidget {
                 guessFrom: [controller.description],
                 maxCount: 1,
               ),
+          () => AlignmentValuesField(controller: controller.alignmentValues),
           () => Row(
                 children: [
                   Expanded(
@@ -86,6 +92,16 @@ class CharacterClassFormController extends LibraryEntityFormController<
   final _damageDice = ValueNotifier<List<dw.Dice>>([dw.Dice.d4]);
   final _hp = TextEditingController();
   final _load = TextEditingController();
+  final _alignmentValues = ValueNotifier<AlignmentValues>(
+    AlignmentValues(
+      meta: Meta.empty(),
+      good: '',
+      neutral: '',
+      evil: '',
+      lawful: '',
+      chaotic: '',
+    ),
+  );
 
   @override
   List<ValueNotifier> get fields => [_name, _description, _damageDice];
@@ -95,6 +111,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
   ValueNotifier<List<dw.Dice>> get damageDice => _damageDice;
   TextEditingController get hp => _hp;
   TextEditingController get load => _load;
+  ValueNotifier<AlignmentValues> get alignmentValues => _alignmentValues;
 
   CharacterClassFormController(super.context) {
     name.text = args.entity?.name ?? '';
@@ -102,6 +119,15 @@ class CharacterClassFormController extends LibraryEntityFormController<
     damageDice.value = asList(args.entity?.damageDice ?? dw.Dice.d4);
     hp.text = args.entity?.hp.toString() ?? '';
     load.text = args.entity?.load.toString() ?? '';
+    alignmentValues.value = args.entity?.alignments ??
+        AlignmentValues(
+          meta: Meta.empty(),
+          good: '',
+          neutral: '',
+          evil: '',
+          lawful: '',
+          chaotic: '',
+        );
   }
 
   @override
@@ -112,6 +138,15 @@ class CharacterClassFormController extends LibraryEntityFormController<
     damageDice.value = asList(entity.damageDice);
     hp.text = entity.hp.toString();
     load.text = entity.load.toString();
+    alignmentValues.value = args.entity?.alignments ??
+        AlignmentValues(
+          meta: Meta.empty(),
+          good: '',
+          neutral: '',
+          evil: '',
+          lawful: '',
+          chaotic: '',
+        );
   }
 
   @override
@@ -124,6 +159,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
         damageDice: damageDice.value.single,
         hp: int.tryParse(hp.text) ?? 0,
         load: int.tryParse(load.text) ?? 0,
+        alignments: alignmentValues.value,
       );
 }
 
@@ -135,3 +171,4 @@ class CharacterClassFormArguments
     required super.formContext,
   });
 }
+

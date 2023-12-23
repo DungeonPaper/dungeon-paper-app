@@ -31,13 +31,14 @@ class ClassAlignmentsController extends ChangeNotifier {
       for (final alignment in sortedAlignmentTypes)
         alignment: TextEditingController(
           text: alignments.byType(alignment),
-        ),
+        )..addListener(notifyListeners),
     });
   }
 
   void toggleEdit(dw.AlignmentType type, [bool? value]) {
     editing[type] ??= false;
     editing[type] = value ?? !editing[type]!;
+    notifyListeners();
   }
 
   void select(dw.AlignmentType type) {
@@ -58,7 +59,16 @@ class ClassAlignmentsController extends ChangeNotifier {
     );
 
     onChanged?.call(updated, selected);
+    notifyListeners();
     Navigator.of(context).pop();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (var c in textControllers.values) {
+      c.dispose();
+    }
   }
 }
 

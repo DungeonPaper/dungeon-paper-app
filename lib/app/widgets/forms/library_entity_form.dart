@@ -30,17 +30,22 @@ class LibraryEntityForm<
           appBar: AppBar(
             title: title(controller),
           ),
-          body: ItemBuilder.lazyListView(
-            padding: const EdgeInsets.all(16).copyWith(bottom: 80),
-            children:
-                children.joinObjects(() => const SizedBox(height: 16)).toList(),
-            trailing: [
-              () => const Divider(height: 64),
-              () => EntityShareForm(
-                    entity: controller.asEntity,
-                    onChange: controller.updateFromEntity,
-                  ),
-            ],
+          body: Center(
+            child: SizedBox(
+            width: 800,
+              child: ItemBuilder.lazyListView(
+                padding: const EdgeInsets.all(16).copyWith(bottom: 80),
+                children:
+                    children.joinObjects(() => const SizedBox(height: 16)).toList(),
+                trailing: [
+                  () => const Divider(height: 64),
+                  () => EntityShareForm(
+                        entity: controller.asEntity,
+                        onChange: controller.updateFromEntity,
+                      ),
+                ],
+              ),
+            ),
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () => controller.onSave(context),

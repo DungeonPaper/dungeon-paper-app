@@ -35,7 +35,7 @@ class ClassAlignmentsView extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Builder(
                   builder: (context) {
-                    final description = controller.alignments.byType(alignment);
+                    final description = controller.textControllers[alignment]!;
                     final isEditing = controller.isEditing(alignment);
                     final isSelected = controller.isSelected(alignment);
 
@@ -83,9 +83,9 @@ class ClassAlignmentsView extends StatelessWidget {
                               padding: const EdgeInsets.all(8)
                                   .copyWith(left: 56, top: 0),
                               child: !isEditing
-                                  ? Text(description.isEmpty
+                                  ? Text(description.text.isEmpty
                                       ? tr.generic.noDescription
-                                      : description)
+                                      : description.text)
                                   : TextField(
                                       controller: controller
                                           .textControllers[alignment]!,
