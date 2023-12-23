@@ -172,6 +172,7 @@ class Messages {
   FeedbackMessages get feedback => FeedbackMessages(this);
   MigrationMessages get migration => MigrationMessages(this);
   BackupMessages get backup => BackupMessages(this);
+  ChangelogMessages get changelog => ChangelogMessages(this);
 }
 
 class AppMessages {
@@ -3608,6 +3609,32 @@ class CharacterClassBundlesExportingBackupMessages {
   String get title => """Export Class Bundle""";
 }
 
+class ChangelogMessages {
+  final Messages _parent;
+  const ChangelogMessages(this._parent);
+
+  /// ```dart
+  /// "What's New?"
+  /// ```
+  String get title => """What's New?""";
+  TagsChangelogMessages get tags => TagsChangelogMessages(this);
+}
+
+class TagsChangelogMessages {
+  final ChangelogMessages _parent;
+  const TagsChangelogMessages(this._parent);
+
+  /// ```dart
+  /// "Latest"
+  /// ```
+  String get latest => """Latest""";
+
+  /// ```dart
+  /// "Current"
+  /// ```
+  String get current => """Current""";
+}
+
 Map<String, String> get messagesMap => {
       """app.name""": """Dungeon Paper""",
       """platformInteractions.tap""": """Tap""",
@@ -4029,4 +4056,7 @@ Map<String, String> get messagesMap => {
           """Export Class Bundle""",
       """backup.exporting.bundles.characterClass.title""":
           """Export Class Bundle""",
+      """changelog.title""": """What's New?""",
+      """changelog.tags.latest""": """Latest""",
+      """changelog.tags.current""": """Current""",
     };

@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/widgets/chips/advanced_chip.dart';
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class ChangelogView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Changelog'),
+        title: Text(tr.changelog.title),
       ),
       body: Consumer<ChangelogController>(
         builder: (context, controller, child) {
@@ -41,15 +42,15 @@ class ChangelogView extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleLarge),
                     ),
                     if (isLatest)
-                      const AdvancedChip(
-                        label: Text('Latest'),
+                      AdvancedChip(
+                        label: Text(tr.changelog.tags.latest),
                         backgroundColor: Colors.green,
                         visualDensity: VisualDensity.compact,
                         padding: EdgeInsets.zero,
                       ),
                     if (isCurrent)
-                      const AdvancedChip(
-                        label: Text('Current'),
+                      AdvancedChip(
+                        label: Text(tr.changelog.tags.current),
                         backgroundColor: Colors.blue,
                         visualDensity: VisualDensity.compact,
                         padding: EdgeInsets.zero,

@@ -726,3 +726,9 @@ backup:
       characterClass:
         button: Export Class Bundle
         title: Export Class Bundle
+
+changelog:
+  title: What's New?
+  tags:
+    latest: Latest
+    current: Current
