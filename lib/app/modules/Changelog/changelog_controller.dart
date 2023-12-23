@@ -43,8 +43,7 @@ class ChangelogController extends ChangeNotifier {
 
   Future<void> getAppVersion() async {
     final resp = await PackageInfo.fromPlatform();
-    final version = Version.parse('2.0.2');
-    // final version = Version.parse(resp.version);
+    final version = Version.parse(resp.version);
     currentVersion = version;
   }
 }
