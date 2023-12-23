@@ -29,66 +29,71 @@ class HomeCharacterJournalView extends StatelessWidget
           final char = controller.current;
           // return ReorderableListView(
           if (char.notes.isEmpty) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: SizedBox(
-                    width: 550,
-                    child: Column(
-                      children: [
-                        const Icon(DwIcons.scroll_quill, size: 128),
-                        const SizedBox(height: 24),
-                        Text(
-                          tr.notes.emptyState.title,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headlineLarge,
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          tr.notes.emptyState.subtitle,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 24),
-                        // Text(
-                        //   tr.notes.emptyState.info,
-                        //   textAlign: TextAlign.center,
-                        //   style: Theme.of(context).textTheme.bodyLarge,
-                        // ),
-                        // const SizedBox(height: 24),
-                        ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 36,
-                              vertical: 24,
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: SizedBox(
+                      width: 550,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16).copyWith(bottom: 88),
+                        child: Column(
+                          children: [
+                            const Icon(DwIcons.scroll_quill, size: 128),
+                            const SizedBox(height: 24),
+                            Text(
+                              tr.notes.emptyState.title,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headlineLarge,
                             ),
-                          ),
-                          onPressed: () => ModelPages.openNotePage(
-                            context,
-                            note: null,
-                            onSave: (note) {
-                              controller.updateCharacter(
-                                CharacterUtils.addNotes(char, [note]),
-                              );
-                            },
-                          ),
-                          icon: const Icon(Icons.add),
-                          label: Builder(
-                            builder: (context) {
-                              return Text(
-                                tr.notes.emptyState.button,
-                                textAlign: TextAlign.center,
-                                style: DefaultTextStyle.of(context).style.copyWith(fontSize: 18),
-                              );
-                            }
-                          ),
+                            const SizedBox(height: 24),
+                            Text(
+                              tr.notes.emptyState.subtitle,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 24),
+                            // Text(
+                            //   tr.notes.emptyState.info,
+                            //   textAlign: TextAlign.center,
+                            //   style: Theme.of(context).textTheme.bodyLarge,
+                            // ),
+                            // const SizedBox(height: 24),
+                            ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 36,
+                                  vertical: 24,
+                                ),
+                              ),
+                              onPressed: () => ModelPages.openNotePage(
+                                context,
+                                note: null,
+                                onSave: (note) {
+                                  controller.updateCharacter(
+                                    CharacterUtils.addNotes(char, [note]),
+                                  );
+                                },
+                              ),
+                              icon: const Icon(Icons.add),
+                              label: Builder(
+                                builder: (context) {
+                                  return Text(
+                                    tr.notes.emptyState.button,
+                                    textAlign: TextAlign.center,
+                                    style: DefaultTextStyle.of(context).style.copyWith(fontSize: 18),
+                                  );
+                                }
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           }
           return ListView(
