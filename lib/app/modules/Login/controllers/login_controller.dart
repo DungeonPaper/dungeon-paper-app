@@ -1,6 +1,8 @@
 import 'package:dungeon_paper/app/data/services/auth_provider.dart';
 import 'package:dungeon_paper/app/data/services/loading_provider.dart';
+import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/core/utils/secrets_base.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -22,7 +24,10 @@ class LoginController extends ChangeNotifier with AuthProviderMixin {
     passwordConfirm.addListener(validate);
   }
 
-  void toggleSignup() => _signup = !_signup;
+  void toggleSignup() {
+    _signup = !_signup;
+    notifyListeners();
+  }
 
   void _loginWrapper(BuildContext context, Future<void> Function() cb) async {
     final messenger = ScaffoldMessenger.of(context);
@@ -82,6 +87,12 @@ class LoginController extends ChangeNotifier with AuthProviderMixin {
     );
   }
 
+  void setValid(bool valid) {
+    debugPrint('setValid: $valid');
+    _valid = valid;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -91,6 +102,19 @@ class LoginController extends ChangeNotifier with AuthProviderMixin {
   }
 
   bool validate() {
-    return _valid = formKey.currentState?.validate() ?? false;
+    _valid = [
+      email.text.isNotEmpty,
+      EmailValidator.validate(email.text),
+      password.text.isNotEmpty,
+      PasswordValidator().validator(password.text) == null,
+      if (isSignUp) ...[
+        passwordConfirm.text.isNotEmpty,
+        password.text == passwordConfirm.text,
+      ],
+    ].every((c) => c == true);
+    notifyListeners();
+    debugPrint('valid: $_valid');
+    return _valid;
   }
 }
+

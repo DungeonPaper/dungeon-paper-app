@@ -606,6 +606,8 @@ account:
   deleteAccount:
     title: Delete Your Account
     success: A deletion request for your account was sent successfully
+  unlink:
+    success(String provider): You successfully unlinked $provider.
 
 actions:
   moves:

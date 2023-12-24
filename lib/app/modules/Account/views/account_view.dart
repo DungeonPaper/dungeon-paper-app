@@ -50,7 +50,7 @@ class AccountView extends StatelessWidget {
                 title: Text(tr.account.details.displayName.title),
                 subtitle: Text(controller.user.displayName),
                 leading: const Icon(Icons.abc),
-                onTap: () => _openNameDialog(context),
+                onTap: () => _openNameDialog(context, controller),
               ),
             ),
         () => Consumer<AccountController>(
@@ -74,15 +74,17 @@ class AccountView extends StatelessWidget {
               builder: (context, controller, _) => ListTile(
                 title: Text(tr.account.details.email.title),
                 subtitle: Text(controller.user.email),
-                onTap: () => _openEmailDialog(context),
+                onTap: () => _openEmailDialog(context, controller),
                 leading: const Icon(Icons.email),
               ),
             ),
-        () => ListTile(
-              title: Text(tr.account.details.password.title),
-              subtitle: Text(tr.account.details.password.subtitle),
-              onTap: () => _openPasswordDialog(context),
-              leading: const Icon(Icons.key),
+        () => Consumer<AccountController>(
+              builder: (context, controller, _) => ListTile(
+                title: Text(tr.account.details.password.title),
+                subtitle: Text(tr.account.details.password.subtitle),
+                onTap: () => _openPasswordDialog(context, controller),
+                leading: const Icon(Icons.key),
+              ),
             ),
         () => const Divider(),
         () => Padding(
@@ -117,9 +119,9 @@ class AccountView extends StatelessWidget {
                     trailing: ElevatedButton(
                       onPressed: providerCount(controller) > 1
                           ? isProviderLinked(controller, provider)
-                              ? unlinkProvider(context, provider)
+                              ? unlinkProvider(context, controller, provider)
                               : PlatformHelper.canUseProvider(provider)
-                                  ? linkProvider(context, provider)
+                                  ? linkProvider(context, controller, provider)
                                   : null
                           : null,
                       child: Text(
@@ -195,38 +197,26 @@ class AccountView extends StatelessWidget {
           .any((pr) => pr.providerId == domainFromProviderName(provider)) ==
       true;
 
-  void _openNameDialog(BuildContext context) {
+  void _openNameDialog(BuildContext context, AccountController controller) {
     showDialog(
       context: context,
       builder: (context) {
-        final controller =
-            Provider.of<AccountController>(context, listen: false);
         return SingleTextFieldDialog(
           title: tr.account.details.displayName.title,
           inputLabel: tr.account.details.displayName.label,
           inputHint: tr.account.details.displayName.placeholder,
           value: controller.user.displayName,
-          onSave: (displayName) {
-            controller.userProvider.updateUser(
-              controller.user.copyWith(displayName: displayName),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(tr.account.details.displayName.success),
-              ),
-            );
-          },
+          onSave: (displayName) =>
+              controller.updateDisplayName(context, displayName),
         );
       },
     );
   }
 
-  void _openEmailDialog(BuildContext context) {
+  void _openEmailDialog(BuildContext context, AccountController controller) {
     showDialog(
       context: context,
       builder: (context) {
-        final controller =
-            Provider.of<AccountController>(context, listen: false);
         return SingleTextFieldDialog(
           title: tr.account.details.email.title,
           inputLabel: tr.account.details.email.label,
@@ -239,50 +229,32 @@ class AccountView extends StatelessWidget {
     );
   }
 
-  void _openPasswordDialog(BuildContext context) {
+  void _openPasswordDialog(BuildContext context, AccountController controller) {
     showDialog(
       context: context,
       builder: (context) {
-        final controller =
-            Provider.of<AccountController>(context, listen: false);
         return PasswordFieldDialog(
-          onSave: (password) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(tr.account.details.password.success),
-              ),
-            );
-            controller.authProvider.fbUser!.updatePassword(password);
-          },
+          onSave: (password) => controller.updatePassword(context, password),
         );
       },
     );
   }
 
-  void _uploadImage(BuildContext context) {
-    final controller = Provider.of<AccountController>(context, listen: false);
-    controller.uploadPhoto(context);
-  }
+  void _uploadImage(BuildContext context) {}
 
-  Future<void> Function() unlinkProvider(
-          BuildContext context, ProviderName provider) =>
+  Future<void> Function() unlinkProvider(BuildContext context,
+          AccountController controller, ProviderName provider) =>
       () => awaitUnlinkProviderConfirmation(
             context,
             provider,
             () {
-              final controller =
-                  Provider.of<AccountController>(context, listen: false);
-              controller.authProvider.logoutFromProvider(provider);
-              controller.authProvider.fbUser!
-                  .unlink(domainFromProviderName(provider));
+              controller.unlinkProvider(context, provider);
             },
           );
 
-  Future<void> Function() linkProvider(
-          BuildContext context, ProviderName provider) =>
+  Future<void> Function() linkProvider(BuildContext context,
+          AccountController controller, ProviderName provider) =>
       () async {
-        final controller =
-            Provider.of<AccountController>(context, listen: false);
         final cred =
             await controller.authProvider.getProviderCredential(provider);
         controller.authProvider.fbUser!.linkWithCredential(cred);
@@ -471,3 +443,4 @@ class _PasswordFieldDialogState extends State<PasswordFieldDialog> {
     return PasswordValidator().validator(value);
   }
 }
+

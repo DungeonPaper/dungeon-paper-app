@@ -133,6 +133,9 @@ class LoginView extends StatelessWidget {
                               ),
                               validator: PasswordValidator().validator,
                             ),
+                            //
+                            // SIGN UP
+                            //
                             if (controller.isSignUp) ...[
                               const SizedBox(height: 16),
                               PasswordField(
@@ -150,12 +153,18 @@ class LoginView extends StatelessWidget {
                                   enabled: !loadingProvider.loadingUser,
                                   // floatingLabelBehavior: FloatingLabelBehavior.auto,
                                 ),
-                                validator: (pwd) =>
-                                    PasswordValidator().validator(pwd) ??
-                                    (pwd == controller.password.text
-                                        ? null
-                                        : tr.auth.signup.password.confirm
-                                            .error),
+                                validator: (pwd) {
+                                  final controller =
+                                      Provider.of<LoginController>(context,
+                                          listen: false);
+                                  final res = PasswordValidator().validator(pwd) ??
+                                      (pwd == controller.password.text
+                                          ? null
+                                          : tr.auth.signup.password.confirm
+                                              .error);
+                                              debugPrint('pwd: $res');
+                                              return res;
+                                },
                               ),
                             ],
                             const SizedBox(height: 16),

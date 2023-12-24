@@ -31,13 +31,10 @@ scripts:
     description: Build, push and install APK to ADB connected device
   - name: android:release
     cmd: |-
-      name=$(dart run btool get packageName)
-      version=$(dart run btool get packageVersion)
-      symbols="symbols-$name-$version.zip"
-      bundleout="$name-$version.aab"
       bundle=build/app/outputs/bundle/release/app-release.aab
       mkdir release
       android:build:bundle && symbols:collect && cp $bundle release/$bundleout
+      [[ ! -f "$(which open)" ]] || open release
     description: Builds, collects debug symbols, and places the output in release/ dir.
 
   # ===============================================================================================

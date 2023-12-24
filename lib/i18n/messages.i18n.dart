@@ -2778,6 +2778,7 @@ class AccountMessages {
   ProvidersAccountMessages get providers => ProvidersAccountMessages(this);
   DeleteAccountAccountMessages get deleteAccount =>
       DeleteAccountAccountMessages(this);
+  UnlinkAccountMessages get unlink => UnlinkAccountMessages(this);
 }
 
 class DetailsAccountMessages {
@@ -2954,6 +2955,16 @@ class DeleteAccountAccountMessages {
   /// ```
   String get success =>
       """A deletion request for your account was sent successfully""";
+}
+
+class UnlinkAccountMessages {
+  final AccountMessages _parent;
+  const UnlinkAccountMessages(this._parent);
+
+  /// ```dart
+  /// "You successfully unlinked $provider."
+  /// ```
+  String success(String provider) => """You successfully unlinked $provider.""";
 }
 
 class ActionsMessages {
