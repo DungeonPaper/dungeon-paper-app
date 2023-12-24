@@ -97,6 +97,8 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
           ? getLightTheme(user)
           : getDarkTheme(user);
 
+  List<WithMeta> get classActions => [race, bio.alignment];
+
   static RollButton get basicActionRollButton => RollButton(
         label: tr.customRolls.presets.basicAction,
         dice: [dw.Dice.d6 * 2],

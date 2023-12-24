@@ -1085,6 +1085,11 @@ class CategoriesHomeMessages {
   /// "Equipped Items"
   /// ```
   String get items => """Equipped Items""";
+
+  /// ```dart
+  /// "Class Actions"
+  /// ```
+  String get classActions => """Class Actions""";
 }
 
 class SummaryHomeMessages {
@@ -3792,6 +3797,7 @@ Map<String, String> get messagesMap => {
       """home.categories.moves""": """Favorite Moves""",
       """home.categories.spells""": """Prepared Spells""",
       """home.categories.items""": """Equipped Items""",
+      """home.categories.classActions""": """Class Actions""",
       """home.summary.load.tooltip""": """Max Load""",
       """home.summary.coins.tooltip""": """Coins""",
       """home.menu.character.tooltip""": """Character Menu""",

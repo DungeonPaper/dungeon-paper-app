@@ -214,6 +214,7 @@ home:
     moves: Favorite Moves
     spells: Prepared Spells
     items: Equipped Items
+    classActions: Class Actions
   summary:
     load:
       label(int cur, int max): 'Load: $cur/$max'

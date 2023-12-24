@@ -1,5 +1,6 @@
 import 'package:dungeon_paper/app/data/models/character_settings.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
+import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
@@ -8,7 +9,11 @@ import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/library_provider.dart';
 import 'package:dungeon_paper/app/model_utils/character_utils.dart';
 import 'package:dungeon_paper/app/model_utils/model_pages.dart';
+import 'package:dungeon_paper/app/modules/BioForm/controllers/bio_form_controller.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/checklist_menu_entry.dart';
+import 'package:dungeon_paper/app/widgets/cards/alignment_value_card.dart';
+import 'package:dungeon_paper/app/widgets/cards/alignment_value_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/item_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/cards/move_card.dart';
@@ -40,6 +45,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
       (maybeChar?.items ?? <Item>[]).where((m) => m.equipped).toList();
   List<Note> get notes =>
       (maybeChar?.notes ?? <Note>[]).where((n) => n.favorite).toList();
+  List<WithMeta> get classActions => maybeChar?.classActions ?? [];
 
   @override
   Widget build(BuildContext context) {
@@ -161,14 +167,13 @@ class HomeCharacterDynamicCards extends StatelessWidget
               return HorizontalCardListView<Move>(
                 cardSize: cardSize,
                 items: moves,
-                cardBuilder: (context, move, index, onTap) =>
-                     MoveCardMini(
-                    move: moves[index],
-                    onTap: onTap,
-                    onSave: (move) => controller.updateCharacter(
-                      CharacterUtils.updateMoves(controller.current, [move]),
-                    ),
-                    abilityScores: controller.current.abilityScores,
+                cardBuilder: (context, move, index, onTap) => MoveCardMini(
+                  move: moves[index],
+                  onTap: onTap,
+                  onSave: (move) => controller.updateCharacter(
+                    CharacterUtils.updateMoves(controller.current, [move]),
+                  ),
+                  abilityScores: controller.current.abilityScores,
                 ),
                 expandedCardBuilder: (context, move, index) =>
                     LibraryProvider.consumer(
@@ -217,16 +222,16 @@ class HomeCharacterDynamicCards extends StatelessWidget
                         : const SizedBox.shrink();
                   },
                 ),
-                leading: raceCardMini != null &&
-                        controller.current.settings.racePosition ==
-                            RacePosition.start
-                    ? [raceCardMini]
-                    : [],
-                trailing: raceCardMini != null &&
-                        controller.current.settings.racePosition ==
-                            RacePosition.end
-                    ? [raceCardMini]
-                    : [],
+                // leading: raceCardMini != null &&
+                //         controller.current.settings.racePosition ==
+                //             RacePosition.start
+                //     ? [raceCardMini]
+                //     : [],
+                // trailing: raceCardMini != null &&
+                //         controller.current.settings.racePosition ==
+                //             RacePosition.end
+                //     ? [raceCardMini]
+                //     : [],
               );
             },
           ),
@@ -396,9 +401,89 @@ class HomeCharacterDynamicCards extends StatelessWidget
                   )
                 : const SizedBox.shrink(),
           ),
+          //
+          // CLASS ACTIONS
+          //
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(tr.home.categories.classActions),
+          ),
+          HorizontalCardListView<WithMeta>(
+            cardSize: cardSize,
+            items: classActions,
+            cardBuilder: (context, item, index, onTap) =>
+                classActionCardsMini(context, controller)[index],
+            expandedCardBuilder: (context, item, index) =>
+                classActionCards(context, controller)[index],
+          ),
         ],
       ),
     );
+  }
+
+  List<Widget> classActionCardsMini(
+      BuildContext context, CharacterProvider charProvider) {
+    final raceCard = RaceCardMini(
+      race: char.race,
+      onSave: (race) => charProvider.updateCharacter(
+        char.copyWithInherited(race: race),
+      ),
+    );
+    final alignmentCard = AlignmentValueCardMini(alignment: char.bio.alignment);
+    return [
+      raceCard,
+      alignmentCard,
+    ];
+  }
+
+  List<Widget> classActionCards(
+      BuildContext context, CharacterProvider charProvider) {
+    final raceCard = RaceCard(
+      race: char.race,
+      onSave: (race) => charProvider.updateCharacter(
+        char.copyWithInherited(race: race),
+      ),
+      actions: [
+        EntityEditMenu(
+          onDelete: null,
+          onEdit: () => ModelPages.openRacePage(
+            context,
+            race: char.race,
+            abilityScores: char.abilityScores,
+            onSave: (race) => charProvider.updateCharacter(
+              char.copyWithInherited(race: race),
+            ),
+          ),
+        ),
+      ],
+    );
+    final alignmentCard = AlignmentValueCard(
+      alignment: char.bio.alignment,
+      actions: [
+        EntityEditMenu(
+          onDelete: null,
+          onEdit: () => Navigator.of(context).pushNamed(
+            Routes.bio,
+            arguments: BioFormArguments(character: char),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () => charProvider.updateCharacter(
+            char.copyWith(
+              stats: char.stats.copyWith(
+                currentXp: char.stats.currentXp + 1,
+              ),
+            ),
+          ),
+          child: Text(tr.actions.classActions.markXP),
+        ),
+      ],
+    );
+    return [
+      raceCard,
+      alignmentCard,
+    ];
   }
 
   void Function() _delete<T>(
