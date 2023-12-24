@@ -1,5 +1,9 @@
+import 'package:dungeon_paper/app/data/models/user.dart';
+import 'package:dungeon_paper/app/data/models/user_settings.dart';
 import 'package:dungeon_paper/app/data/services/auth_provider.dart';
 import 'package:dungeon_paper/app/data/services/loading_provider.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
+import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/core/utils/secrets_base.dart';
 import 'package:email_validator/email_validator.dart';
@@ -81,10 +85,19 @@ class LoginController extends ChangeNotifier with AuthProviderMixin {
   void signUp(
     BuildContext context,
   ) {
-    _loginWrapper(
-      context,
-      () => authProvider.signUp(email: email.text, password: password.text),
-    );
+    _loginWrapper(context, () async {
+      final snackBar = CustomSnackBar.deferred(context);
+      try {
+        await authProvider.signUp(email: email.text, password: password.text);
+      } catch (e) {
+        if (secrets.sentryDsn.isNotEmpty) {
+          Sentry.captureException(e);
+        }
+        debugPrint('ERROR: $e');
+        // TODO intl
+        snackBar.show('Sign up failed');
+      }
+    });
   }
 
   void setValid(bool valid) {

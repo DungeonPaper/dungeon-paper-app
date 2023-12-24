@@ -105,6 +105,7 @@ class _DungeonPaperAppState extends State<DungeonPaperApp> {
           key: appGlobalKey,
           onGenerateRoute: AppPages.onGenerateRoute,
           initialRoute: AppPages.initial,
+          navigatorKey: navigatorKey,
         ),
       ),
     );

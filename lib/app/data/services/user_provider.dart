@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/data/services/loading_provider.dart';
 import 'package:dungeon_paper/app/data/services/repository_provider.dart';
 import 'package:dungeon_paper/app/modules/Migration/controllers/migration_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
 import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/core/http/api_requests/migration.dart';
@@ -133,8 +134,7 @@ class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
   }
 
   Future<User?> _migrateUser(fba.User user) async {
-    final context = appGlobalKey.currentContext!;
-    final migrationDetails = await Navigator.of(context).pushNamed(
+    final migrationDetails = await Navigator.of(navigatorKey.currentContext!).pushNamed(
       Routes.migration,
       arguments: MigrationArguments(email: user.email ?? ''),
     ) as MigrationDetails?;
@@ -204,13 +204,13 @@ class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
 
     if (needsMigration) {
       final context = appGlobalKey.currentContext!;
-      final messenger = ScaffoldMessenger.of(context);
       final loadingProvider =
           Provider.of<LoadingProvider>(context, listen: false);
+
+      final messenger = CustomSnackBar.deferred(context);
       final resp = await _migrateUser(user);
       if (resp == null) {
-        messenger.showSnackBar(
-            SnackBar(content: Text(tr.errors.userOperationCanceled)));
+        messenger.show(content: tr.errors.userOperationCanceled);
 
         loadingProvider.loadingUser = false;
         loadingProvider.afterFirstLoad = !loadingProvider.loadingCharacters;
@@ -250,3 +250,4 @@ mixin UserProviderMixin {
       UserProvider.of(appGlobalKey.currentContext!);
   User get user => userProvider.current;
 }
+
