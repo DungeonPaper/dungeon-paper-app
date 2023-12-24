@@ -2001,12 +2001,23 @@ class SettingsItemsMessages {
 class NotesMessages {
   final Messages _parent;
   const NotesMessages(this._parent);
+  CategoryNotesMessages get category => CategoryNotesMessages(this);
 
   /// ```dart
   /// "General"
   /// ```
   String get noCategory => """General""";
   EmptyStateNotesMessages get emptyState => EmptyStateNotesMessages(this);
+}
+
+class CategoryNotesMessages {
+  final NotesMessages _parent;
+  const CategoryNotesMessages(this._parent);
+
+  /// ```dart
+  /// "Category"
+  /// ```
+  String get label => """Category""";
 }
 
 class EmptyStateNotesMessages {
@@ -3882,6 +3893,7 @@ creation and leveling up.""",
       """items.settings.countArmor""": """Count Armor""",
       """items.settings.countDamage""": """Count Damage""",
       """items.settings.countWeight""": """Count Weight""",
+      """notes.category.label""": """Category""",
       """notes.noCategory""": """General""",
       """notes.emptyState.title""": """No Notes""",
       """notes.emptyState.subtitle""":

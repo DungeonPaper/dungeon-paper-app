@@ -17,14 +17,32 @@ class NoteForm extends StatelessWidget with RepositoryProviderMixin {
       builder: (context, controller, _) =>
           LibraryEntityForm<Note, NoteFormController>(
         children: [
-          () => TextFormField(
-                decoration: InputDecoration(
-                  label: Text(
-                    tr.generic.entityName(tr.entity(tn(Note))),
+          () => Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        label: Text(
+                          tr.generic.entityName(tr.entity(tn(Note))),
+                        ),
+                      ),
+                      textCapitalization: TextCapitalization.words,
+                      controller: controller.title,
+                    ),
                   ),
-                ),
-                textCapitalization: TextCapitalization.words,
-                controller: controller.title,
+                  const SizedBox(width: 16),
+                  SizedBox(
+                    width: 300,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: tr.notes.noCategory,
+                        label: Text(tr.notes.category.label),
+                      ),
+                      textCapitalization: TextCapitalization.words,
+                      controller: controller.category,
+                    ),
+                  ),
+                ],
               ),
           () => RichTextField(
                 decoration: InputDecoration(
@@ -101,3 +119,4 @@ class NoteFormArguments extends LibraryEntityFormArguments<Note> {
     required super.formContext,
   });
 }
+

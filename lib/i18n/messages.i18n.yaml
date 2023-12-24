@@ -415,6 +415,8 @@ items:
     countWeight: Count Weight
 
 notes:
+  category:
+    label: Category
   noCategory: General
   emptyState:
     title: No Notes
