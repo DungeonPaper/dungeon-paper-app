@@ -46,11 +46,12 @@ class HomeCharacterDynamicCards extends StatelessWidget
   List<Note> get notes =>
       (maybeChar?.notes ?? <Note>[]).where((n) => n.favorite).toList();
   List<WithMeta> get classActions => maybeChar?.classActions ?? [];
+  double maxContentHeight(BuildContext context) =>
+      MediaQuery.of(context).size.height - 250;
 
   @override
   Widget build(BuildContext context) {
     const cardSize = Size(210, 151);
-    final maxContentHeight = MediaQuery.of(context).size.height - 250;
     return CharacterProvider.consumer(
       (context, controller, _) => Column(
         mainAxisSize: MainAxisSize.min,
@@ -79,7 +80,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
             expandedCardBuilder: (context, note, index) => notes.isNotEmpty &&
                     index < notes.length
                 ? NoteCard(
-                    maxContentHeight: maxContentHeight,
+                    maxContentHeight: maxContentHeight(context),
                     expandable: false,
                     initiallyExpanded: true,
                     note: notes[index],
@@ -126,44 +127,6 @@ class HomeCharacterDynamicCards extends StatelessWidget
             ),
           Builder(
             builder: (context) {
-              final raceCardMini = controller.current.race.favorite
-                  ? RaceCardMini(
-                      race: controller.current.race,
-                      onTap: () => showDialog(
-                        context: context,
-                        builder: (context) => ExpandedCardDialogView<Race>(
-                          // heroTag: getKeyFor(item.value),
-                          heroTag: null,
-                          builder: (context) => RaceCard(
-                            maxContentHeight: maxContentHeight,
-                            expandable: false,
-                            initiallyExpanded: true,
-                            race: controller.current.race,
-                            actions: [
-                              EntityEditMenu(
-                                onEdit: () => ModelPages.openRacePage(
-                                  context,
-                                  abilityScores:
-                                      controller.current.abilityScores,
-                                  race: controller.current.race,
-                                  onSave: (race) => controller.updateCharacter(
-                                    controller.current.copyWith(race: race),
-                                  ),
-                                ),
-                                onDelete: null,
-                              ),
-                            ],
-                            onSave: (race) => controller.updateCharacter(
-                              controller.current.copyWith(race: race),
-                            ),
-                          ),
-                        ),
-                      ),
-                      onSave: (race) => controller.updateCharacter(
-                        controller.current.copyWith(race: race),
-                      ),
-                    )
-                  : null;
               return HorizontalCardListView<Move>(
                 cardSize: cardSize,
                 items: moves,
@@ -180,7 +143,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
                   (context, library, _) {
                     return moves.isNotEmpty && index < moves.length
                         ? MoveCard(
-                            maxContentHeight: maxContentHeight,
+                            maxContentHeight: maxContentHeight(context),
                             expandable: false,
                             initiallyExpanded: true,
                             move: moves[index],
@@ -259,7 +222,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
             expandedCardBuilder: (context, spell, index) =>
                 spells.isNotEmpty && index < spells.length
                     ? SpellCard(
-                        maxContentHeight: maxContentHeight,
+                        maxContentHeight: maxContentHeight(context),
                         expandable: false,
                         initiallyExpanded: true,
                         spell: spells[index],
@@ -323,7 +286,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
             expandedCardBuilder: (context, item, index) => items.isNotEmpty &&
                     index < items.length
                 ? ItemCard(
-                    maxContentHeight: maxContentHeight,
+                    maxContentHeight: maxContentHeight(context),
                     expandable: false,
                     initiallyExpanded: true,
                     item: items[index],
@@ -425,12 +388,65 @@ class HomeCharacterDynamicCards extends StatelessWidget
   List<Widget> classActionCardsMini(
       BuildContext context, CharacterProvider charProvider) {
     final raceCard = RaceCardMini(
-      race: char.race,
+      race: charProvider.current.race,
+      onTap: () => showDialog(
+        context: context,
+        builder: (context) => ExpandedCardDialogView<Race>(
+          // heroTag: getKeyFor(item.value),
+          heroTag: null,
+          builder: (context) => RaceCard(
+            maxContentHeight: maxContentHeight(context),
+            expandable: false,
+            initiallyExpanded: true,
+            race: charProvider.current.race,
+            actions: [
+              EntityEditMenu(
+                onEdit: () => ModelPages.openRacePage(
+                  context,
+                  abilityScores: charProvider.current.abilityScores,
+                  race: charProvider.current.race,
+                  onSave: (race) => charProvider.updateCharacter(
+                    charProvider.current.copyWith(race: race),
+                  ),
+                ),
+                onDelete: null,
+              ),
+            ],
+            onSave: (race) => charProvider.updateCharacter(
+              charProvider.current.copyWith(race: race),
+            ),
+          ),
+        ),
+      ),
       onSave: (race) => charProvider.updateCharacter(
-        char.copyWithInherited(race: race),
+        charProvider.current.copyWith(race: race),
       ),
     );
-    final alignmentCard = AlignmentValueCardMini(alignment: char.bio.alignment);
+    final alignmentCard = AlignmentValueCardMini(
+      alignment: char.bio.alignment,
+      onTap: () => showDialog(
+        context: context,
+        builder: (context) => ExpandedCardDialogView<Race>(
+          // heroTag: getKeyFor(item.value),
+          heroTag: null,
+          builder: (context) => AlignmentValueCard(
+            maxContentHeight: maxContentHeight(context),
+            expandable: false,
+            initiallyExpanded: true,
+            alignment: char.bio.alignment,
+            actions: [
+              EntityEditMenu(
+                onEdit: () => Navigator.of(context).pushNamed(
+                  Routes.bio,
+                  arguments: BioFormArguments(character: char),
+                ),
+                onDelete: null,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
     return [
       raceCard,
       alignmentCard,
