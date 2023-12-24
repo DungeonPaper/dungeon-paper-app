@@ -22,12 +22,12 @@ class SelectCharacterThemeView extends StatelessWidget {
               context,
               tr.character.theme.defaultLight,
               onReset: () {
-                controller.lightTheme = null;
+                controller.setLightTheme(null);
                 controller.save();
               },
               resetEnabled: controller.lightTheme != null,
               onChangeSeeAll: (val) =>
-                  controller.seeAll[Brightness.light] = val,
+                  controller.setSeeAll(Brightness.light, val),
               seeAll: controller.seeAll[Brightness.light]!,
             ),
           ),
@@ -39,7 +39,7 @@ class SelectCharacterThemeView extends StatelessWidget {
                     : AppThemes.allLightThemes,
                 selected: controller.lightTheme,
                 onSelected: (theme) async {
-                  controller.lightTheme = theme;
+                  controller.setLightTheme(theme);
                   controller.save();
                 },
               ),
@@ -51,11 +51,12 @@ class SelectCharacterThemeView extends StatelessWidget {
               context,
               tr.character.theme.defaultDark,
               onReset: () {
-                controller.darkTheme = null;
+                controller.setDarkTheme(null);
                 controller.save();
               },
               resetEnabled: controller.darkTheme != null,
-              onChangeSeeAll: (val) => controller.seeAll[Brightness.dark] = val,
+              onChangeSeeAll: (val) =>
+                  controller.setSeeAll(Brightness.dark, val),
               seeAll: controller.seeAll[Brightness.dark]!,
             ),
           ),
@@ -67,7 +68,7 @@ class SelectCharacterThemeView extends StatelessWidget {
                     : AppThemes.allDarkThemes,
                 selected: controller.darkTheme,
                 onSelected: (theme) async {
-                  controller.darkTheme = theme;
+                  controller.setDarkTheme(theme);
                   controller.save();
                 },
               ),
@@ -110,3 +111,4 @@ class SelectCharacterThemeView extends StatelessWidget {
     );
   }
 }
+

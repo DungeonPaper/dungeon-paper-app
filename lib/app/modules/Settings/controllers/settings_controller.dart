@@ -1,9 +1,11 @@
 import 'package:dungeon_paper/app/data/models/user_settings.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-class SettingsController extends ChangeNotifier with UserProviderMixin {
+class SettingsController extends ChangeNotifier
+    with CharacterProviderMixin, UserProviderMixin {
   final seeAll = {Brightness.light: false, Brightness.dark: false};
 
   UserSettings get settings => user.settings;
@@ -17,8 +19,38 @@ class SettingsController extends ChangeNotifier with UserProviderMixin {
     }
   }
 
-  void toggleSeeAll(Brightness brightness) {
-    seeAll[brightness] = !seeAll[brightness]!;
+  void setLightTheme(int theme) {
+    updateSettings(
+      settings.copyWith(defaultLightTheme: theme),
+    );
+    if (user.brightness == Brightness.light) {
+      if (maybeChar != null) {
+        final character = charProvider.current;
+        charProvider.switchToCharacterTheme(character);
+      } else {
+        charProvider.switchToTheme(theme);
+      }
+    }
+    notifyListeners();
+  }
+
+  void setDarkTheme(int theme) {
+    updateSettings(
+      settings.copyWith(defaultLightTheme: theme),
+    );
+    if (user.brightness == Brightness.dark) {
+      if (maybeChar != null) {
+        final character = charProvider.current;
+        charProvider.switchToCharacterTheme(character);
+      } else {
+        charProvider.switchToTheme(theme);
+      }
+    }
+    notifyListeners();
+  }
+
+  void setSeeAll(Brightness brightness, bool value) {
+    seeAll[brightness] = value;
     notifyListeners();
   }
 
@@ -26,3 +58,4 @@ class SettingsController extends ChangeNotifier with UserProviderMixin {
     return userProvider.updateUser(user.copyWith(settings: settings));
   }
 }
+

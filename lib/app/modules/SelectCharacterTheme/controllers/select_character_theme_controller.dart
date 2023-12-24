@@ -18,6 +18,21 @@ class SelectCharacterThemeController extends ChangeNotifier with CharacterProvid
     }
   }
 
+  void setLightTheme(int? theme) {
+    lightTheme = theme;
+    notifyListeners();
+  }
+
+  void setDarkTheme(int? theme) {
+    darkTheme = theme;
+    notifyListeners();
+  }
+
+  void setSeeAll(Brightness brightness, bool value) {
+    seeAll[brightness] = value;
+    notifyListeners();
+  }
+
   void save() async {
     await charProvider.updateCharacter(
       char.copyWith(

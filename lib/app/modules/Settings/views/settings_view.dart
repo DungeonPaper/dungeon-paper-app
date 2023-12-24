@@ -41,7 +41,7 @@ class SettingsView extends StatelessWidget
               context,
               tr.settings.defaultTheme.light,
               onChangeSeeAll: (val) =>
-                  controller.seeAll[Brightness.light] = val,
+                  controller.setSeeAll(Brightness.light, val),
               seeAll: controller.seeAll[Brightness.light]!,
             ),
           ),
@@ -52,15 +52,7 @@ class SettingsView extends StatelessWidget
                     ? AppThemes.allThemes
                     : AppThemes.allLightThemes,
                 selected: controller.settings.defaultLightTheme,
-                onSelected: (theme) async {
-                  await controller.updateSettings(
-                    controller.settings.copyWith(defaultLightTheme: theme),
-                  );
-
-                  if (user.brightness == Brightness.light) {
-                    charProvider.switchToCharacterTheme(charProvider.current);
-                  }
-                },
+                onSelected: (theme) => controller.setLightTheme(theme),
               ),
             ),
             horizontal: 8,
@@ -69,7 +61,8 @@ class SettingsView extends StatelessWidget
             builder: (context, controller, _) => _sectionTitle(
               context,
               tr.settings.defaultTheme.dark,
-              onChangeSeeAll: (val) => controller.seeAll[Brightness.dark] = val,
+              onChangeSeeAll: (val) =>
+                  controller.setSeeAll(Brightness.dark, val),
               seeAll: controller.seeAll[Brightness.dark]!,
             ),
           ),
@@ -80,19 +73,7 @@ class SettingsView extends StatelessWidget
                     ? AppThemes.allThemes
                     : AppThemes.allDarkThemes,
                 selected: controller.settings.defaultDarkTheme,
-                onSelected: (theme) async {
-                  await controller.updateSettings(
-                    controller.settings.copyWith(defaultDarkTheme: theme),
-                  );
-                  if (user.brightness == Brightness.dark) {
-                    if (maybeChar != null) {
-                      final character = charProvider.current;
-                      charProvider.switchToCharacterTheme(character);
-                    } else {
-                      charProvider.switchToTheme(theme);
-                    }
-                  }
-                },
+                onSelected: (theme) => controller.setDarkTheme(theme),
               ),
             ),
             horizontal: 8,
@@ -129,3 +110,4 @@ class SettingsView extends StatelessWidget
     );
   }
 }
+

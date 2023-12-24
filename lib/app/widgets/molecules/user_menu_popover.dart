@@ -29,7 +29,7 @@ class UserMenuPopover extends StatelessWidget with CharacterProviderMixin, UserP
     return ListTileTheme.merge(
       minLeadingWidth: 10,
       dense: true,
-      contentPadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.symmetric(vertical: 4),
       child: GestureDetector(
         onTap: () => Navigator.of(context).pop(),
         child: BackdropFilter(
