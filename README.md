@@ -52,7 +52,7 @@ don't hesitate to open an appropriate issue and I will do my best to reply promp
 ### Quick Development Setup
 
 ```
-gh repo fork DungeonPaper/dungeon-paper-app # Fork the Repository with the Github CLI. Alternatively, do it manually
+gh repo fork DungeonPaper/dungeon-paper-app --clone # Fork the Repository with the Github CLI. Alternatively, do it manually
 cd dungeon-paper-app
 ./local_development.sh # Setup firebase and secrets, as explained in *Development Set Up*
 ```
