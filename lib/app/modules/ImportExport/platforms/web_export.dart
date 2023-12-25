@@ -15,6 +15,7 @@ void downloadFileFromDataURL(String dataURL, String fileName) =>
 class Exporter extends AbstractExporter {
   @override
   void export(BuildContext context, Uint8List data, String filename) {
+    debugPrint('Exporting to web');
     final base64Data = base64Encode(data);
     final dataUrl = 'data:;base64,$base64Data';
     downloadFileFromDataURL(dataUrl, filename);

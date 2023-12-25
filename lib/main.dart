@@ -65,19 +65,8 @@ final _userProvider = UserProvider();
 final _repositoryProvider = RepositoryProvider();
 final _libraryProvider = LibraryProvider();
 
-class DungeonPaperApp extends StatefulWidget {
+class DungeonPaperApp extends StatelessWidget {
   const DungeonPaperApp({super.key});
-
-  @override
-  State<DungeonPaperApp> createState() => _DungeonPaperAppState();
-}
-
-class _DungeonPaperAppState extends State<DungeonPaperApp> {
-  @override
-  void initState() {
-    super.initState();
-    _userProvider.loadBuiltInRepo();
-  }
 
   @override
   Widget build(BuildContext context) {

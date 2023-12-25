@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A Dungeon World character sheet app written with Flutter.
-version: 2.0.6+304
+version: 2.0.6+306
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -61,11 +61,15 @@ dependencies:
   intl: ^0.17.0
   intl_generator: ^0.4.1
   localstore: ^1.2.1
+  markdown: ^7.1.1
   package_info_plus: ^3.1.0
   path: ^1.8.1
   path_provider: ^2.0.9
   popover: ^0.2.6+3
-  sentry_flutter: ^7.13.2
+  provider: ^6.1.1
+  pub_semver: ^2.1.4
+  sentry: ^7.14.0
+  sentry_flutter: ^7.14.0
   shared_preferences: ^2.0.13
   sign_in_with_apple: ^4.1.0
   skeleton_loader: ^2.0.0+4
@@ -74,9 +78,6 @@ dependencies:
   uuid: ^4.2.2
   wakelock: ^0.6.2
   wheel_spinner: ^0.7.2
-  provider: ^6.1.1
-  pub_semver: ^2.1.4
-  markdown: ^7.1.1
   # wheel_spinner:
   #   path: ../wheel_spinner
 
@@ -219,3 +220,7 @@ icons_launcher:
       enable: true
     remove_alpha_ios: true
     remove_alpha_macos: true
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  upload_sources: true
