@@ -8,6 +8,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
 import 'package:dungeon_paper/app/modules/ImportExport/local_widgets/import_progress_dialog.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
 import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
@@ -109,23 +110,12 @@ class ImportController extends ChangeNotifier
   }
 
   void pickImportFile(BuildContext context) async {
-    final messenger = ScaffoldMessenger.of(context);
-    final theme = Theme.of(context);
     final result = await FilePicker.platform
         .pickFiles(type: FileType.custom, allowedExtensions: ['json']);
     if (result == null) {
-      messenger.showSnackBar(
-        SnackBar(
-          content: Column(
-            children: [
-              Text(
-                tr.backup.importing.error.title,
-                style: theme.textTheme.bodyLarge,
-              ),
-              Text(tr.backup.importing.error.message),
-            ],
-          ),
-        ),
+      CustomSnackBar.show(
+        title: tr.backup.importing.error.title,
+        content: tr.backup.importing.error.message,
       );
       return;
     }
@@ -141,8 +131,6 @@ class ImportController extends ChangeNotifier
       return null;
     }
 
-    final messenger = ScaffoldMessenger.of(context);
-    final theme = Theme.of(context);
     return () async {
       leftCount = selectionsCount;
       final navigator = Navigator.of(context);
@@ -191,20 +179,9 @@ class ImportController extends ChangeNotifier
       await Future.delayed(const Duration(milliseconds: 500));
       navigator.pop();
 
-      messenger.showSnackBar(
-        SnackBar(
-          content: Column(
-            children: [
-              Text(
-                tr.backup.importing.success.title,
-                style: theme.textTheme.bodyLarge,
-              ),
-              Text(
-                tr.backup.importing.success.message,
-              ),
-            ],
-          ),
-        ),
+      CustomSnackBar(
+        title: tr.backup.importing.success.title,
+        content: tr.backup.importing.success.message,
       );
     };
   }
@@ -309,3 +286,4 @@ class ImportSelections {
         races,
       ].any((l) => l.isNotEmpty);
 }
+

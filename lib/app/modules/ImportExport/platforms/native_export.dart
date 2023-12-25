@@ -12,7 +12,6 @@ import 'package:path_provider/path_provider.dart';
 class Exporter extends AbstractExporter {
   @override
   void export(BuildContext context, Uint8List data, String filename) async {
-    final snackBar = CustomSnackBar.deferred(context);
     final tmp = await getTemporaryDirectory();
 
     final tmpFile = File(path.join(tmp.path, filename));
@@ -22,18 +21,18 @@ class Exporter extends AbstractExporter {
     try {
       final path = await FlutterFileDialog.saveFile(params: params);
       if (path == null) {
-        snackBar.show(
+        CustomSnackBar.show(
           title: tr.backup.exporting.error.title,
           content: tr.errors.userOperationCanceled,
         );
       } else {
-        snackBar.show(
+        CustomSnackBar.show(
           title: tr.backup.exporting.success.title,
           content: tr.backup.exporting.success.message,
         );
       }
     } catch (e) {
-      snackBar.show(
+      CustomSnackBar.show(
         title: tr.backup.exporting.error.title,
         content: tr.backup.exporting.error.message,
       );

@@ -97,7 +97,8 @@ class _DungeonPaperAppState extends State<DungeonPaperApp> {
       ],
       child: DynamicTheme(
         themeCollection: themeCollection,
-        defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
+        defaultThemeId:
+            prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
         builder: (context, theme) => MaterialApp(
           scrollBehavior: MultiPlatformScrollBehavior(),
           title: tr.app.name,
@@ -106,6 +107,7 @@ class _DungeonPaperAppState extends State<DungeonPaperApp> {
           onGenerateRoute: AppPages.onGenerateRoute,
           initialRoute: AppPages.initial,
           navigatorKey: navigatorKey,
+          scaffoldMessengerKey: scaffoldMessengerKey,
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_text.dart';
 import 'package:dungeon_paper/app/widgets/atoms/password_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
@@ -150,8 +151,7 @@ class AccountView extends StatelessWidget {
                       username: controller.user.username,
                     );
                     // A deletion request for your account was sent successfully
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(tr.account.deleteAccount.success)));
+                    CustomSnackBar.show(content: tr.account.deleteAccount.success);
                   },
                 ),
               ),

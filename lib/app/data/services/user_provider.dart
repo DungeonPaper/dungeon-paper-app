@@ -207,10 +207,9 @@ class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
       final loadingProvider =
           Provider.of<LoadingProvider>(context, listen: false);
 
-      final messenger = CustomSnackBar.deferred(context);
       final resp = await _migrateUser(user);
       if (resp == null) {
-        messenger.show(content: tr.errors.userOperationCanceled);
+        CustomSnackBar.show(content: tr.errors.userOperationCanceled);
 
         loadingProvider.loadingUser = false;
         loadingProvider.afterFirstLoad = !loadingProvider.loadingCharacters;

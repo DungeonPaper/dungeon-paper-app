@@ -1,21 +1,21 @@
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:flutter/material.dart';
 
 class CustomSnackBar extends SnackBar {
   CustomSnackBar({
     super.key,
-    required BuildContext context,
     this.title,
     required String content,
-  }) : super(content: _getContent(context, title, content));
+  }) : super(content: _getContent(title, content));
 
   final String? title;
 
   static Widget _getContent(
-      BuildContext context, String? title, String content) {
+      String? title, String content) {
     if (title != null && title.isNotEmpty) {
       return Column(
         children: [
-          Text(title, style: Theme.of(context).textTheme.bodyLarge),
+          Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           Text(content),
         ],
       );
@@ -23,23 +23,11 @@ class CustomSnackBar extends SnackBar {
     return Text(content);
   }
 
-  static show(BuildContext context, {String? title, required String content}) =>
-      ScaffoldMessenger.of(context).showSnackBar(
-        CustomSnackBar(context: context, title: title, content: content),
-      );
-
-  static deferred(BuildContext context) => DeferredCustomSnackBar._(context);
+  static show({String? title, required String content}) {
+    final context = scaffoldMessengerKey.currentContext!;
+    return ScaffoldMessenger.of(context).showSnackBar(
+      CustomSnackBar(title: title, content: content),
+    );
+  }
 }
 
-class DeferredCustomSnackBar {
-  DeferredCustomSnackBar._(this.context);
-  BuildContext context;
-
-  show({
-    String? title,
-    required String content,
-  }) =>
-      ScaffoldMessenger.of(context).showSnackBar(
-        CustomSnackBar(context: context, title: title, content: content),
-      );
-}

@@ -95,17 +95,16 @@ Future<UploadResponse?> cropAndUploadPhoto(
 ) async {
   CroppedFile? file;
   final uploadPhoto = _uploadPhotoFactory(context);
-  final snackBar = CustomSnackBar.deferred(context);
   try {
     file = await _pickAndCrop(context);
     if (file == null) {
-      snackBar.show(content: tr.errors.userOperationCanceled);
+      CustomSnackBar.show(content: tr.errors.userOperationCanceled);
       settings.onCancel?.call();
       return null;
     }
     settings.onUploadFile?.call(file);
   } catch (e) {
-    snackBar.show(content: tr.errors.uploadError);
+    CustomSnackBar.show(content: tr.errors.uploadError);
     settings.onError?.call(e);
     return null;
   }
@@ -118,8 +117,8 @@ Future<UploadResponse?> cropAndUploadPhoto(
 
     settings.onSuccess?.call(downloadURL);
   } catch (e) {
-    snackBar.show(
-      message:
+    CustomSnackBar.show(
+      content:
           'Error while uploading photo. Try again later, or contact support using the "About" page.',
     );
 

@@ -1,9 +1,6 @@
-import 'package:dungeon_paper/app/data/models/user.dart';
-import 'package:dungeon_paper/app/data/models/user_settings.dart';
 import 'package:dungeon_paper/app/data/services/auth_provider.dart';
 import 'package:dungeon_paper/app/data/services/loading_provider.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
-import 'package:dungeon_paper/core/storage_handler/storage_handler.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/core/utils/secrets_base.dart';
 import 'package:email_validator/email_validator.dart';
@@ -34,7 +31,6 @@ class LoginController extends ChangeNotifier with AuthProviderMixin {
   }
 
   void _loginWrapper(BuildContext context, Future<void> Function() cb) async {
-    final messenger = ScaffoldMessenger.of(context);
     final loadingProvider = LoadingProvider.of(context);
     try {
       final navigator = Navigator.of(context);
@@ -50,7 +46,7 @@ class LoginController extends ChangeNotifier with AuthProviderMixin {
       loadingProvider.loadingUser = false;
       loadingProvider.loadingCharacters = false;
       // TODO intl
-      messenger.showSnackBar(const SnackBar(content: Text('Login failed')));
+      CustomSnackBar.show(content: 'Login failed');
     }
   }
 
@@ -86,7 +82,6 @@ class LoginController extends ChangeNotifier with AuthProviderMixin {
     BuildContext context,
   ) {
     _loginWrapper(context, () async {
-      final snackBar = CustomSnackBar.deferred(context);
       try {
         await authProvider.signUp(email: email.text, password: password.text);
       } catch (e) {
@@ -95,7 +90,7 @@ class LoginController extends ChangeNotifier with AuthProviderMixin {
         }
         debugPrint('ERROR: $e');
         // TODO intl
-        snackBar.show('Sign up failed');
+        CustomSnackBar.show(content: 'Sign up failed');
       }
     });
   }

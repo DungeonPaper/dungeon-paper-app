@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
 import 'package:dungeon_paper/core/http/api.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,6 @@ class SendFeedbackController extends ChangeNotifier with UserProviderMixin {
   Future<void> send(BuildContext context) async {
     sending = true;
     final navigator = Navigator.of(context);
-    final messenger = ScaffoldMessenger.of(context);
-    final theme = Theme.of(context);
     await api.requests.sendFeedback(
       email: user.isLoggedIn ? user.email : email.text,
       subject: title.text,
@@ -24,15 +23,9 @@ class SendFeedbackController extends ChangeNotifier with UserProviderMixin {
       username: user.isLoggedIn ? user.username : null,
     );
     navigator.pop();
-    messenger.showSnackBar(
-      SnackBar(
-        content: Column(
-          children: [
-            Text(tr.feedback.success.title, style: theme.textTheme.bodyLarge),
-            Text(tr.feedback.success.message),
-          ],
-        ),
-      ),
+    CustomSnackBar.show(
+      title: tr.feedback.success.title,
+      content: tr.feedback.success.message,
     );
   }
 
@@ -44,3 +37,4 @@ class SendFeedbackController extends ChangeNotifier with UserProviderMixin {
     }
   }
 }
+
