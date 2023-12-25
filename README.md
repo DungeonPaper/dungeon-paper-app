@@ -49,6 +49,16 @@ just a small amount to help sustain this project, I would be very very thankful!
 I welcome any issues or pull requests on GitHub. If you find a bug, or would like a new feature,
 don't hesitate to open an appropriate issue and I will do my best to reply promptly.
 
+### Quick Development Setup
+
+```
+gh repo fork DungeonPaper/dungeon-paper-app # Fork the Repository with the Github CLI. Alternatively, do it manually
+cd dungeon-paper-app
+./local_development.sh # Setup firebase and secrets, as explained in *Development Set Up*
+```
+
+You will be unable to access online features (login, etc) and other parts of the app may be broken, but offline features (using the app) seems to work well, and you can develop and add features.
+
 ### Development Set Up
 
 1. Download Flutter
