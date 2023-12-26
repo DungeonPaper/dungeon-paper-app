@@ -24,8 +24,8 @@ class CustomSnackBar extends SnackBar {
   }
 
   static show({String? title, required String content}) {
-    final context = scaffoldMessengerKey.currentContext!;
-    return ScaffoldMessenger.of(context).showSnackBar(
+    assert(scaffoldMessengerKey.currentState != null);
+    return scaffoldMessengerKey.currentState!.showSnackBar(
       CustomSnackBar(title: title, content: content),
     );
   }
