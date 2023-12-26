@@ -531,8 +531,8 @@ customRolls:
     title: Special Dice
     button(String btn): "${_select(btn, {'damage': 'Damage'}, other: btn)}"
   tooltip:
-    rollNormal(String dice): Roll $dice\n* Rolling with debility
-    rollWithDebility(String dice): Roll $dice
+    rollNormal(String dice): Roll $dice
+    rollWithDebility(String dice): Roll $dice\n* Rolling with debility
   presets:
     title: Presets
     basicAction: Basic Action
@@ -615,7 +615,9 @@ actions:
     special: Special Moves
   classActions:
     title: Class Actions
-    markXP: Mark +1 XP
+    markXP:
+      button: Mark +1 XP
+      success: +1 XP marked
 
 abilityScores:
   info: You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.

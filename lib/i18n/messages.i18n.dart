@@ -2561,14 +2561,15 @@ class TooltipCustomRollsMessages {
   const TooltipCustomRollsMessages(this._parent);
 
   /// ```dart
-  /// "Roll $dice\n* Rolling with debility"
-  /// ```
-  String rollNormal(String dice) => """Roll $dice\n* Rolling with debility""";
-
-  /// ```dart
   /// "Roll $dice"
   /// ```
-  String rollWithDebility(String dice) => """Roll $dice""";
+  String rollNormal(String dice) => """Roll $dice""";
+
+  /// ```dart
+  /// "Roll $dice\n* Rolling with debility"
+  /// ```
+  String rollWithDebility(String dice) =>
+      """Roll $dice\n* Rolling with debility""";
 }
 
 class PresetsCustomRollsMessages {
@@ -2998,11 +2999,23 @@ class ClassActionsActionsMessages {
   /// "Class Actions"
   /// ```
   String get title => """Class Actions""";
+  MarkXPClassActionsActionsMessages get markXP =>
+      MarkXPClassActionsActionsMessages(this);
+}
+
+class MarkXPClassActionsActionsMessages {
+  final ClassActionsActionsMessages _parent;
+  const MarkXPClassActionsActionsMessages(this._parent);
 
   /// ```dart
   /// "Mark +1 XP"
   /// ```
-  String get markXP => """Mark +1 XP""";
+  String get button => """Mark +1 XP""";
+
+  /// ```dart
+  /// "+1 XP marked"
+  /// ```
+  String get success => """+1 XP marked""";
 }
 
 class AbilityScoresMessages {
@@ -4036,7 +4049,8 @@ creation and leveling up.""",
       """actions.moves.basic""": """Basic Moves""",
       """actions.moves.special""": """Special Moves""",
       """actions.classActions.title""": """Class Actions""",
-      """actions.classActions.markXP""": """Mark +1 XP""",
+      """actions.classActions.markXP.button""": """Mark +1 XP""",
+      """actions.classActions.markXP.success""": """+1 XP marked""",
       """abilityScores.info""":
           """You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.""",
       """abilityScores.rollButton.stat""": """Roll +{stat}""",

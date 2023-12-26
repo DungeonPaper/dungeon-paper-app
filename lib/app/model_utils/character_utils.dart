@@ -3,7 +3,11 @@ import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/app/data/services/character_provider.dart';
+import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_paper/i18n.dart';
+import 'package:flutter/material.dart';
 
 class CharacterUtils {
   // Moves
@@ -152,11 +156,21 @@ class CharacterUtils {
   ) {
     return (oldIndex, newIndex) =>
         enumerate(reorder(list.toList(), oldIndex, newIndex))
-            .map(
-              (e) => e.value.copyWith(
-                settings: e.value.settings.copyWith(sortOrder: e.index),
-              ),
-            )
+            .map((e) => e.value.copyWith(
+                  settings: e.value.settings.copyWith(sortOrder: e.index),
+                ))
             .toList();
   }
+
+  static addXP(BuildContext context, Character char, int xp) {
+    CharacterProvider.of(context).updateCharacter(
+      char.copyWith(
+        stats: char.stats.copyWith(
+          currentXp: char.stats.currentXp + 1,
+        ),
+      ),
+    );
+    CustomSnackBar.show(content: tr.actions.classActions.markXP.success);
+  }
 }
+
