@@ -88,6 +88,7 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
+  script_runner: ^0.5.1
   test: ^1.19.5
 
 # For information on the generic Dart part of this file, see the

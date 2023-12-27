@@ -36,9 +36,9 @@ scripts:
       symbols="symbols-$name-$version.zip"
       bundleout="$name-$version.aab"
       bundle=build/app/outputs/bundle/release/app-release.aab
-      mkdir release
+      mkdir -p release/android
       android:build:bundle && symbols:collect && cp $bundle release/$bundleout
-      [[ ! -f "$(which open)" ]] || open release
+      [[ ! -f "$(which open)" ]] || open release/android
     description: Builds, collects debug symbols, and places the output in release/ dir.
 
   # ===============================================================================================
