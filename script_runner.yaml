@@ -14,7 +14,6 @@ scripts:
     description: Build Android unified bundle + standalone APK
   - name: android:push
     description: Push APK to ADB-connected device
-    suppress_header_output: true
     cmd: |-
       name=$(dart run btool get packageName)
       version=$(dart run btool get packageVersion)
@@ -37,7 +36,7 @@ scripts:
       bundleout="$name-$version.aab"
       bundle=build/app/outputs/bundle/release/app-release.aab
       mkdir -p release/android
-      android:build:bundle && symbols:collect && cp $bundle release/$bundleout
+      android:build:bundle && symbols:collect && cp $bundle release/android/$bundleout
       [[ ! -f "$(which open)" ]] || open release/android
     description: Builds, collects debug symbols, and places the output in release/ dir.
 
