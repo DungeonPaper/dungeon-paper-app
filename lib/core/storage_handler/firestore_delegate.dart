@@ -3,8 +3,13 @@ part of 'storage_handler.dart';
 class FirestoreDelegate extends StorageDelegate {
   final storage = FirebaseFirestore.instance;
 
+  @override
+  bool enableRetry(e) {
+    return e is FirebaseException && e.code == 'unavailable';
+  }
+
   String get prefix =>
-      _collectionPrefix != null ? _collectionPrefix! + '/' : '';
+      _collectionPrefix != null ? '${_collectionPrefix!}/' : '';
 
   @override
   Future<List<DocData>> getCollection(String collection) => storage

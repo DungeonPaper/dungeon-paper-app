@@ -3,6 +3,7 @@ part of 'storage_handler.dart';
 abstract class StorageDelegate {
   String? _collectionPrefix;
   String? get collectionPrefix => _collectionPrefix;
+  bool enableRetry(_) => false;
 
   void setCollectionPrefix(String? prefix) {
     debugPrint('Set collection prefix: $prefix for $this');
