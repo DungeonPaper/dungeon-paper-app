@@ -41,6 +41,7 @@ class StorageHandler implements StorageDelegate {
 
   Future<T> withRetry<T>(
     Future<T> Function() action, {
+    String? debugLabel,
     int? retryCount,
     Duration? retryDelay,
   }) async {
@@ -51,9 +52,12 @@ class StorageHandler implements StorageDelegate {
       try {
         return await action();
       } catch (e) {
+        debugLabel ??= '$action';
         if (!enableRetry(e) || count >= retryCount) {
           rethrow;
         }
+        debugPrint(
+            'Failed to execute action: $debugLabel, retrying in: ${retryDelay.inSeconds} seconds, attempt: $count');
         await Future.delayed(retryDelay);
         count++;
       }
@@ -70,6 +74,7 @@ class StorageHandler implements StorageDelegate {
     debugPrint('Get document: $collection/$document');
     return withRetry(
       () => delegate.getDocument(collection, document),
+      debugLabel: 'Get document: $collection/$document',
       retryCount: retryCount,
       retryDelay: retryDelay,
     );
@@ -86,6 +91,7 @@ class StorageHandler implements StorageDelegate {
     debugPrint('Create document: $collection/$document');
     return withRetry(
       () => delegate.create(collection, document, value),
+      debugLabel: 'Create document: $collection/$document',
       retryCount: retryCount,
       retryDelay: retryDelay,
     );
@@ -100,6 +106,7 @@ class StorageHandler implements StorageDelegate {
     debugPrint('Get collection: $collection');
     return withRetry(
       () => delegate.getCollection(collection),
+      debugLabel: 'Get collection: $collection',
       retryCount: retryCount,
       retryDelay: retryDelay,
     );
@@ -115,6 +122,7 @@ class StorageHandler implements StorageDelegate {
     debugPrint('Delete document: $collection/$document');
     return withRetry(
       () => delegate.delete(collection, document),
+      debugLabel: 'Delete document: $collection/$document',
       retryCount: retryCount,
       retryDelay: retryDelay,
     );
@@ -134,6 +142,7 @@ class StorageHandler implements StorageDelegate {
     debugPrint('Update document: $collection/$document');
     return withRetry(
       () => delegate.update(collection, document, value),
+      debugLabel: 'Update document: $collection/$document',
       retryCount: retryCount,
       retryDelay: retryDelay,
     );
