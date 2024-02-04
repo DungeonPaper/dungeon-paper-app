@@ -1,10 +1,14 @@
+import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_amount_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_armor_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_damage_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/item_weight_chip.dart';
 import 'package:dungeon_paper/app/widgets/chips/tag_chip.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
+import 'package:dungeon_world_data/tag.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:popover/popover.dart';
 
 import '../../data/models/item.dart';
 import 'dynamic_action_card.dart';
@@ -59,6 +63,44 @@ class ItemCard extends StatelessWidget {
         ItemAmountChip(item: item),
       ],
     ];
+    final tags = item.tags
+        .map<Widget>((t) => TagChip.openDescription(context, tag: t))
+        .toList();
+    if (!hideCount) {
+      tags.add(
+        Builder(builder: (context) {
+          return TagChip(
+            tag: Tag(
+              name: 'Amount',
+              value: NumberFormat('#.#').format(item.amount),
+            ),
+            onPressed: () => showPopover(
+              context: context,
+              height: 64,
+              width: 200,
+              backgroundColor: Theme.of(context).cardColor,
+              // direction: PopoverDirection.right,
+              direction: PopoverDirection.top,
+              bodyBuilder: (context) => Container(
+                color: Theme.of(context).cardColor,
+                child: NumberTextField(
+                  numberType: NumberType.double,
+                  onChanged: (str) => onSave?.call(
+                    item.copyWithInherited(
+                      amount: double.tryParse(str) ??
+                          item.amount,
+                    ),
+                  ),
+                  controller: TextEditingController(
+                    text: item.amount.toString(),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }),
+      );
+    }
     return DynamicActionCard(
       initiallyExpanded: initiallyExpanded,
       title: item.name,
@@ -72,7 +114,7 @@ class ItemCard extends StatelessWidget {
         ...chips,
         ...trailing,
       ].joinObjects(const SizedBox(width: 8)),
-      chips: item.tags.map((t) => TagChip.openDescription(context, tag: t)),
+      chips: tags,
       dice: const [],
       icon: showIcon ? Icon(item.icon, size: 16) : null,
       starred: item.equipped,
@@ -85,3 +127,4 @@ class ItemCard extends StatelessWidget {
     );
   }
 }
+
