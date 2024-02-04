@@ -433,23 +433,28 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return CharacterProvider.consumer((context, controller, _) {
+      debugPrint('ActionsCardList rebuild');
+      debugPrint(
+          'Character items: \n${controller.current.items.map((e) => '- ${e.displayName}').join('\n')}');
       return CategorizedList(
         initiallyExpanded: true,
         title: Text(tr.entityPlural(typeName)),
         itemPadding: const EdgeInsets.only(bottom: 8),
         titleTrailing: [
-          LibraryProvider.consumer((context, library, _) => TextButton.icon(
-                onPressed: () => Navigator.pushNamed(
-                  context,
-                  route,
-                  arguments: addPageArguments(
-                    onSelected: (items) => library.upsertToCharacter(items,
-                        forkBehavior: ForkBehavior.fork),
-                  ),
+          LibraryProvider.consumer(
+            (context, library, _) => TextButton.icon(
+              onPressed: () => Navigator.pushNamed(
+                context,
+                route,
+                arguments: addPageArguments(
+                  onSelected: (items) => library.upsertToCharacter(items,
+                      forkBehavior: ForkBehavior.fork),
                 ),
-                label: Text(tr.generic.addEntity(tr.entityPlural(typeName))),
-                icon: const Icon(Icons.add),
-              )),
+              ),
+              label: Text(tr.generic.addEntity(tr.entityPlural(typeName))),
+              icon: const Icon(Icons.add),
+            ),
+          ),
           GroupSortMenu(
             index: index,
             totalItemCount: Character.allActionCategories.length,
@@ -497,13 +502,12 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
     String name,
   ) {
     return () {
-      awaitDeleteConfirmation(context, name, () {
-        charProvider.updateCharacter(
-          char.copyWithInherited(
-            moves: char.moves.where((x) => x.key != object.key).toList(),
-          ),
-        );
-      });
+      awaitDeleteConfirmation(
+        context,
+        name,
+        () => charProvider
+            .updateCharacter(CharacterUtils.removeByType<T>(char, [object])),
+      );
     };
   }
 }
