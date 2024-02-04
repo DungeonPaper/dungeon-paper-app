@@ -502,7 +502,7 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
     String name,
   ) {
     return () {
-      awaitDeleteConfirmation(
+      awaitDeleteConfirmation<T>(
         context,
         name,
         () => charProvider
