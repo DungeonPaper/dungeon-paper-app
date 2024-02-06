@@ -1106,7 +1106,7 @@ class LoadSummaryHomeMessages {
   /// ```dart
   /// "Load: $cur/$max"
   /// ```
-  String label(int cur, int max) => """Load: $cur/$max""";
+  String label(double cur, double max) => """Load: $cur/$max""";
 
   /// ```dart
   /// "Max Load"

@@ -112,7 +112,7 @@ scripts:
     description: Run Build Runner
   - name: symbols:collect
     cmd: |-
-      dir="$(pwd)/release"
+      dir="$(pwd)/release/android"
       name=$(dart run btool get packageName)
       version=$(dart run btool get packageVersion)
       filename="symbols-$name-$version.zip"
