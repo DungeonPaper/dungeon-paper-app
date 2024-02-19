@@ -97,8 +97,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
               ),
               child: widget.starred
                   ? widget.starredIcon ?? const Icon(Icons.star_rounded, color: Color.fromRGBO(255, 215, 0, 1))
-                  : widget.unstarredIcon ??
-                      const Icon(Icons.star_border_rounded),
+                  : widget.unstarredIcon ?? const Icon(Icons.star_border_rounded),
             ),
             onPressed: () => widget.onStarChanged?.call(!widget.starred),
           ),
