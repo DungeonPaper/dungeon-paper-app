@@ -21,7 +21,7 @@ class _ImportExportViewState extends State<ImportExportView>
   @override
   void initState() {
     super.initState();
-    tab = TabController(length: 2, vsync: this);
+    tab = TabController(length: 2, vsync: this)..addListener(() => setState(() {}));
   }
 
   @override
@@ -61,8 +61,8 @@ class _ImportExportViewState extends State<ImportExportView>
               : tr.backup.importing.button),
           icon: Icon(tab.index == 0 ? Icons.upload : Icons.download),
           onPressed: tab.index == 0
-              ? () => controller.doExport(context)
-              : () => controller.doImport(context),
+              ? controller.doExport(context)
+              : controller.doImport(context),
         ),
       ),
     );

@@ -5,6 +5,8 @@ typedef DocData = Map<String, dynamic>;
 class StorageHandler implements StorageDelegate {
   static StorageHandler? _instance;
   static StorageHandler get instance => _instance ??= StorageHandler();
+  static const defaultRetryCount = 3;
+  static const defaultRetryDelay = Duration(seconds: 2);
 
   static final _firestore = FirestoreDelegate();
   static final _firestoreGlobal = FirestoreDelegate();
@@ -25,46 +27,125 @@ class StorageHandler implements StorageDelegate {
   StorageDelegate get delegate => delegates[currentDelegate]!.call();
 
   @override
-  Future<DocData?> getDocument(String collection, String document) {
-    debugPrint('Get document: $collection/$document');
-    return delegate.getDocument(collection, document);
-  }
-
-  @override
-  Future<void> create(String collection, String document, DocData value) {
-    debugPrint('Create document: $collection/$document');
-    return delegate.create(collection, document, value);
-  }
-
-  @override
-  Future<List<DocData>> getCollection(String collection) {
-    debugPrint('Get collection: $collection');
-    return delegate.getCollection(collection);
-  }
+  bool enableRetry(e) => delegate.enableRetry(e);
 
   @override
   String? _collectionPrefix;
 
   @override
-  void setCollectionPrefix(String? prefix) =>
-      delegate.setCollectionPrefix(prefix);
-
-  @override
   String? get collectionPrefix => delegate.collectionPrefix;
 
   @override
-  Future<void> delete(String collection, String document) {
+  void setCollectionPrefix(String? prefix) =>
+      delegate.setCollectionPrefix(prefix);
+
+  Future<T> withRetry<T>(
+    Future<T> Function() action, {
+    String? debugLabel,
+    int? retryCount,
+    Duration? retryDelay,
+  }) async {
+    retryCount ??= defaultRetryCount;
+    retryDelay ??= defaultRetryDelay;
+    var count = 0;
+    while (true) {
+      try {
+        return await action();
+      } catch (e) {
+        debugLabel ??= '$action';
+        if (!enableRetry(e) || count >= retryCount) {
+          rethrow;
+        }
+        debugPrint(
+            'Failed to execute action: $debugLabel, retrying in: ${retryDelay.inSeconds} seconds, attempt: $count');
+        await Future.delayed(retryDelay);
+        count++;
+      }
+    }
+  }
+
+  @override
+  Future<DocData?> getDocument(
+    String collection,
+    String document, {
+    int? retryCount,
+    Duration? retryDelay,
+  }) {
+    debugPrint('Get document: $collection/$document');
+    return withRetry(
+      () => delegate.getDocument(collection, document),
+      debugLabel: 'Get document: $collection/$document',
+      retryCount: retryCount,
+      retryDelay: retryDelay,
+    );
+  }
+
+  @override
+  Future<void> create(
+    String collection,
+    String document,
+    DocData value, {
+    int? retryCount,
+    Duration? retryDelay,
+  }) {
+    debugPrint('Create document: $collection/$document');
+    return withRetry(
+      () => delegate.create(collection, document, value),
+      debugLabel: 'Create document: $collection/$document',
+      retryCount: retryCount,
+      retryDelay: retryDelay,
+    );
+  }
+
+  @override
+  Future<List<DocData>> getCollection(
+    String collection, {
+    int? retryCount,
+    Duration? retryDelay,
+  }) {
+    debugPrint('Get collection: $collection');
+    return withRetry(
+      () => delegate.getCollection(collection),
+      debugLabel: 'Get collection: $collection',
+      retryCount: retryCount,
+      retryDelay: retryDelay,
+    );
+  }
+
+  @override
+  Future<void> delete(
+    String collection,
+    String document, {
+    int? retryCount,
+    Duration? retryDelay,
+  }) {
     debugPrint('Delete document: $collection/$document');
-    return delegate.delete(collection, document);
+    return withRetry(
+      () => delegate.delete(collection, document),
+      debugLabel: 'Delete document: $collection/$document',
+      retryCount: retryCount,
+      retryDelay: retryDelay,
+    );
   }
 
   @override
   Future<void> clear() => delegate.clear();
 
   @override
-  Future<void> update(String collection, String document, DocData value) {
+  Future<void> update(
+    String collection,
+    String document,
+    DocData value, {
+    int? retryCount,
+    Duration? retryDelay,
+  }) {
     debugPrint('Update document: $collection/$document');
-    return delegate.update(collection, document, value);
+    return withRetry(
+      () => delegate.update(collection, document, value),
+      debugLabel: 'Update document: $collection/$document',
+      retryCount: retryCount,
+      retryDelay: retryDelay,
+    );
   }
 
   @override
@@ -94,3 +175,4 @@ class StorageHandler implements StorageDelegate {
         onError: onError, onDone: onDone, cancelOnError: cancelOnError);
   }
 }
+

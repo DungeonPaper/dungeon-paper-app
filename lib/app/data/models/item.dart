@@ -35,7 +35,7 @@ class Item extends dw.Item with WithIcon implements WithMeta {
       .firstWhereOrNull((tag) => cleanStr(tag?.name ?? '') == name);
   bool get isWorn => findTag('worn') != null;
 
-  int get weight => settings.countWeight ? tagIntValue('weight') ?? 0 : 0;
+  double get weight => (settings.countWeight ? tagIntValue('weight') ?? 0 : 0) * amount;
   int get armor =>
       settings.countArmor && isWorn && equipped ? tagIntValue('armor') ?? 0 : 0;
   int get damage =>

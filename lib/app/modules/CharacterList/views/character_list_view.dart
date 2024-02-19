@@ -34,66 +34,76 @@ class CharacterListPageView extends StatelessWidget with UserProviderMixin {
             children: [
               for (final cat in controller.charsByCategory.keys)
                 () {
-                  return CategorizedList(
-                    title: Text(cat.isNotEmpty ? cat : tr.character.noCategory),
-                    onReorder: (oldIndex, newIndex) => controller.updateAll(
-                      CharacterUtils.reorderCharacters(
-                              controller.charsByCategory[cat]!)
-                          .call(oldIndex, newIndex),
-                    ),
-                    children: [
-                      for (var char in controller.charsByCategory[cat]!)
-                        Builder(
-                          key: Key(char.key),
-                          builder: (context) {
-                            final charTheme =
-                                AppThemes.getTheme(char.getCurrentTheme(user));
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4),
-                              child: Card(
-                                margin: EdgeInsets.zero,
-                                color: charTheme.scaffoldBackgroundColor,
-                                child: ListTileTheme.merge(
-                                  minLeadingWidth: 48,
-                                  minVerticalPadding: 16,
-                                  horizontalTitleGap: 10,
-                                  textColor: charTheme.colorScheme.onBackground,
-                                  // textColor: ThemeData.estimateBrightnessForColor(charTheme.scaffoldBackgroundColor) == Brightness.light ? Colors.black : Colors.white,
-                                  child: InkWell(
-                                    borderRadius: borderRadius,
-                                    splashColor: Theme.of(context).splashColor,
-                                    onTap: () {
-                                      controller.setCurrent(char.key);
-                                      Navigator.of(context)
-                                          .popUntil((route) => route.isFirst);
-                                    },
-                                    child: ListTile(
-                                      leading: CharacterAvatar.squircle(
-                                          character: char, size: 48),
-                                      title: Text(char.displayName),
-                                      subtitle: CharacterSubtitle(
-                                        character: char,
-                                        textAlign: TextAlign.start,
-                                      ),
-                                      trailing: EntityEditMenu(
-                                        onEdit: null,
-                                        onDelete: () {
-                                          awaitDeleteConfirmation<Character>(
-                                            context,
-                                            char.displayName,
-                                            () => controller
-                                                .deleteCharacter(char),
-                                          );
+                  return Center(
+                    child: SizedBox(
+                      width: 800,
+                      child: CategorizedList(
+                        title: Text(
+                            cat.isNotEmpty ? cat : tr.character.noCategory),
+                        onReorder: (oldIndex, newIndex) => controller.updateAll(
+                          CharacterUtils.reorderCharacters(
+                                  controller.charsByCategory[cat]!)
+                              .call(oldIndex, newIndex),
+                        ),
+                        children: [
+                          for (var char in controller.charsByCategory[cat]!)
+                            Builder(
+                              key: Key(char.key),
+                              builder: (context) {
+                                final charTheme = AppThemes.getTheme(
+                                    char.getCurrentTheme(user));
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4),
+                                  child: Card(
+                                    margin: EdgeInsets.zero,
+                                    color: charTheme.scaffoldBackgroundColor,
+                                    child: ListTileTheme.merge(
+                                      minLeadingWidth: 48,
+                                      minVerticalPadding: 16,
+                                      horizontalTitleGap: 10,
+                                      textColor:
+                                          charTheme.colorScheme.onBackground,
+                                      // textColor: ThemeData.estimateBrightnessForColor(charTheme.scaffoldBackgroundColor) == Brightness.light ? Colors.black : Colors.white,
+                                      child: InkWell(
+                                        borderRadius: borderRadius,
+                                        splashColor:
+                                            Theme.of(context).splashColor,
+                                        onTap: () {
+                                          controller.setCurrent(char.key);
+                                          Navigator.of(context).popUntil(
+                                              (route) => route.isFirst);
                                         },
+                                        child: ListTile(
+                                          leading: CharacterAvatar.squircle(
+                                              character: char, size: 48),
+                                          title: Text(char.displayName),
+                                          subtitle: CharacterSubtitle(
+                                            character: char,
+                                            textAlign: TextAlign.start,
+                                          ),
+                                          trailing: EntityEditMenu(
+                                            onEdit: null,
+                                            onDelete: () {
+                                              awaitDeleteConfirmation<
+                                                  Character>(
+                                                context,
+                                                char.displayName,
+                                                () => controller
+                                                    .deleteCharacter(char),
+                                              );
+                                            },
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                    ],
+                                );
+                              },
+                            ),
+                        ],
+                      ),
+                    ),
                   );
                 },
             ],
@@ -108,3 +118,4 @@ class CharacterListPageView extends StatelessWidget with UserProviderMixin {
     );
   }
 }
+

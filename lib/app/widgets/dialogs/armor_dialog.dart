@@ -48,7 +48,7 @@ class _ArmorDialogState extends State<ArmorDialog> {
           children: [
             CheckboxListTile(
               // minLeadingWidth: 20,
-              title: Text(tr.armor.dialog.title),
+              title: Text(tr.armor.dialog.autoArmor),
               dense: true,
               visualDensity: VisualDensity.compact,
               controlAffinity: ListTileControlAffinity.leading,

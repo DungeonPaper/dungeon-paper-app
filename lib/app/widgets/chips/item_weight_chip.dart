@@ -19,7 +19,7 @@ class ItemWeightChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return PrimaryChip(
       icon: const Icon(DwIcons.dumbbell),
-      label: NumberFormat('#.#').format(item.amount * item.weight),
+      label: NumberFormat('#.#').format(item.weight),
       tooltip: dw.dungeonWorldData.tags['Weight']!.description,
       visualDensity: visualDensity ?? VisualDensity.compact,
     );

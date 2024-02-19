@@ -80,31 +80,28 @@ You will be unable to access online features (login, etc) and other parts of the
    flutterfire configure
    ```
 
-1. Add your firebase secrets, put this template in `lib/core/utils/secrets.dart` and update the
-   values
+1. Copy the `secrets.example.dart` to `secrets.dart` in the same directory:
 
    ```dart
-   part of 'secrets_base.dart';
-
-   class Secrets extends SecretsBase {
-     @override
-     final String sentryDsn = '<sentry dsn value>';
-   }
+   cp lib/core/utils/secrets.example.dart lib/core/utils/secrets.dart
    ```
 
    Sentry DSN can remain empty to skip error reporting.
 
-1. To run build scripts, install [script_runner](https://pub.dev/packages/script_runner) and use
-   `scr -h` to see all available commands
+1. To run build scripts, use [script_runner](https://pub.dev/packages/script_runner) by running
+   `dart run script_runner -h` to see a list of all available commands. Alternatively, you can
+   manually run the command in `script_runner.yaml`, or install `script_runner` globally and shorten
+   the command to `scr`.
 
 As mentioned above, Firebase secret keys must be your own, and so are the databases and services
-related to them. This project uses Firebase auth and Cloud Firestore.
+related to them. This project requires Firebase auth and Cloud Firestore to function.
 
 ### Translations
 
 This app is currently only available in English. However, it's possible to contribute translations
 if you wish to help localize the app to your language. The app should be fully-localizable easily by
-just updating the translation files.
+updating the translation files, and once we ave more than one language we will add UI to change it
+at will.
 
 - The current main translations file is at `lib/i18n/messages.i18n.yaml`
 - To add a new localization file, copy this file to `lib/i18n/messages_<lang code>.i18n.yaml` (for

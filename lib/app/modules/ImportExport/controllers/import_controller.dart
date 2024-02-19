@@ -124,6 +124,7 @@ class ImportController extends ChangeNotifier
     final filestring = utf8.decode(filedata as List<int>);
     final filejson = json.decode(filestring);
     toImport = ImportSelections.fromJson(filejson);
+    notifyListeners();
   }
 
   void Function()? getDoImport(BuildContext context) {
@@ -184,6 +185,11 @@ class ImportController extends ChangeNotifier
         content: tr.backup.importing.success.message,
       );
     };
+  }
+
+  void clearFile() {
+    toImport = null;
+    notifyListeners();
   }
 }
 

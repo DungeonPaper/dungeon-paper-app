@@ -17,33 +17,41 @@ class NoteForm extends StatelessWidget with RepositoryProviderMixin {
       builder: (context, controller, _) =>
           LibraryEntityForm<Note, NoteFormController>(
         children: [
-          () => Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: Text(
-                          tr.generic.entityName(tr.entity(tn(Note))),
-                        ),
-                      ),
-                      textCapitalization: TextCapitalization.words,
-                      controller: controller.title,
+          () => LayoutBuilder(builder: (context, constraints) {
+                final nameField = TextFormField(
+                  decoration: InputDecoration(
+                    label: Text(
+                      tr.generic.entityName(tr.entity(tn(Note))),
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  SizedBox(
-                    width: 300,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: tr.notes.noCategory,
-                        label: Text(tr.notes.category.label),
-                      ),
-                      textCapitalization: TextCapitalization.words,
-                      controller: controller.category,
-                    ),
+                  textCapitalization: TextCapitalization.words,
+                  controller: controller.title,
+                );
+                final categoryField = TextFormField(
+                  decoration: InputDecoration(
+                    hintText: tr.notes.noCategory,
+                    label: Text(tr.notes.category.label),
                   ),
-                ],
-              ),
+                  textCapitalization: TextCapitalization.words,
+                  controller: controller.category,
+                );
+                if (constraints.maxWidth < 600) {
+                  return Column(
+                    children: [
+                      nameField,
+                      const SizedBox(height: 16),
+                      categoryField,
+                    ],
+                  );
+                }
+                return Row(
+                  children: [
+                    Expanded(child: nameField),
+                    const SizedBox(width: 16),
+                    SizedBox(width: 300, child: categoryField),
+                  ],
+                );
+              }),
           () => RichTextField(
                 decoration: InputDecoration(
                   label: Text(

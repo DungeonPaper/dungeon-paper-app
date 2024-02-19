@@ -183,14 +183,8 @@ class HomeCharacterDynamicCards extends StatelessWidget
           ),
         ),
         ElevatedButton(
-          onPressed: () => charProvider.updateCharacter(
-            char.copyWith(
-              stats: char.stats.copyWith(
-                currentXp: char.stats.currentXp + 1,
-              ),
-            ),
-          ),
-          child: Text(tr.actions.classActions.markXP),
+          onPressed: () => CharacterUtils.addXP(context, char, 1),
+          child: Text(tr.actions.classActions.markXP.button),
         ),
       ],
     );

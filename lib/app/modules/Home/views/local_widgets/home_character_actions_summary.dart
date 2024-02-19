@@ -86,8 +86,8 @@ class HomeCharacterActionsSummary extends StatelessWidget {
     );
   }
 
-  Color? _loadColor(int currentLoad, int maxLoad) {
-    final perc = currentLoad.toDouble() / maxLoad.toDouble();
+  Color? _loadColor(double currentLoad, double maxLoad) {
+    final perc = currentLoad / maxLoad;
     if (perc > 0.75) {
       return Colors.red;
     } else if (perc > 0.5) {
@@ -96,3 +96,4 @@ class HomeCharacterActionsSummary extends StatelessWidget {
     return null;
   }
 }
+

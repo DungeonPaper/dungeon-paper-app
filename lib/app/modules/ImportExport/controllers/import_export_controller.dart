@@ -7,8 +7,10 @@ import 'import_controller.dart';
 
 // TODO remove?
 class ImportExportController extends ChangeNotifier {
-  void Function()? doExport(BuildContext context) =>
-      Provider.of<ExportController>(context, listen: false).getDoExport(context);
+  void Function()? doExport(BuildContext context) {
+  debugPrint('Exporting from controller');
+    return Provider.of<ExportController>(context, listen: false).getDoExport(context);
+  }
   void Function()? doImport(BuildContext context) =>
       Provider.of<ImportController>(context, listen: false).getDoImport(context);
 }

@@ -29,12 +29,27 @@ class ExportController extends ChangeNotifier
   List<Race> get races => repo.my.races.values.toList();
 
   ExportController() {
+    selectAll();
+  }
+
+  void selectAll() {
     toExport.characters = List.from(characters);
     toExport.moves = List.from(moves);
     toExport.spells = List.from(spells);
     toExport.items = List.from(items);
     toExport.classes = List.from(classes);
     toExport.races = List.from(races);
+    notifyListeners();
+  }
+
+  void selectNone() {
+    toExport.characters = [];
+    toExport.moves = [];
+    toExport.spells = [];
+    toExport.items = [];
+    toExport.classes = [];
+    toExport.races = [];
+    notifyListeners();
   }
 
   @override
@@ -93,6 +108,7 @@ class ExportController extends ChangeNotifier
 
   void Function()? getDoExport(BuildContext context) {
     return () async {
+      debugPrint('Exporting using getDoExport');
       final strData = utf8.encode(json.encode(toExport.toJson()));
 
       final dt = DateFormat('yy-MM-dd_HH.mm.ss').format(DateTime.now());
@@ -157,3 +173,4 @@ class ExportSelections {
     throw TypeError();
   }
 }
+

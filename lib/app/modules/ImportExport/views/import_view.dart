@@ -25,7 +25,7 @@ class ImportView extends StatelessWidget {
               ? ItemBuilder.lazyChildren(
                   children: [
                     () => ElevatedButton.icon(
-                          onPressed: () => controller.toImport = null,
+                          onPressed: controller.clearFile,
                           icon: const Icon(Icons.clear),
                           label: Text(tr.backup.importing.file.clearFile),
                         ),
