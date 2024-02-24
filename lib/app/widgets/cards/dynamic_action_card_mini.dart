@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/core/utils/markdown_styles.dart';
@@ -105,11 +106,22 @@ class DynamicActionCardMini extends StatelessWidget {
                           // visualDensity: VisualDensity.compact,
                           padding: EdgeInsets.zero,
                           iconSize: 16,
-                          icon: Icon(
-                            starred
-                                ? Icons.star_rounded
-                                : Icons.star_border_rounded,
-                            color: colorScheme.onSurface.withOpacity(0.3),
+                          icon: IconTheme(
+                            data: IconTheme.of(context).copyWith(
+                              size: 16,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(0.3),
+                            ),
+                            child: starred
+                                ? starredIcon ??
+                                    const Icon(
+                                      Icons.star_rounded,
+                                      color: DwColors.gold,
+                                    )
+                                : unstarredIcon ??
+                                    const Icon(Icons.star_border_rounded),
                           ),
                           onPressed: () => onStarChanged(!starred),
                         ),
@@ -190,3 +202,4 @@ class RectClipper extends CustomClipper<Rect> {
       oldClipper.size.width != size.width ||
       oldClipper.size.height != size.height;
 }
+

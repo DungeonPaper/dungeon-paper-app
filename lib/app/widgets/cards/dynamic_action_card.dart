@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
+import 'package:dungeon_paper/app/themes/colors.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_expansion_tile.dart';
 import 'package:dungeon_paper/app/widgets/atoms/round_roll_button.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
@@ -96,8 +97,10 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
               ),
               child: widget.starred
-                  ? widget.starredIcon ?? const Icon(Icons.star_rounded, color: Color.fromRGBO(255, 215, 0, 1))
-                  : widget.unstarredIcon ?? const Icon(Icons.star_border_rounded),
+                  ? widget.starredIcon ??
+                      const Icon(Icons.star_rounded, color: DwColors.gold)
+                  : widget.unstarredIcon ??
+                      const Icon(Icons.star_border_rounded),
             ),
             onPressed: () => widget.onStarChanged?.call(!widget.starred),
           ),
@@ -235,3 +238,4 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
     );
   }
 }
+
