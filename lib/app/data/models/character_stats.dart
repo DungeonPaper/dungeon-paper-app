@@ -20,7 +20,7 @@ class CharacterStats {
   final int currentXp;
   final int? armor;
   final dw.Dice? damageDice;
-  final double? load;
+  final num? load;
 
   int get maxXp => maxExpForLevel(level);
   static int maxExpForLevel(int level) => level + 7;
@@ -45,7 +45,7 @@ class CharacterStats {
     int? currentXp,
     int? armor,
     dw.Dice? damageDice,
-    double? load,
+    num? load,
   }) =>
       CharacterStats(
         level: level ?? this.level,
