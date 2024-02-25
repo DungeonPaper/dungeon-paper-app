@@ -29,8 +29,9 @@ class HomeCharacterActionsSummary extends StatelessWidget {
                   PrimaryChip(
                     // visualDensity: VisualDensity.compact,
                     icon: const Icon(DwIcons.dumbbell, size: 16),
-                    label: tr.home.summary.load
-                        .label(char.currentLoad, char.maxLoad),
+                    label: tr.home.summary.load.label(
+                        NumberFormat('#.#').format(char.currentLoad),
+                        NumberFormat('#.#').format(char.maxLoad)),
                     tooltip: tr.home.summary.load.tooltip,
                     backgroundColor: _loadColor(char.currentLoad, char.maxLoad),
                     onPressed: () => showDialog(

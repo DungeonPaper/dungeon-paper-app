@@ -217,7 +217,7 @@ home:
     classActions: Class Actions
   summary:
     load:
-      label(double cur, double max): 'Load: $cur/$max'
+      label(String cur, String max): 'Load: $cur/$max'
       tooltip: Max Load
     coins:
       label(String amt): $amt G
