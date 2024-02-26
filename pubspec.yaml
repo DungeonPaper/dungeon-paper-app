@@ -77,7 +77,6 @@ dependencies:
   url_launcher: ^6.0.20
   uuid: ^4.2.2
   wakelock: ^0.6.2
-  web: ^0.4.0
   wheel_spinner: ^0.7.2
   # wheel_spinner:
   #   path: ../wheel_spinner

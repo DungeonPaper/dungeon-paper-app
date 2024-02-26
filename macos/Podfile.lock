@@ -669,7 +669,7 @@ PODS:
     - Firebase/Analytics (= 10.20.0)
     - firebase_core
     - FlutterMacOS
-  - firebase_auth (4.17.5):
+  - firebase_auth (4.17.4):
     - Firebase/Auth (~> 10.20.0)
     - Firebase/CoreOnly (~> 10.20.0)
     - firebase_core
@@ -999,7 +999,7 @@ SPEC CHECKSUMS:
   cloud_firestore: 686113653b333c799c17e592dcc2d0feb465015d
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
   firebase_analytics: d954cdc2f1e8a2d04dc42b73ecc63d3fc3f0ae3d
-  firebase_auth: fd1d51ad2b50cde2d9cd4499e26774f3dd27df39
+  firebase_auth: 050fc4a224e6d9b019f9cd1f3a72a23661be0b5c
   firebase_core: 2e1a33fd13fb581f0dc809c18be25cdc1a2e10db
   firebase_remote_config: fb0e72591f52427a2cee0f8670dda0086f19e6dd
   firebase_storage: 1528674639411a07761cc7dac2bcef57a68bd116
@@ -1018,7 +1018,7 @@ SPEC CHECKSUMS:
   FirebaseSharedSwift: 19b3f709993d6fa1d84941d41c01e3c4c11eab93
   FirebaseStorage: 8505bae8ac6662474b5b50e07759fb2765c15746
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  google_sign_in_ios: 989eea5abe94af62050782714daf920be883d4a2
+  google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
   GoogleAppMeasurement: bb3c564c3efb933136af0e94899e0a46167466a8
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34

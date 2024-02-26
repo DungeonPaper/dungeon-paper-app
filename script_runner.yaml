@@ -73,7 +73,7 @@ scripts:
   # Web
   # ===============================================================================================
   - name: web:build
-    cmd: flutter build web
+    cmd: flutter pub add web:^0.4.0 && flutter build web && flutter pub remove web
     description: Build Web app
   - name: web:publish
     cmd: firebase deploy --only hosting
