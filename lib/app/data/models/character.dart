@@ -78,8 +78,8 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
   int get maxXp => stats.maxXp;
   double get currentHpPercent => clamp(stats.currentHp / maxHp, 0, 1);
   double get currentExpPercent => clamp(stats.currentXp / maxXp, 0, 1);
-  double get maxLoad => stats.load ?? defaultMaxLoad;
-  double get defaultMaxLoad => characterClass.load + abilityScores.loadBaseValue.toDouble();
+  int get maxLoad => stats.load ?? defaultMaxLoad;
+  int get defaultMaxLoad => characterClass.load + abilityScores.loadBaseValue;
   double get currentLoad => items.fold(0, (weight, item) => weight + item.weight);
   int get armor => stats.armor ?? defaultArmor;
   int get defaultArmor => items.fold(0, (armor, item) => armor + item.armor);

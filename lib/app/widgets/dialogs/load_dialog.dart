@@ -12,9 +12,9 @@ class LoadDialog extends StatefulWidget {
     required this.onChanged,
   });
 
-  final double? load;
-  final double defaultLoad;
-  final void Function(double? load) onChanged;
+  final int? load;
+  final int defaultLoad;
+  final void Function(int? load) onChanged;
 
   @override
   State<LoadDialog> createState() => _LoadDialogState();
@@ -75,7 +75,7 @@ class _LoadDialogState extends State<LoadDialog> {
   }
 
   void save() {
-    widget.onChanged(useDefault ? null : double.parse(controller.text));
+    widget.onChanged(useDefault ? null : int.parse(controller.text));
     Navigator.of(context).pop();
   }
 

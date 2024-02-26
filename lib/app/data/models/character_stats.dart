@@ -20,7 +20,7 @@ class CharacterStats {
   final int currentXp;
   final int? armor;
   final dw.Dice? damageDice;
-  final num? load;
+  final int? load;
 
   int get maxXp => maxExpForLevel(level);
   static int maxExpForLevel(int level) => level + 7;
@@ -45,7 +45,7 @@ class CharacterStats {
     int? currentXp,
     int? armor,
     dw.Dice? damageDice,
-    num? load,
+    int? load,
   }) =>
       CharacterStats(
         level: level ?? this.level,
@@ -104,7 +104,7 @@ class CharacterStats {
         load: load,
       );
 
-  CharacterStats copyWithLoad(double? load) => CharacterStats(
+  CharacterStats copyWithLoad(int? load) => CharacterStats(
         level: level,
         maxHp: maxHp,
         currentHp: currentHp,
