@@ -30,7 +30,7 @@ class BondsFlagsFormView extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             children: [
               Text(tr.sessionMarks.bonds, style: textTheme.headlineSmall),
-              for (final bond in enumerate(controller.bondsDesc))
+              for (final bond in enumerate(controller.bondsCtrls))
                 ListTile(
                   contentPadding: const EdgeInsets.all(0),
                   trailing: IconButton(
@@ -51,7 +51,7 @@ class BondsFlagsFormView extends StatelessWidget {
               ),
               const Divider(height: 24),
               Text(tr.sessionMarks.flags, style: textTheme.headlineSmall),
-              for (final flag in enumerate(controller.flagsDesc))
+              for (final flag in enumerate(controller.flagsCtrls))
                 ListTile(
                   contentPadding: const EdgeInsets.all(0),
                   trailing: IconButton(
