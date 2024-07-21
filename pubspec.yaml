@@ -27,26 +27,26 @@ environment:
 dependencies:
   animations: ^2.0.2
   cached_network_image: ^3.3.0
-  cloud_firestore: ^4.13.3
+  cloud_firestore: ^5.1.0
   cupertino_icons: ^1.0.2
   # dungeon_world_data:
   #   path: ../dungeon_world_data
   dungeon_world_data: ^3.1.1
   dynamic_themes: ^1.1.0
-  email_validator: ^2.0.1
-  firebase_analytics: ^10.7.2
-  firebase_auth: ^4.15.0
-  firebase_core: ^2.24.0
-  firebase_remote_config: ^4.3.6
-  firebase_storage: ^11.5.3
+  email_validator: ^3.0.0
+  firebase_analytics: ^11.2.0
+  firebase_auth: ^5.1.2
+  firebase_core: ^3.2.0
+  firebase_remote_config: ^5.0.3
+  firebase_storage: ^12.1.1
   file_picker: ^5.2.10
   flutter:
     sdk: flutter
-  flutter_file_dialog: ^2.3.0
-  flutter_markdown: ^0.6.10+2
+  flutter_file_dialog: ^3.0.2
+  flutter_markdown: ^0.7.3
   flutter_native_splash: ^2.2.5
   flutter_svg: ^2.0.9
-  google_sign_in: ^5.3.3
+  google_sign_in: ^6.2.1
   google_sign_in_ios: ^5.7.0
   http: ^0.13.4
   # i18n: ^4.0.8
@@ -57,21 +57,21 @@ dependencies:
       url: https://github.com/chenasraf/i18n.git
       ref: next
   icons_launcher: ^2.0.2
-  image_cropper: ^2.0.2
-  intl: ^0.17.0
+  image_cropper: ^4.0.1
+  intl: ^0.19.0
   intl_generator: ^0.4.1
   localstore: ^1.2.1
   markdown: ^7.1.1
   package_info_plus: ^3.1.0
   path: ^1.8.1
   path_provider: ^2.0.9
-  popover: ^0.2.6+3
+  popover: ^0.3.0+1
   provider: ^6.1.1
   pub_semver: ^2.1.4
-  sentry: ^7.14.0
-  sentry_flutter: ^7.14.0
+  sentry: ^8.4.0
+  sentry_flutter: ^8.4.0
   shared_preferences: ^2.0.13
-  sign_in_with_apple: ^4.1.0
+  sign_in_with_apple: ^6.1.1
   skeleton_loader: ^2.0.0+4
   string_similarity: ^2.0.0
   url_launcher: ^6.0.20
@@ -85,10 +85,10 @@ dev_dependencies:
   args: ^2.3.0
   btool: ^0.1.4
   build_runner: ^2.4.1
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-  script_runner: ^0.5.1
+  script_runner: ^0.7.4
   test: ^1.19.5
 
 # For information on the generic Dart part of this file, see the

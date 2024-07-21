@@ -112,7 +112,6 @@ class AdvancedChip extends StatelessWidget
   @override
   final Color? surfaceTintColor;
 
-  @override
   bool get useDeleteButtonTooltip => false;
 
   @override
@@ -156,6 +155,11 @@ class AdvancedChip extends StatelessWidget
   }
 
   @override
-  MaterialStateProperty<Color?>? get color =>
-      MaterialStatePropertyAll(backgroundColor);
+  BoxConstraints? get avatarBoxConstraints => null;
+
+  @override
+  BoxConstraints? get deleteIconBoxConstraints => null;
+
+  @override
+  MaterialStateProperty<Color?>? get color => null;
 }
