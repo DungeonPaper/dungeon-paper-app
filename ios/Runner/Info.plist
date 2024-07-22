@@ -54,6 +54,8 @@
 		<false/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Photo access required to allow uploading pictures for characters and your user profile.</string>
 		<!-- Google Sign-in Section -->
 		<key>CFBundleURLTypes</key>
 		<array>

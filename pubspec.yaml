@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A Dungeon World character sheet app written with Flutter.
-version: 2.0.9+312
+version: 2.0.10+316
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -39,30 +39,28 @@ dependencies:
   firebase_core: ^3.2.0
   firebase_remote_config: ^5.0.3
   firebase_storage: ^12.1.1
-  file_picker: ^5.2.10
+  file_picker: ^8.0.6
   flutter:
     sdk: flutter
   flutter_file_dialog: ^3.0.2
   flutter_markdown: ^0.7.3
-  flutter_native_splash: ^2.2.5
+  flutter_native_splash: ^2.4.1
   flutter_svg: ^2.0.9
   google_sign_in: ^6.2.1
   google_sign_in_ios: ^5.7.0
-  http: ^0.13.4
+  http: ^1.2.2
   # i18n: ^4.0.8
   # i18n:
   #   path: ../i18n
   i18n:
     git:
       url: https://github.com/chenasraf/i18n.git
-      ref: next
+      ref: master
   icons_launcher: ^2.0.2
-  image_cropper: ^4.0.1
-  intl: ^0.19.0
-  intl_generator: ^0.4.1
+  image_cropper: ^7.1.0
   localstore: ^1.2.1
   markdown: ^7.1.1
-  package_info_plus: ^3.1.0
+  package_info_plus: ^8.0.0
   path: ^1.8.1
   path_provider: ^2.0.9
   popover: ^0.3.0+1
@@ -76,8 +74,9 @@ dependencies:
   string_similarity: ^2.0.0
   url_launcher: ^6.0.20
   uuid: ^4.2.2
-  wakelock: ^0.6.2
+  wakelock_plus: 1.2.5
   wheel_spinner: ^0.7.2
+  intl: ^0.19.0
   # wheel_spinner:
   #   path: ../wheel_spinner
 
@@ -89,7 +88,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   script_runner: ^0.7.4
-  test: ^1.19.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

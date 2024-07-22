@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../themes/themes.dart';
 import '../services/character_provider.dart';
@@ -78,7 +78,7 @@ class UserSettings with CharacterProviderMixin {
   String toString() => 'UserSettings($debugProperties)';
 
   void apply() {
-    Wakelock.toggle(enable: keepScreenAwake);
+    WakelockPlus.toggle(enable: keepScreenAwake);
 
     if (maybeChar != null) {
       charProvider.switchToCharacterTheme(char);

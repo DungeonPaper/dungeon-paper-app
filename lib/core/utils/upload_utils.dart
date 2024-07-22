@@ -39,10 +39,7 @@ class UploadResponse {
   });
 }
 
-Future<CroppedFile?> _pickAndCrop(
-  BuildContext context, {
-  CropStyle? cropStyle,
-}) async {
+Future<CroppedFile?> _pickAndCrop(BuildContext context) async {
   final theme = Theme.of(context);
   final res = await FlutterFileDialog.pickFile(
     params: const OpenFileDialogParams(
@@ -60,7 +57,6 @@ Future<CroppedFile?> _pickAndCrop(
   final cropped = await ImageCropper().cropImage(
     sourcePath: res,
     aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-    cropStyle: cropStyle ?? CropStyle.rectangle,
     uiSettings: [
       AndroidUiSettings(
         backgroundColor: theme.scaffoldBackgroundColor,
@@ -132,3 +128,4 @@ Future<UploadResponse?> cropAndUploadPhoto(
     downloadURL: downloadURL,
   );
 }
+

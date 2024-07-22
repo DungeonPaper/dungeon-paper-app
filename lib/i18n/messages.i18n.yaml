@@ -1,19 +1,21 @@
 # generic name mappings
 _entSingle(String type): |-
-  ${_select(type, {
-    'AbilityScore': 'Ability Score',
-    'AlignmentValue': 'Alignment',
-    'CharacterClass': 'Class',
-    'Dice': 'Die',
-    'GearSelection': 'Starting Gear',
-    'MoveCategory': 'Category',
-  })}
+  ${switch (type) {
+    'AbilityScore' => 'Ability Score',
+    'AlignmentValue' => 'Alignment',
+    'CharacterClass' => 'Class',
+    'Dice' => 'Die',
+    'GearSelection' => 'Starting Gear',
+    'MoveCategory' => 'Category',
+    _ => type,
+  }}
 _entPlural(String type): |-
-  ${_select(type, {
-    'CharacterClass': 'Classes',
-    'Dice': 'Dice',
-    'MoveCategory': 'Categories',
-  }, other: '${_entSingle(type)}s')}
+  ${switch (type) {
+    'CharacterClass' => 'Classes',
+    'Dice' => 'Dice',
+    'MoveCategory' => 'Categories',
+    _ => '${_entSingle(type)}s',
+  }}
 
 entity(String ent): '${_entSingle(ent.toString())}'
 entityPlural(String ent): '${_entPlural(ent.toString())}'
@@ -115,10 +117,11 @@ myLibrary:
   selectDisabled(String ent): You can remove this $ent by finding it in the "Use" tab,\nand clicking "Remove" on its context menu.
   itemCount(String cnt, String type): $cnt in $type
   libraryType(String type): |-
-    ${_select(type, {
-      'builtIn': 'Playbook',
-      'my': 'My Library'
-    })}
+    ${switch (type) {
+      'builtIn' => 'Playbook',
+      'my' => 'My Library',
+      _ => type,
+    }}
   alreadyAdded: Already added
   itemTab:
     playbook: Playbook
@@ -170,12 +173,13 @@ auth:
     unusable(String provider): This device only supports unlinking $provider accounts.
     # `{provider, select, facebook {Facebook} google {Google} apple {Apple} password {Dungeon Paper} other {Other}}`
     name(String provider): |-
-      ${_select(provider, {
-        'facebook': 'Facebook',
-        'google': 'Google',
-        'apple': 'Apple',
-        'password': 'Dungeon Paper',
-      }, other: 'Other')}
+      ${switch (provider) {
+        'facebook' => 'Facebook',
+        'google' => 'Google',
+        'apple' => 'Apple',
+        'password' => 'Dungeon Paper',
+        _ => 'Other',
+      }}
     unlink: Unlink
     link: Link
   confirmUnlink:
@@ -376,36 +380,40 @@ dialogs:
 moves:
   category:
     shortName(String cat): |-
-      ${_select(cat, {
-        'starting': 'Starting',
-        'basic': 'Basic',
-        'special': 'Special',
-        'advanced1': 'Advanced',
-        'advanced2': 'Advanced+',
-      }, other: 'Other')}
+      ${switch (cat) {
+        'starting' => 'Starting',
+        'basic' => 'Basic',
+        'special' => 'Special',
+        'advanced1' => 'Advanced',
+        'advanced2' => 'Advanced+',
+        _ => 'Other'
+      }}
     mediumName(String cat): |-
-      ${_select(cat, {
-        'starting': 'Starting',
-        'basic': 'Basic',
-        'special': 'Special',
-        'advanced1': 'Advanced (1-5)',
-        'advanced2': 'Advanced (6-10)',
-      }, other: 'Other')}
+      ${switch (cat) {
+        'starting' => 'Starting',
+        'basic' => 'Basic',
+        'special' => 'Special',
+        'advanced1' => 'Advanced (1-5)',
+        'advanced2' => 'Advanced (6-10)',
+        _ => 'Other'
+      }}
     longName(String cat): |-
-      ${_select(cat, {
-        'starting': 'Starting',
-        'basic': 'Basic',
-        'special': 'Special',
-        'advanced1': 'Advanced (level 1-5)',
-        'advanced2': 'Advanced (level 6-10)',
-      }, other: 'Other')}
+      ${switch (cat) {
+        'starting' => 'Starting',
+        'basic' => 'Basic',
+        'special' => 'Special',
+        'advanced1' => 'Advanced (level 1-5)',
+        'advanced2' => 'Advanced (level 6-10)',
+        _ => 'Other'
+      }}
 
 spells:
   spellLevel(String level): |-
-    ${_select(level, {
-      'rote': 'Rote',
-      'cantrip': 'Cantrip',
-    }, other: 'Level $level')}
+    ${switch (level) {
+      'rote' => 'Rote',
+      'cantrip' => 'Cantrip',
+      _ =>  'Level $level',
+    }}
 
 items:
   amount(String amt): × $amt
@@ -427,13 +435,14 @@ notes:
 # `{alignment, select, chaotic {Chaotic} evil {Evil} good {Good} lawful {Lawful} neutral {Neutral} other {{alignment}}}`
 alignment:
   name(String key): |-
-    ${_select(key, {
-      'chaotic': 'Chaotic',
-      'evil': 'Evil',
-      'good': 'Good',
-      'lawful': 'Lawful',
-      'neutral': 'Neutral',
-    })}
+    ${switch (key) {
+      'chaotic' => 'Chaotic',
+      'evil' => 'Evil',
+      'good' => 'Good',
+      'lawful' => 'Lawful',
+      'neutral' => 'Neutral',
+      _ => key,
+    }}
   alignmentValues:
     title: Alignments
 
@@ -529,7 +538,7 @@ customRolls:
   buttonLabel: Button Label
   specialDice:
     title: Special Dice
-    button(String btn): "${_select(btn, {'damage': 'Damage'}, other: btn)}"
+    button(String btn): "${switch (btn) {'damage' => 'Damage', _ => btn}}"
   tooltip:
     rollNormal(String dice): Roll $dice
     rollWithDebility(String dice): Roll $dice\n* Rolling with debility

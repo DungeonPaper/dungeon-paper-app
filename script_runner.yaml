@@ -32,13 +32,23 @@ scripts:
     cmd: |-
       name=$(dart run btool get packageName)
       version=$(dart run btool get packageVersion)
-      symbols="symbols-$name-$version.zip"
       bundleout="$name-$version.aab"
       bundle=build/app/outputs/bundle/release/app-release.aab
       mkdir -p release/android
-      android:build:bundle && symbols:collect && cp $bundle release/android/$bundleout
+      android:build:bundle && cp "$bundle" "release/android/$bundleout"
+      android:symbols:collect
       [[ ! -f "$(which open)" ]] || open release/android
     description: Builds, collects debug symbols, and places the output in release/ dir.
+  - name: android:symbols:collect
+    cmd: |-
+      dir="$(pwd)/release/android"
+      name=$(dart run btool get packageName)
+      version=$(dart run btool get packageVersion)
+      filename="symbols-$name-$version.zip"
+      mkdir release
+      cd build/app/intermediates/merged_native_libs/release/out/lib
+      zip -r "$dir/$filename" */*
+    description: Create a zip of the debug symbols for Android
 
   # ===============================================================================================
   # iOS
@@ -55,6 +65,16 @@ scripts:
   - name: ios:pod:update
     cmd: pushd ios; pod repo update && pod install; popd
     description: Install Pods for iOS
+  - name: ios:release
+    cmd: |-
+      name=$(dart run btool get packageName)
+      version=$(dart run btool get packageVersion)
+      bundleout="$name-$version.ipa"
+      bundle="build/ios/ipa/Dungeon Paper.ipa"
+      mkdir -p release/ios
+      ios:build:bundle && cp "$bundle" "release/ios/$bundleout"
+      [[ ! -f "$(which open)" ]] || open release/ios
+    description: Builds, and places the output in release/ dir.
 
   # ===============================================================================================
   # macOS
@@ -113,13 +133,3 @@ scripts:
   - name: runner
     cmd: dart run build_runner
     description: Run Build Runner
-  - name: symbols:collect
-    cmd: |-
-      dir="$(pwd)/release/android"
-      name=$(dart run btool get packageName)
-      version=$(dart run btool get packageVersion)
-      filename="symbols-$name-$version.zip"
-      mkdir release
-      cd build/app/intermediates/merged_native_libs/release/out/lib
-      zip -r "$dir/$filename" */*
-    description: Create a zip of the debug symbols

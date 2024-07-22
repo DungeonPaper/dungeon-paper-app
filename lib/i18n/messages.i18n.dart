@@ -60,12 +60,6 @@ String _cardinal(
       many: many,
       other: other,
     );
-String _select(
-  String key,
-  Map<String, String> cases, {
-  String? other,
-}) =>
-    i18n.select(key, cases, other: other);
 
 class Messages {
   const Messages();
@@ -74,39 +68,43 @@ class Messages {
 
   /// ```dart
   /// """
-  /// ${_select(type, {
-  ///   'AbilityScore': 'Ability Score',
-  ///   'AlignmentValue': 'Alignment',
-  ///   'CharacterClass': 'Class',
-  ///   'Dice': 'Die',
-  ///   'GearSelection': 'Starting Gear',
-  ///   'MoveCategory': 'Category',
-  /// })}
+  /// ${switch (type) {
+  ///   'AbilityScore' => 'Ability Score',
+  ///   'AlignmentValue' => 'Alignment',
+  ///   'CharacterClass' => 'Class',
+  ///   'Dice' => 'Die',
+  ///   'GearSelection' => 'Starting Gear',
+  ///   'MoveCategory' => 'Category',
+  ///   _ => type,
+  /// }}
   /// """
   /// ```
-  String _entSingle(String type) => """${_select(type, {
-            'AbilityScore': 'Ability Score',
-            'AlignmentValue': 'Alignment',
-            'CharacterClass': 'Class',
-            'Dice': 'Die',
-            'GearSelection': 'Starting Gear',
-            'MoveCategory': 'Category',
-          })}""";
+  String _entSingle(String type) => """${switch (type) {
+        'AbilityScore' => 'Ability Score',
+        'AlignmentValue' => 'Alignment',
+        'CharacterClass' => 'Class',
+        'Dice' => 'Die',
+        'GearSelection' => 'Starting Gear',
+        'MoveCategory' => 'Category',
+        _ => type,
+      }}""";
 
   /// ```dart
   /// """
-  /// ${_select(type, {
-  ///   'CharacterClass': 'Classes',
-  ///   'Dice': 'Dice',
-  ///   'MoveCategory': 'Categories',
-  /// }, other: '${_entSingle(type)}s')}
+  /// ${switch (type) {
+  ///   'CharacterClass' => 'Classes',
+  ///   'Dice' => 'Dice',
+  ///   'MoveCategory' => 'Categories',
+  ///   _ => '${_entSingle(type)}s',
+  /// }}
   /// """
   /// ```
-  String _entPlural(String type) => """${_select(type, {
-        'CharacterClass': 'Classes',
-        'Dice': 'Dice',
-        'MoveCategory': 'Categories',
-      }, other: '${_entSingle(type)}s')}""";
+  String _entPlural(String type) => """${switch (type) {
+        'CharacterClass' => 'Classes',
+        'Dice' => 'Dice',
+        'MoveCategory' => 'Categories',
+        _ => '${_entSingle(type)}s',
+      }}""";
 
   /// ```dart
   /// "${_entSingle(ent.toString())}"
@@ -619,14 +617,18 @@ class MyLibraryMessages {
 
   /// ```dart
   /// """
-  /// ${_select(type, {
-  ///   'builtIn': 'Playbook',
-  ///   'my': 'My Library'
-  /// })}
+  /// ${switch (type) {
+  ///   'builtIn' => 'Playbook',
+  ///   'my' => 'My Library',
+  ///   _ => type,
+  /// }}
   /// """
   /// ```
-  String libraryType(String type) =>
-      """${_select(type, {'builtIn': 'Playbook', 'my': 'My Library'})}""";
+  String libraryType(String type) => """${switch (type) {
+        'builtIn' => 'Playbook',
+        'my' => 'My Library',
+        _ => type,
+      }}""";
 
   /// ```dart
   /// "Already added"
@@ -872,20 +874,22 @@ class ProvidersAuthMessages {
 
   /// ```dart
   /// """
-  /// ${_select(provider, {
-  ///   'facebook': 'Facebook',
-  ///   'google': 'Google',
-  ///   'apple': 'Apple',
-  ///   'password': 'Dungeon Paper',
-  /// }, other: 'Other')}
+  /// ${switch (provider) {
+  ///   'facebook' => 'Facebook',
+  ///   'google' => 'Google',
+  ///   'apple' => 'Apple',
+  ///   'password' => 'Dungeon Paper',
+  ///   _ => 'Other',
+  /// }}
   /// """
   /// ```
-  String name(String provider) => """${_select(provider, {
-        'facebook': 'Facebook',
-        'google': 'Google',
-        'apple': 'Apple',
-        'password': 'Dungeon Paper',
-      }, other: 'Other')}""";
+  String name(String provider) => """${switch (provider) {
+        'facebook' => 'Facebook',
+        'google' => 'Google',
+        'apple' => 'Apple',
+        'password' => 'Dungeon Paper',
+        _ => 'Other',
+      }}""";
 
   /// ```dart
   /// "Unlink"
@@ -1893,60 +1897,66 @@ class CategoryMovesMessages {
 
   /// ```dart
   /// """
-  /// ${_select(cat, {
-  ///   'starting': 'Starting',
-  ///   'basic': 'Basic',
-  ///   'special': 'Special',
-  ///   'advanced1': 'Advanced',
-  ///   'advanced2': 'Advanced+',
-  /// }, other: 'Other')}
+  /// ${switch (cat) {
+  ///   'starting' => 'Starting',
+  ///   'basic' => 'Basic',
+  ///   'special' => 'Special',
+  ///   'advanced1' => 'Advanced',
+  ///   'advanced2' => 'Advanced+',
+  ///   _ => 'Other'
+  /// }}
   /// """
   /// ```
-  String shortName(String cat) => """${_select(cat, {
-        'starting': 'Starting',
-        'basic': 'Basic',
-        'special': 'Special',
-        'advanced1': 'Advanced',
-        'advanced2': 'Advanced+',
-      }, other: 'Other')}""";
+  String shortName(String cat) => """${switch (cat) {
+        'starting' => 'Starting',
+        'basic' => 'Basic',
+        'special' => 'Special',
+        'advanced1' => 'Advanced',
+        'advanced2' => 'Advanced+',
+        _ => 'Other'
+      }}""";
 
   /// ```dart
   /// """
-  /// ${_select(cat, {
-  ///   'starting': 'Starting',
-  ///   'basic': 'Basic',
-  ///   'special': 'Special',
-  ///   'advanced1': 'Advanced (1-5)',
-  ///   'advanced2': 'Advanced (6-10)',
-  /// }, other: 'Other')}
+  /// ${switch (cat) {
+  ///   'starting' => 'Starting',
+  ///   'basic' => 'Basic',
+  ///   'special' => 'Special',
+  ///   'advanced1' => 'Advanced (1-5)',
+  ///   'advanced2' => 'Advanced (6-10)',
+  ///   _ => 'Other'
+  /// }}
   /// """
   /// ```
-  String mediumName(String cat) => """${_select(cat, {
-        'starting': 'Starting',
-        'basic': 'Basic',
-        'special': 'Special',
-        'advanced1': 'Advanced (1-5)',
-        'advanced2': 'Advanced (6-10)',
-      }, other: 'Other')}""";
+  String mediumName(String cat) => """${switch (cat) {
+        'starting' => 'Starting',
+        'basic' => 'Basic',
+        'special' => 'Special',
+        'advanced1' => 'Advanced (1-5)',
+        'advanced2' => 'Advanced (6-10)',
+        _ => 'Other'
+      }}""";
 
   /// ```dart
   /// """
-  /// ${_select(cat, {
-  ///   'starting': 'Starting',
-  ///   'basic': 'Basic',
-  ///   'special': 'Special',
-  ///   'advanced1': 'Advanced (level 1-5)',
-  ///   'advanced2': 'Advanced (level 6-10)',
-  /// }, other: 'Other')}
+  /// ${switch (cat) {
+  ///   'starting' => 'Starting',
+  ///   'basic' => 'Basic',
+  ///   'special' => 'Special',
+  ///   'advanced1' => 'Advanced (level 1-5)',
+  ///   'advanced2' => 'Advanced (level 6-10)',
+  ///   _ => 'Other'
+  /// }}
   /// """
   /// ```
-  String longName(String cat) => """${_select(cat, {
-        'starting': 'Starting',
-        'basic': 'Basic',
-        'special': 'Special',
-        'advanced1': 'Advanced (level 1-5)',
-        'advanced2': 'Advanced (level 6-10)',
-      }, other: 'Other')}""";
+  String longName(String cat) => """${switch (cat) {
+        'starting' => 'Starting',
+        'basic' => 'Basic',
+        'special' => 'Special',
+        'advanced1' => 'Advanced (level 1-5)',
+        'advanced2' => 'Advanced (level 6-10)',
+        _ => 'Other'
+      }}""";
 }
 
 class SpellsMessages {
@@ -1955,16 +1965,18 @@ class SpellsMessages {
 
   /// ```dart
   /// """
-  /// ${_select(level, {
-  ///   'rote': 'Rote',
-  ///   'cantrip': 'Cantrip',
-  /// }, other: 'Level $level')}
+  /// ${switch (level) {
+  ///   'rote' => 'Rote',
+  ///   'cantrip' => 'Cantrip',
+  ///   _ =>  'Level $level',
+  /// }}
   /// """
   /// ```
-  String spellLevel(String level) => """${_select(level, {
-        'rote': 'Rote',
-        'cantrip': 'Cantrip',
-      }, other: 'Level $level')}""";
+  String spellLevel(String level) => """${switch (level) {
+        'rote' => 'Rote',
+        'cantrip' => 'Cantrip',
+        _ => 'Level $level',
+      }}""";
 }
 
 class ItemsMessages {
@@ -2052,22 +2064,24 @@ class AlignmentMessages {
 
   /// ```dart
   /// """
-  /// ${_select(key, {
-  ///   'chaotic': 'Chaotic',
-  ///   'evil': 'Evil',
-  ///   'good': 'Good',
-  ///   'lawful': 'Lawful',
-  ///   'neutral': 'Neutral',
-  /// })}
+  /// ${switch (key) {
+  ///   'chaotic' => 'Chaotic',
+  ///   'evil' => 'Evil',
+  ///   'good' => 'Good',
+  ///   'lawful' => 'Lawful',
+  ///   'neutral' => 'Neutral',
+  ///   _ => key,
+  /// }}
   /// """
   /// ```
-  String name(String key) => """${_select(key, {
-            'chaotic': 'Chaotic',
-            'evil': 'Evil',
-            'good': 'Good',
-            'lawful': 'Lawful',
-            'neutral': 'Neutral',
-          })}""";
+  String name(String key) => """${switch (key) {
+        'chaotic' => 'Chaotic',
+        'evil' => 'Evil',
+        'good' => 'Good',
+        'lawful' => 'Lawful',
+        'neutral' => 'Neutral',
+        _ => key,
+      }}""";
   AlignmentValuesAlignmentMessages get alignmentValues =>
       AlignmentValuesAlignmentMessages(this);
 }
@@ -2550,10 +2564,10 @@ class SpecialDiceCustomRollsMessages {
   String get title => """Special Dice""";
 
   /// ```dart
-  /// "${_select(btn, {'damage': 'Damage'}, other: btn)}"
+  /// "${switch (btn) {'damage' => 'Damage', _ => btn}}"
   /// ```
   String button(String btn) =>
-      """${_select(btn, {'damage': 'Damage'}, other: btn)}""";
+      """${switch (btn) { 'damage' => 'Damage', _ => btn }}""";
 }
 
 class TooltipCustomRollsMessages {
