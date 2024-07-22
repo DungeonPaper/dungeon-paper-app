@@ -73,7 +73,7 @@ scripts:
   # Web
   # ===============================================================================================
   - name: web:build
-    cmd: flutter pub add web:^0.4.0 && flutter build web && flutter pub remove web
+    cmd: flutter build web
     description: Build Web app
   - name: web:publish
     cmd: firebase deploy --only hosting
@@ -101,6 +101,9 @@ scripts:
   - name: gen:icons
     cmd: flutter pub run icons_launcher:create
     description: Generate launcher icons
+  - name: gen:splash
+    cmd: flutter pub run flutter_native_splash:create
+    description: Generate splash screen
   - name: intl:build
     cmd: runner build -d
     description: Build i18n files
