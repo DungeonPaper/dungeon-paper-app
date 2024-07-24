@@ -28,35 +28,27 @@ import 'firebase_options.dart';
 void main() async {
   registerEntityTypeResolver(tn);
   if (secrets.sentryDsn.isEmpty) {
-    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     await _init();
-    FlutterNativeSplash.remove();
-    runApp(const DungeonPaperApp());
     return;
   }
   await SentryFlutter.init(
     (options) {
       options.dsn = secrets.sentryDsn;
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-      // We recommend adjusting this value in production.
       options.tracesSampleRate = kDebugMode ? 1.0 : 0.5;
       options.environment = kDebugMode ? 'development' : 'release';
     },
-    appRunner: () async {
-      final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-      FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-      await _init();
-      FlutterNativeSplash.remove();
-      runApp(const DungeonPaperApp());
-    },
+    appRunner: _init,
   );
 }
 
 Future<void> _init() async {
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
   await initRemoteConfig();
+  FlutterNativeSplash.remove();
+  runApp(const DungeonPaperApp());
 }
 
 final _loadingProvider = LoadingProvider();
@@ -89,8 +81,7 @@ class DungeonPaperApp extends StatelessWidget {
       ],
       child: DynamicTheme(
         themeCollection: themeCollection,
-        defaultThemeId:
-            prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
+        defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
         builder: (context, theme) => MaterialApp(
           scrollBehavior: MultiPlatformScrollBehavior(),
           title: tr.app.name,
