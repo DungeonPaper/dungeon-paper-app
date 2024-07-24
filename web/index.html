@@ -140,5 +140,12 @@
       <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="" />
     </picture>
     <script src="flutter_bootstrap.js" async=""></script>
+    <script>
+      // redirect to / if there is a hash, prevents argument errors from router
+      if (window.location.hash != '' && window.location.hash != '#/') {
+        console.warn(`Hash found: ${window.location.hash}, redirecting to /`)
+        window.location.href = '/'
+      }
+    </script>
   </body>
 </html>
