@@ -11,8 +11,8 @@ class IntlService extends ChangeNotifier {
   static Messages get m => _m[locale] ?? _loadMessages(_locale);
   static List<Locale> get supportedLocales => _m.keys.toList();
 
-  static late final String dateFormat;
-  static late final String timeFormat;
+  static String dateFormat = 'dd/MM/y';
+  static String timeFormat = 'H:mm';
 
   IntlService() {
     debugPrint('[INTL] Initializing IntlService');
@@ -29,8 +29,12 @@ class IntlService extends ChangeNotifier {
     final dtFormat = await fmt.getDatePattern();
     final tmFormat = await fmt.getTimePattern();
 
-    dateFormat = dtFormat ?? 'dd/MM/y';
-    timeFormat = tmFormat ?? 'H:mm';
+    if (dtFormat != null) {
+      dateFormat = dtFormat;
+    }
+    if (tmFormat != null) {
+      timeFormat = 'H:mm';
+    }
 
     debugPrint('Fetched date formats:\n$dateFormat\n$timeFormat');
   }
