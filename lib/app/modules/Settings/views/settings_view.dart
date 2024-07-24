@@ -26,7 +26,7 @@ class SettingsView extends StatelessWidget
             context,
             tr.settings.categories.general,
           ),
-          if (PlatformHelper.isAndroid)
+          if (PlatformHelper.isMobile)
             Consumer<SettingsController>(
               builder: (context, controller, _) => SwitchListTile.adaptive(
                 title: Text(tr.settings.keepAwake),
