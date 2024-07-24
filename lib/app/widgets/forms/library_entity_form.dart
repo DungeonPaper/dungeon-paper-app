@@ -125,10 +125,10 @@ abstract class LibraryEntityFormController<T extends WithMeta,
 
   @override
   void dispose() {
+    // for (var field in fields) {
+    //   field.dispose();
+    // }
     super.dispose();
-    for (var field in fields) {
-      field.dispose();
-    }
   }
 
   Meta _forkMeta() {
