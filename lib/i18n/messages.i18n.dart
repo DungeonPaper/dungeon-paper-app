@@ -73,7 +73,9 @@ class Messages {
   ///   'AlignmentValue' => 'Alignment',
   ///   'CharacterClass' => 'Class',
   ///   'Dice' => 'Die',
-  ///   'GearSelection' => 'Starting Gear',
+  ///   'GearSelection' => 'Gear Set',
+  ///   'GearChoice' => 'Gear Choice',
+  ///   'GearOption' => 'Gear Set Item',
   ///   'MoveCategory' => 'Category',
   ///   _ => type,
   /// }}
@@ -84,7 +86,9 @@ class Messages {
         'AlignmentValue' => 'Alignment',
         'CharacterClass' => 'Class',
         'Dice' => 'Die',
-        'GearSelection' => 'Starting Gear',
+        'GearSelection' => 'Gear Set',
+        'GearChoice' => 'Gear Choice',
+        'GearOption' => 'Gear Set Item',
         'MoveCategory' => 'Category',
         _ => type,
       }}""";
@@ -146,6 +150,7 @@ class Messages {
   AboutMessages get about => AboutMessages(this);
   CharacterMessages get character => CharacterMessages(this);
   CharacterClassMessages get characterClass => CharacterClassMessages(this);
+  StartingGearMessages get startingGear => StartingGearMessages(this);
   DiceMessages get dice => DiceMessages(this);
   BasicInfoMessages get basicInfo => BasicInfoMessages(this);
   DebilitiesMessages get debilities => DebilitiesMessages(this);
@@ -1493,6 +1498,21 @@ class CharacterClassMessages {
   String get damageDice => """Damage Dice""";
   IsSpellcasterCharacterClassMessages get isSpellcaster =>
       IsSpellcasterCharacterClassMessages(this);
+
+  /// ```dart
+  /// "Stats"
+  /// ```
+  String get stats => """Stats""";
+
+  /// ```dart
+  /// "Backgrounds"
+  /// ```
+  String get bio => """Backgrounds""";
+
+  /// ```dart
+  /// "Starting Gear Selections"
+  /// ```
+  String get startingGear => """Starting Gear Selections""";
 }
 
 class IsSpellcasterCharacterClassMessages {
@@ -1500,19 +1520,187 @@ class IsSpellcasterCharacterClassMessages {
   const IsSpellcasterCharacterClassMessages(this._parent);
 
   /// ```dart
-  /// "Spellcaster"
+  /// "Spellcasting class"
   /// ```
-  String get title => """Spellcaster""";
+  String get title => """Spellcasting class""";
 
   /// ```dart
   /// """
-  /// Spellcaster classes are prompted to select spells (as well as moves) during character
+  /// Spellcasters are prompted to select spells (as well as moves) during character
   /// creation and leveling up.
   /// """
   /// ```
   String get subtitle =>
-      """Spellcaster classes are prompted to select spells (as well as moves) during character
+      """Spellcasters are prompted to select spells (as well as moves) during character
 creation and leveling up.""";
+}
+
+class StartingGearMessages {
+  final Messages _parent;
+  const StartingGearMessages(this._parent);
+
+  /// ```dart
+  /// "Edit Starting Gear"
+  /// ```
+  String get title => """Edit Starting Gear""";
+  ChoiceStartingGearMessages get choice => ChoiceStartingGearMessages(this);
+  SelectionStartingGearMessages get selection =>
+      SelectionStartingGearMessages(this);
+  OptionStartingGearMessages get option => OptionStartingGearMessages(this);
+}
+
+class ChoiceStartingGearMessages {
+  final StartingGearMessages _parent;
+  const ChoiceStartingGearMessages(this._parent);
+
+  /// ```dart
+  /// "Choice $index"
+  /// ```
+  String title(int index) => """Choice $index""";
+
+  /// ```dart
+  /// "A choice is a list of selections the player can make. It provides a possible set of items & coins that the player can select from."
+  /// ```
+  String get helpText =>
+      """A choice is a list of selections the player can make. It provides a possible set of items & coins that the player can select from.""";
+  DescriptionChoiceStartingGearMessages get description =>
+      DescriptionChoiceStartingGearMessages(this);
+  MaxSelectionsChoiceStartingGearMessages get maxSelections =>
+      MaxSelectionsChoiceStartingGearMessages(this);
+
+  /// ```dart
+  /// "Move up"
+  /// ```
+  String get moveUp => """Move up""";
+
+  /// ```dart
+  /// "Move down"
+  /// ```
+  String get moveDown => """Move down""";
+}
+
+class DescriptionChoiceStartingGearMessages {
+  final ChoiceStartingGearMessages _parent;
+  const DescriptionChoiceStartingGearMessages(this._parent);
+
+  /// ```dart
+  /// "Prompt"
+  /// ```
+  String get label => """Prompt""";
+
+  /// ```dart
+  /// "e.g. Choose your weapon"
+  /// ```
+  String get hintText => """e.g. Choose your weapon""";
+}
+
+class MaxSelectionsChoiceStartingGearMessages {
+  final ChoiceStartingGearMessages _parent;
+  const MaxSelectionsChoiceStartingGearMessages(this._parent);
+
+  /// ```dart
+  /// "Suggested max allowance"
+  /// ```
+  String get label => """Suggested max allowance""";
+
+  /// ```dart
+  /// "This will suggest a maximum amount to select, and will display a count, but will not limit the selection. Use 0 or leave blank for no limit."
+  /// ```
+  String get helpText =>
+      """This will suggest a maximum amount to select, and will display a count, but will not limit the selection. Use 0 or leave blank for no limit.""";
+}
+
+class SelectionStartingGearMessages {
+  final StartingGearMessages _parent;
+  const SelectionStartingGearMessages(this._parent);
+
+  /// ```dart
+  /// "Gear Set"
+  /// ```
+  String get title => """Gear Set""";
+
+  /// ```dart
+  /// "Each gear set consists of some amount of coins, and a list of items to be given to the character. Choosing one gear set will give the character all the items and gold in that set."
+  /// ```
+  String get helpText =>
+      """Each gear set consists of some amount of coins, and a list of items to be given to the character. Choosing one gear set will give the character all the items and gold in that set.""";
+
+  /// ```dart
+  /// "Add Gear Set"
+  /// ```
+  String get add => """Add Gear Set""";
+  DescriptionSelectionStartingGearMessages get description =>
+      DescriptionSelectionStartingGearMessages(this);
+  CoinsSelectionStartingGearMessages get coins =>
+      CoinsSelectionStartingGearMessages(this);
+}
+
+class DescriptionSelectionStartingGearMessages {
+  final SelectionStartingGearMessages _parent;
+  const DescriptionSelectionStartingGearMessages(this._parent);
+
+  /// ```dart
+  /// "Selection description"
+  /// ```
+  String get label => """Selection description""";
+
+  /// ```dart
+  /// "e.g. Your father's old sword, and 10 coins"
+  /// ```
+  String get hintText => """e.g. Your father's old sword, and 10 coins""";
+}
+
+class CoinsSelectionStartingGearMessages {
+  final SelectionStartingGearMessages _parent;
+  const CoinsSelectionStartingGearMessages(this._parent);
+
+  /// ```dart
+  /// "Coins"
+  /// ```
+  String get label => """Coins""";
+
+  /// ```dart
+  /// "0"
+  /// ```
+  String get hintText => """0""";
+}
+
+class OptionStartingGearMessages {
+  final StartingGearMessages _parent;
+  const OptionStartingGearMessages(this._parent);
+
+  /// ```dart
+  /// "Gear Set Items"
+  /// ```
+  String get title => """Gear Set Items""";
+
+  /// ```dart
+  /// "Each gear set item consists of X amount of a specific item."
+  /// ```
+  String get helpText =>
+      """Each gear set item consists of X amount of a specific item.""";
+
+  /// ```dart
+  /// "Add Items"
+  /// ```
+  String get add => """Add Items""";
+  AmountOptionStartingGearMessages get amount =>
+      AmountOptionStartingGearMessages(this);
+}
+
+class AmountOptionStartingGearMessages {
+  final OptionStartingGearMessages _parent;
+  const AmountOptionStartingGearMessages(this._parent);
+
+  /// ```dart
+  /// "Amount"
+  /// ```
+  String get label => """Amount""";
+
+  /// ```dart
+  /// "1"
+  /// ```
+  String get hintText => """1""";
 }
 
 class DiceMessages {
@@ -3914,10 +4102,39 @@ Map<String, String> get messagesMap => {
       """characterClass.baseLoad""": """Base Load""",
       """characterClass.baseHp""": """Base HP""",
       """characterClass.damageDice""": """Damage Dice""",
-      """characterClass.isSpellcaster.title""": """Spellcaster""",
+      """characterClass.isSpellcaster.title""": """Spellcasting class""",
       """characterClass.isSpellcaster.subtitle""":
-          """Spellcaster classes are prompted to select spells (as well as moves) during character
+          """Spellcasters are prompted to select spells (as well as moves) during character
 creation and leveling up.""",
+      """characterClass.stats""": """Stats""",
+      """characterClass.bio""": """Backgrounds""",
+      """characterClass.startingGear""": """Starting Gear Selections""",
+      """startingGear.title""": """Edit Starting Gear""",
+      """startingGear.choice.helpText""":
+          """A choice is a list of selections the player can make. It provides a possible set of items & coins that the player can select from.""",
+      """startingGear.choice.description.label""": """Prompt""",
+      """startingGear.choice.description.hintText""":
+          """e.g. Choose your weapon""",
+      """startingGear.choice.maxSelections.label""":
+          """Suggested max allowance""",
+      """startingGear.choice.maxSelections.helpText""":
+          """This will suggest a maximum amount to select, and will display a count, but will not limit the selection. Use 0 or leave blank for no limit.""",
+      """startingGear.choice.moveUp""": """Move up""",
+      """startingGear.choice.moveDown""": """Move down""",
+      """startingGear.selection.title""": """Gear Set""",
+      """startingGear.selection.helpText""":
+          """Each gear set consists of some amount of coins, and a list of items to be given to the character. Choosing one gear set will give the character all the items and gold in that set.""",
+      """startingGear.selection.add""": """Add Gear Set""",
+      """startingGear.selection.description.label""":
+          """Selection description""",
+      """startingGear.selection.description.hintText""":
+          """e.g. Your father's old sword, and 10 coins""",
+      """startingGear.selection.coins.label""": """Coins""",
+      """startingGear.option.title""": """Gear Set Items""",
+      """startingGear.option.helpText""":
+          """Each gear set item consists of X amount of a specific item.""",
+      """startingGear.option.add""": """Add Items""",
+      """startingGear.option.amount.label""": """Amount""",
       """dice.form.amount""": """Amount""",
       """dice.form.sides""": """Sides""",
       """dice.form.diceSeparator""": """d""",

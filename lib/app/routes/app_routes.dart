@@ -114,9 +114,8 @@ abstract class Routes {
   static const createCharacterStartingGear =
       _Paths.character + _Paths.create + _Paths.startingGear;
 
-  /// `/character/class`
-  static const characterClass =
-      _Paths.character + _Paths.characterClass; // TODO add page
+  /// `/class`
+  static const createCharacterClass = _Paths.characterClass;
 
   /// `/character/ability-score`
   static const abilityScoreForm = _Paths.character + _Paths.abilityScoreForm;
@@ -150,6 +149,9 @@ abstract class Routes {
 
   /// `/changelog`
   static const changelog = _Paths.changelog;
+
+  /// `/class/start-gear`
+  static const createClassStartingGear = _Paths.characterClass + _Paths.startingGear;
 }
 
 abstract class _Paths {

@@ -1,12 +1,16 @@
 import 'package:dungeon_paper/app/data/models/ability_scores.dart';
 import 'package:dungeon_paper/app/data/models/alignment.dart';
 import 'package:dungeon_paper/app/data/models/character_class.dart';
+import 'package:dungeon_paper/app/data/models/gear_choice.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
+import 'package:dungeon_paper/app/modules/StartingGearEditForm/starting_gear_edit_form_controller.dart';
+import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/alignment_values_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/number_text_field.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rich_text_field.dart';
 import 'package:dungeon_paper/app/widgets/forms/library_entity_form.dart';
 import 'package:dungeon_paper/app/widgets/molecules/dice_list_input.dart';
+import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
@@ -42,6 +46,8 @@ class CharacterClassForm extends StatelessWidget {
                 textCapitalization: TextCapitalization.sentences,
               ),
           () => const Divider(height: 32),
+          () => Text(tr.characterClass.stats,
+              style: Theme.of(context).textTheme.titleLarge),
           () => DiceListInput(
                 controller: controller.damageDice,
                 label: Text(tr.characterClass.damageDice),
@@ -57,7 +63,6 @@ class CharacterClassForm extends StatelessWidget {
                 maxCount: 1,
                 minCount: 1,
               ),
-          () => AlignmentValuesField(controller: controller.alignmentValues),
           () => Row(
                 children: [
                   Expanded(
@@ -81,13 +86,50 @@ class CharacterClassForm extends StatelessWidget {
                   ),
                 ],
               ),
-          () => CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
+          () => SwitchListTile.adaptive(
                 title: Text(tr.characterClass.isSpellcaster.title),
                 subtitle: Text(tr.characterClass.isSpellcaster.subtitle),
                 value: controller.isSpellcaster.value,
-                onChanged: (value) =>
-                    controller.isSpellcaster.value = value ?? false,
+                onChanged: (value) => controller.isSpellcaster.value = value,
+              ),
+          () => Text(tr.characterClass.bio,
+              style: Theme.of(context).textTheme.titleLarge),
+          () => AlignmentValuesField(controller: controller.alignmentValues),
+          () => Text(tr.characterClass.startingGear,
+              style: Theme.of(context).textTheme.bodySmall),
+          () => Wrap(
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  const Icon(DwIcons.armor),
+                  Text(
+                    tr.entityCountNum(
+                      tn(GearChoice),
+                      controller.gearChoices.value.length,
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    label: Text(tr.generic.edit),
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {
+                      final nav = Navigator.of(context);
+                      nav.pushNamed(
+                        Routes.createClassStartingGear,
+                        arguments: StartingGearEditFormControllerArgs(
+                          choices: controller.gearChoices.value,
+                          onSave: (gearChoices) {
+                            controller.gearChoices.value = gearChoices
+                                .map((c) => GearChoice.fromJson(c.toJson()))
+                                .toList();
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
         ],
       ),
@@ -113,6 +155,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
     ),
   );
   final _isSpellcaster = ValueNotifier<bool>(false);
+  final _gearChoices = ValueNotifier<List<GearChoice>>([]);
 
   @override
   List<ValueNotifier> get fields => [
@@ -124,6 +167,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
         _damageDice,
         _alignmentValues,
         _isSpellcaster,
+        _gearChoices,
       ];
 
   TextEditingController get name => _name;
@@ -133,6 +177,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
   TextEditingController get load => _load;
   ValueNotifier<AlignmentValues> get alignmentValues => _alignmentValues;
   ValueNotifier<bool> get isSpellcaster => _isSpellcaster;
+  ValueNotifier<List<GearChoice>> get gearChoices => _gearChoices;
 
   CharacterClassFormController(super.context) {
     name.text = args.entity?.name ?? '';
@@ -150,6 +195,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
           chaotic: '',
         );
     isSpellcaster.value = args.entity?.isSpellcaster ?? false;
+    gearChoices.value = args.entity?.gearChoices ?? [];
   }
 
   @override
@@ -170,6 +216,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
           chaotic: '',
         );
     isSpellcaster.value = entity.isSpellcaster;
+    gearChoices.value = entity.gearChoices;
   }
 
   @override
@@ -184,6 +231,7 @@ class CharacterClassFormController extends LibraryEntityFormController<
         load: int.tryParse(load.text) ?? 0,
         alignments: alignmentValues.value,
         isSpellcaster: isSpellcaster.value,
+        gearChoices: gearChoices.value,
       );
 }
 

@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/app/modules/StartingGearEditForm/starting_gear_edit_form_controller.dart';
+import 'package:dungeon_paper/app/modules/StartingGearEditForm/starting_gear_edit_form_view.dart';
 import 'package:dungeon_paper/app/routes/custom_transitions.dart';
 import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:flutter/material.dart';
@@ -222,6 +224,11 @@ class AppPages {
     Routes.editClass: (context) => ChangeNotifierProvider(
           create: (_) => CharacterClassFormController(context),
           child: const CharacterClassForm(),
+        ),
+
+    Routes.createClassStartingGear: (context) => ChangeNotifierProvider(
+          create: (_) => StartingGearEditFormController(context),
+          child: const StartingGearEditFormView(),
         ),
 
     Routes.races: (context) => ChangeNotifierProvider(

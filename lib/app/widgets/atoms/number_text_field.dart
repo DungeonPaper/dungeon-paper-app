@@ -71,7 +71,7 @@ class NumberTextField extends StatelessWidget {
     this.minValue,
     this.maxValue,
     required this.numberType,
-  })  : keyboardType = keyboardType ??
+  }) : keyboardType = keyboardType ??
             (numberType == NumberType.double
                 ? const TextInputType.numberWithOptions(decimal: true)
                 : const TextInputType.numberWithOptions(decimal: false));
@@ -131,7 +131,7 @@ class NumberTextField extends StatelessWidget {
     return TextFormField(
       key: key,
       controller: controller,
-      initialValue: initialValue,
+      initialValue: _parse(initialValue ?? '')?.toString(),
       focusNode: focusNode,
       decoration: (decoration ?? const InputDecoration()).copyWith(
         prefix: decoration?.prefixIcon ??
@@ -230,6 +230,15 @@ class NumberTextField extends StatelessWidget {
         .toString();
     onChanged?.call(controller?.text ?? '');
   }
+
+  static parseAs(NumberType numberType, String? value) {
+    switch (numberType) {
+      case NumberType.double:
+        return double.tryParse(value ?? '');
+      case NumberType.int:
+        return int.tryParse(value ?? '');
+    }
+  }
 }
 
 enum NumberType {
@@ -292,3 +301,4 @@ class NumberInputFormatter extends TextInputFormatter {
     return oldValue;
   }
 }
+

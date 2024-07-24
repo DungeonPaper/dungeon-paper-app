@@ -36,6 +36,7 @@ class _AlignmentValuesFieldState extends State<AlignmentValuesField> {
         Wrap(
           alignment: WrapAlignment.start,
           spacing: 16,
+          runSpacing: 16,
           children: _alignmentValues.values
                   .map((e) => _buildAlignmentValue(e))
                   .toList() +
