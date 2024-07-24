@@ -13,14 +13,15 @@ import 'package:dungeon_paper/core/utils/secrets_base.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/base.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'app/data/services/character_provider.dart';
+import 'app/data/services/intl_service.dart';
 import 'app/themes/themes.dart';
 import 'firebase_options.dart';
 
@@ -64,6 +65,7 @@ final _characterProvider = CharacterProvider();
 final _userProvider = UserProvider();
 final _repositoryProvider = RepositoryProvider();
 final _libraryProvider = LibraryProvider();
+final _intlService = IntlService();
 
 class DungeonPaperApp extends StatelessWidget {
   const DungeonPaperApp({super.key});
@@ -77,6 +79,7 @@ class DungeonPaperApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(value: _intlService),
         ChangeNotifierProvider.value(value: _loadingProvider),
         ChangeNotifierProvider.value(value: _authProvider),
         ChangeNotifierProvider.value(value: _characterProvider),

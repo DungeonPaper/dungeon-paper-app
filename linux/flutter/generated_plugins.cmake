@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   sentry_flutter
+  system_date_time_format
   url_launcher_linux
 )
 

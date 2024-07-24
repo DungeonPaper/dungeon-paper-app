@@ -1238,6 +1238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0+1"
+  system_date_time_format:
+    dependency: "direct main"
+    description:
+      name: system_date_time_format
+      sha256: "7b533204f2c74603a9eeea9b77639df9885a59aff22583f1b4ee313d901d23d8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   term_glyph:
     dependency: transitive
     description:

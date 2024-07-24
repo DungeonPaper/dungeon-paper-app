@@ -105,8 +105,8 @@ class MoveForm extends StatelessWidget with RepositoryProviderMixin {
                               ),
                             ],
                           ),
-                          defaultContent: template.text,
-                          prefix: template.text,
+                          defaultContent: () => template.text,
+                          prefix: () => template.text,
                         ),
                       )
                     ],

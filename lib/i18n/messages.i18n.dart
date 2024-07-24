@@ -2508,6 +2508,16 @@ class RichTextMessages {
   /// "Markdown Preview"
   /// ```
   String get markdownPreview => """Markdown Preview""";
+
+  /// ```dart
+  /// "Add Current Date"
+  /// ```
+  String get date => """Add Current Date""";
+
+  /// ```dart
+  /// "Add Current Time"
+  /// ```
+  String get time => """Add Current Time""";
 }
 
 class CheckListRichTextMessages {
@@ -3998,6 +4008,8 @@ creation and leveling up.""",
       """richText.imageURL""": """Image URL""",
       """richText.table""": """Table""",
       """richText.markdownPreview""": """Markdown Preview""",
+      """richText.date""": """Add Current Date""",
+      """richText.time""": """Add Current Time""",
       """customRolls.title""": """Quick Roll Buttons""",
       """customRolls.left""": """Left Button""",
       """customRolls.right""": """Right Button""",

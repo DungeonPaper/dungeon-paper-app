@@ -530,6 +530,8 @@ richText:
   header(Object n): Header $n
   cell(int n): Cell $n
   markdownPreview: Markdown Preview
+  date: Add Current Date
+  time: Add Current Time
 
 customRolls:
   title: Quick Roll Buttons

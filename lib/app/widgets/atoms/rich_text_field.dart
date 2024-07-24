@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/services/intl_service.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/markdown_styles.dart';
@@ -5,6 +6,7 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:url_launcher/url_launcher.dart';
 
 class RichTextField extends StatelessWidget {
@@ -241,16 +243,18 @@ class RichTextField extends StatelessWidget {
         () => RichButton(
               icon: Icons.format_bold,
               tooltip: tr.richText.bold,
-              defaultContent: '**bold**',
-              prefix: '**',
+              defaultContent: () => '**bold**',
+              prefix: () => '**',
+              behavior: RichButtonTextBehavior.wrap,
               selectionStartOffset: 2,
               selectionEndOffset: -2,
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.format_italic,
               tooltip: tr.richText.italic,
-              defaultContent: '*italic*',
-              prefix: '*',
+              defaultContent: () => '*italic*',
+              prefix: () => '*',
+              behavior: RichButtonTextBehavior.wrap,
               selectionStartOffset: 1,
               selectionEndOffset: -1,
             ).buildButton(context, _controller),
@@ -271,10 +275,11 @@ class RichTextField extends StatelessWidget {
                           'h6': mdTheme.h6,
                         }['h$i']!,
                       ),
-                      defaultContent:
+                      behavior: RichButtonTextBehavior.wrap,
+                      defaultContent: () =>
                           '\n${List.filled(i, "#").join("")} ${tr.richText.heading(i)}\n',
-                      prefix: '\n${List.filled(i, "#").join("")} ',
-                      suffix: '\n',
+                      prefix: () => '\n${List.filled(i, "#").join("")} ',
+                      suffix: () => '\n',
                       selectionStartOffset: 2 + i,
                       selectionEndOffset: -1,
                     ),
@@ -285,60 +290,82 @@ class RichTextField extends StatelessWidget {
         () => RichButton(
               icon: Icons.format_list_bulleted,
               tooltip: tr.richText.bulletList,
-              defaultContent: '\n- ',
-              prefix: '\n- ',
+              defaultContent: () => '\n- ',
+              prefix: () => '\n- ',
+              behavior: RichButtonTextBehavior.prefix,
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.format_list_numbered,
               tooltip: tr.richText.numberedList,
-              defaultContent: '\n1. ',
-              prefix: '\n1. ',
+              defaultContent: () => '\n1. ',
+              prefix: () => '\n1. ',
+              behavior: RichButtonTextBehavior.prefix,
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.check_box_outline_blank,
               tooltip: tr.richText.checkList.unchecked,
-              defaultContent: '\n- [ ] ',
-              prefix: '\n- [ ] ',
+              defaultContent: () => '\n- [ ] ',
+              prefix: () => '\n- [ ] ',
               selectionStartOffset: 7,
+              behavior: RichButtonTextBehavior.prefix,
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.check_box_outlined,
               tooltip: tr.richText.checkList.checked,
-              defaultContent: '\n- [x] ',
-              prefix: '\n- [x] ',
+              defaultContent: () => '\n- [x] ',
+              prefix: () => '\n- [x] ',
               selectionStartOffset: 7,
+              behavior: RichButtonTextBehavior.prefix,
             ).buildButton(context, _controller),
         () => divider,
         () => RichButton(
               icon: Icons.link,
               tooltip: tr.richText.url,
-              defaultContent: '[text](url)',
-              prefix: '[',
-              suffix: '](url)',
+              defaultContent: () => '[text](url)',
+              prefix: () => '[',
+              suffix: () => '](url)',
               selectionStartOffset: 7,
               selectionEndOffset: -1,
+              behavior: RichButtonTextBehavior.wrap,
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.image,
               tooltip: tr.richText.imageURL,
-              defaultContent: '![alt](url)',
-              prefix: '![alt][',
-              suffix: ']',
+              defaultContent: () => '![alt](url)',
+              prefix: () => '![alt][',
+              suffix: () => ']',
               selectionStartOffset: 7,
               selectionEndOffset: -1,
+              behavior: RichButtonTextBehavior.wrap,
             ).buildButton(context, _controller),
         () => RichButton(
               icon: Icons.table_chart_outlined,
               tooltip: tr.richText.table,
-              defaultContent: '| ${tr.richText.header(1)} '
+              defaultContent: () => '| ${tr.richText.header(1)} '
                   '| ${tr.richText.header(2)} '
                   '|\n|---|---|\n'
                   '| ${tr.richText.cell(1)} '
                   '| ${tr.richText.cell(2)} |',
-              prefix: '| ${tr.richText.header(' ')}|\n|---|\n| ',
-              suffix: ' |',
+              prefix: () => '| ${tr.richText.header(' ')}|\n|---|\n| ',
+              suffix: () => ' |',
               selectionStartOffset: 2,
               selectionEndOffset: -43,
+              behavior: RichButtonTextBehavior.wrap,
+            ).buildButton(context, _controller),
+        () => divider,
+        () => RichButton(
+              icon: Icons.calendar_today,
+              tooltip: tr.richText.date,
+              prefix: () => _getFormattedDate(DateTime.now()),
+              defaultContent: () => _getFormattedDate(DateTime.now()),
+              behavior: RichButtonTextBehavior.prefix,
+            ).buildButton(context, _controller),
+        () => RichButton(
+              icon: Icons.access_time_outlined,
+              tooltip: tr.richText.date,
+              prefix: () => _getFormattedTime(DateTime.now()),
+              behavior: RichButtonTextBehavior.prefix,
+              defaultContent: () => _getFormattedTime(DateTime.now()),
             ).buildButton(context, _controller),
       ],
     );
@@ -359,6 +386,12 @@ class RichTextField extends StatelessWidget {
       builder: (_) => MarkdownPreviewDialog(text: _controller.text),
     );
   }
+
+  String _getFormattedDate(DateTime date) =>
+      intl.DateFormat(IntlService.dateFormat).format(date);
+
+  String _getFormattedTime(DateTime date) =>
+      intl.DateFormat(IntlService.timeFormat).format(date);
 }
 
 class _RichButton extends StatelessWidget {
@@ -430,11 +463,12 @@ class MarkdownPreviewDialog extends StatelessWidget {
 
 class RichButtonAction {
   final Widget text;
-  final String defaultContent;
-  final String prefix;
-  final String? suffix;
+  final String Function() defaultContent;
+  final String Function() prefix;
+  final String? Function()? suffix;
   final int? selectionStartOffset;
   final int? selectionEndOffset;
+  final RichButtonTextBehavior behavior;
 
   RichButtonAction({
     required this.defaultContent,
@@ -442,6 +476,7 @@ class RichButtonAction {
     this.suffix,
     this.selectionStartOffset,
     this.selectionEndOffset,
+    this.behavior = RichButtonTextBehavior.auto,
   }) : text = const Text('');
 
   RichButtonAction.dropdownItem({
@@ -451,19 +486,24 @@ class RichButtonAction {
     this.suffix,
     this.selectionStartOffset,
     this.selectionEndOffset,
+    this.behavior = RichButtonTextBehavior.auto,
   });
 }
+
+enum RichButtonTextBehavior { auto, prefix, suffix, wrap }
 
 class RichButton {
   final IconData icon;
   final String tooltip;
   final List<RichButtonAction> actions;
   final Color? color;
+  final RichButtonTextBehavior behavior;
 
   RichButton.dropdown({
     required this.icon,
     required this.tooltip,
     required this.actions,
+    this.behavior = RichButtonTextBehavior.auto,
     this.color,
   });
 
@@ -471,9 +511,10 @@ class RichButton {
     required this.icon,
     required this.tooltip,
     this.color,
-    required String defaultContent,
-    required String prefix,
-    String? suffix,
+    required String Function() defaultContent,
+    required String Function() prefix,
+    this.behavior = RichButtonTextBehavior.auto,
+    String? Function()? suffix,
     int? selectionStartOffset,
     int? selectionEndOffset,
   }) : actions = [
@@ -497,9 +538,9 @@ class RichButton {
         tooltip: tooltip,
         onTap: _wrapOrAppendCb(
           controller,
-          singleAction.defaultContent,
-          singleAction.prefix,
-          singleAction.suffix,
+          singleAction.defaultContent(),
+          singleAction.prefix(),
+          singleAction.suffix?.call(),
           singleAction.selectionStartOffset,
           singleAction.selectionEndOffset,
         ),
@@ -512,9 +553,9 @@ class RichButton {
           value: action.defaultContent,
           onSelect: _wrapOrAppendCb(
             controller,
-            action.defaultContent,
-            action.prefix,
-            action.suffix,
+            action.defaultContent(),
+            action.prefix(),
+            action.suffix?.call(),
             action.selectionStartOffset,
             action.selectionEndOffset,
           ),
@@ -527,7 +568,7 @@ class RichButton {
     );
   }
 
-  void _wrapWith(TextEditingController controller, String prefix,
+  void _wrapCursorWith(TextEditingController controller, String prefix,
       [String? suffix]) {
     if (controller.selection.isValid) {
       // has selection - wrap current cursor positions
@@ -554,7 +595,7 @@ class RichButton {
     }
   }
 
-  void _append(TextEditingController controller, String text,
+  void _insertAtCursor(TextEditingController controller, String text,
       [int? selectionStartOffset, int? selectionEndOffset]) {
     if (controller.selection.isValid) {
       // has cursor - append at cursor position
@@ -594,7 +635,12 @@ class RichButton {
   void Function() _wrapOrAppendCb(
       TextEditingController controller, String defaultContent, String prefix,
       [String? suffix, int? selectionStartOffset, int? selectionEndOffset]) {
-    var suffix0 = suffix ?? prefix;
+    final isAuto = behavior == RichButtonTextBehavior.auto;
+    final isWrap = behavior == RichButtonTextBehavior.wrap;
+    final hasPrefix = isWrap || (prefix.isNotEmpty && isAuto) || behavior == RichButtonTextBehavior.prefix;
+    final hasSuffix = isWrap || (suffix?.isNotEmpty == true && isAuto) || behavior == RichButtonTextBehavior.suffix;
+    suffix ??= prefix;
+    // final shouldWrap = (isAuto && !controller.selection.isCollapsed)
 
     // if text is empty, or selection starts directly after newline - remove prefix newlines
     // if (controller.text.trim().isEmpty ||
@@ -615,11 +661,13 @@ class RichButton {
     // }
     return () {
       if (!controller.selection.isCollapsed) {
-        _wrapWith(controller, prefix, suffix0);
+        _wrapCursorWith(
+            controller, hasPrefix ? prefix : '', hasSuffix ? suffix : '');
       } else {
-        _append(controller, defaultContent, selectionStartOffset,
+        _insertAtCursor(controller, defaultContent, selectionStartOffset,
             selectionEndOffset);
       }
     };
   }
 }
+

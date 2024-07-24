@@ -8,6 +8,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
   firebase_storage
   sentry_flutter
+  system_date_time_format
   url_launcher_windows
 )
 
