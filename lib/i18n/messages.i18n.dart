@@ -133,6 +133,7 @@ class Messages {
   GenericMessages get generic => GenericMessages(this);
   LoadingMessages get loading => LoadingMessages(this);
   ErrorsMessages get errors => ErrorsMessages(this);
+  NumberFieldsMessages get numberFields => NumberFieldsMessages(this);
   SortMessages get sort => SortMessages(this);
   PlaybookMessages get playbook => PlaybookMessages(this);
   MyLibraryMessages get myLibrary => MyLibraryMessages(this);
@@ -543,6 +544,21 @@ class InvalidPasswordErrorsMessages {
   /// "Password must contain at least one number"
   /// ```
   String get number => """Password must contain at least one number""";
+}
+
+class NumberFieldsMessages {
+  final Messages _parent;
+  const NumberFieldsMessages(this._parent);
+
+  /// ```dart
+  /// "+1"
+  /// ```
+  String get increase => """+1""";
+
+  /// ```dart
+  /// "-1"
+  /// ```
+  String get decrease => """-1""";
 }
 
 class SortMessages {
@@ -3796,6 +3812,8 @@ Map<String, String> get messagesMap => {
       """errors.invalidPassword.number""":
           """Password must contain at least one number""",
       """errors.onlyLetters""": """Must contain letters only""",
+      """numberFields.increase""": """+1""",
+      """numberFields.decrease""": """-1""",
       """sort.moveUp""": """Move up""",
       """sort.moveDown""": """Move down""",
       """playbook.title""": """Playbook""",

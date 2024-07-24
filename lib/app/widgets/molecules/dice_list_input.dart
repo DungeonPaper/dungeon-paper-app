@@ -15,6 +15,7 @@ class DiceListInput extends StatefulWidget {
     this.label,
     this.labelColor,
     this.maxCount,
+    this.minCount,
   });
 
   final ValueNotifier<List<dw.Dice>>? controller;
@@ -22,6 +23,7 @@ class DiceListInput extends StatefulWidget {
   final List<ValueNotifier<TextEditingValue>> guessFrom;
   final Color? labelColor;
   final int? maxCount;
+  final int? minCount;
   final Widget? label;
 
   @override
@@ -47,6 +49,8 @@ class _DiceListInputState extends State<DiceListInput> {
   Widget build(BuildContext context) {
     bool isNotAtMax =
         widget.maxCount == null || controller.value.length < widget.maxCount!;
+    bool isNotAtMin = controller.value.isNotEmpty &&
+        (widget.minCount == null || controller.value.length > widget.minCount!);
 
     return ChipListInput<dw.Dice>(
       label: widget.label,
@@ -63,7 +67,7 @@ class _DiceListInputState extends State<DiceListInput> {
             dice != null ? null : tr.generic.addEntity(tr.entity(tn(dw.Dice))),
         icon: dice != null ? null : const Icon(Icons.add),
         onPressed: onTapChip,
-        onDeleted: onDeleteChip,
+        onDeleted: isNotAtMin ? onDeleteChip : null,
       ),
       maxCount: widget.maxCount,
       labelColor: widget.labelColor,
@@ -106,3 +110,4 @@ class _DiceListInputState extends State<DiceListInput> {
     super.dispose();
   }
 }
+

@@ -70,14 +70,16 @@ class _AlignmentValuesFieldState extends State<AlignmentValuesField> {
     };
   }
 
-  Widget _buildAlignmentValue(AlignmentValue e) {
-    final hasValue = _alignmentValues.byType(e.type).isNotEmpty;
+  Widget _buildAlignmentValue(AlignmentValue value) {
+    final desc = _alignmentValues.byType(value.type);
+    final hasValue = desc.isNotEmpty;
 
     return PrimaryChip(
       // backgroundColor: color,
       isEnabled: hasValue,
-      icon: Icon(AlignmentValue.iconOf(e.type)),
-      label: tr.alignment.name(e.type.name),
+      icon: Icon(AlignmentValue.iconOf(value.type)),
+      label: tr.alignment.name(value.type.name),
+      tooltip: desc,
     );
   }
 }

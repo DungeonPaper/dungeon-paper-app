@@ -55,6 +55,7 @@ class CharacterClassForm extends StatelessWidget {
                 ),
                 guessFrom: [controller.description],
                 maxCount: 1,
+                minCount: 1,
               ),
           () => AlignmentValuesField(controller: controller.alignmentValues),
           () => Row(
