@@ -60,12 +60,13 @@ class CharacterClassCard extends StatelessWidget {
   String get _buildMarkdownDescription {
     final baseLoadLabel = tr.characterClass.baseLoad;
     final baseHpLabel = tr.characterClass.baseHp;
+    final damageDiceLabel = tr.characterClass.damageDice;
 
     final table = [
       ' ### Base Stats',
-      '| **$baseHpLabel** | **$baseLoadLabel** |',
-      '| --- | --- |',
-      '| ${characterClass.hp} | ${characterClass.load} |',
+      '| **$baseHpLabel** | **$baseLoadLabel** | **$damageDiceLabel** |',
+      '| --- | --- | --- |',
+      '| ${characterClass.hp} | ${characterClass.load} | ${characterClass.damageDice} |',
     ].join('\n');
 
     final alignmentsTable = [
