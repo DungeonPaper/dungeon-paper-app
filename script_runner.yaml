@@ -124,6 +124,18 @@ scripts:
   - name: gen:splash
     cmd: flutter pub run flutter_native_splash:create
     description: Generate splash screen
+  - name: gen:module
+    cmd: npx -y simple-scaffold@latest -c gen/scaffold.config.js -k module
+    description: Generate module from template. Append name to command. See simple-scaffold -h for help.
+  - name: gen:atom
+    cmd: npx -y simple-scaffold@latest -c gen/scaffold.config.js -k atom
+    description: Generate atom from template. Append name to command. See simple-scaffold -h for help.
+  - name: gen:molecule
+    cmd: npx -y simple-scaffold@latest -c gen/scaffold.config.js -k molecule
+    description: Generate molecule from template. Append name to command. See simple-scaffold -h for help.
+  - name: gen:organism
+    cmd: npx -y simple-scaffold@latest -c gen/scaffold.config.js -k organism
+    description: Generate organism from template. Append name to command. See simple-scaffold -h for help.
   - name: intl:build
     cmd: runner build -d
     description: Build i18n files
