@@ -13,7 +13,7 @@ final parchmentTheme = createTheme(
     parchmentPrimaryColor,
     brightness: Brightness.light,
     primary: parchmentPrimaryColor,
-    secondary: secondaryColor,
+    // secondary: parchmentSecondaryColor,
   ),
   scaffoldBackgroundColor: parchmentBackgroundColor,
   brightness: Brightness.light,

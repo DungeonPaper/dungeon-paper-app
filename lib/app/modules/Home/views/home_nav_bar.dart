@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/themes/theme_utils.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
@@ -104,7 +105,16 @@ class _NavItem extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final selectedColor = colorScheme.secondary;
-    final selectedFgColor = theme.colorScheme.onSecondary;
+    var selectedFgColor = theme.colorScheme.onSecondary;
+    final selectedBrightness = getBrightnessFor(selectedColor);
+    final selectedFgBrightness = getBrightnessFor(selectedFgColor);
+    if (selectedBrightness == selectedFgBrightness) {
+      if (selectedBrightness == Brightness.dark) {
+        selectedFgColor = Colors.white;
+      } else {
+        selectedFgColor = Colors.black;
+      }
+    }
     final unselectedFgColor = theme.colorScheme.onSurface;
     const duration = Duration(milliseconds: 250);
 
@@ -142,7 +152,7 @@ class _NavItem extends StatelessWidget {
               ),
               child: Text(
                 label,
-                textScaleFactor: 1.1,
+                textScaler: const TextScaler.linear(1.1),
               ),
             ),
           ],
@@ -151,3 +161,4 @@ class _NavItem extends StatelessWidget {
     );
   }
 }
+

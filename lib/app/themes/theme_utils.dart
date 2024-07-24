@@ -175,6 +175,9 @@ ThemeData createTheme(
 Brightness getCurrentPlatformBrightness() =>
     MediaQueryData.fromView(WidgetsBinding.instance.window).platformBrightness;
 
+Brightness getBrightnessFor(Color color) =>
+    ThemeData.estimateBrightnessForColor(color);
+
 SystemUiOverlayStyle getUiOverlayStyleFor(ThemeData theme) =>
     theme.brightness == Brightness.light
         ? SystemUiOverlayStyle.dark
