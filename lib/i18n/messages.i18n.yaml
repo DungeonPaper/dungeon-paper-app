@@ -5,7 +5,9 @@ _entSingle(String type): |-
     'AlignmentValue' => 'Alignment',
     'CharacterClass' => 'Class',
     'Dice' => 'Die',
-    'GearSelection' => 'Starting Gear',
+    'GearSelection' => 'Gear Set',
+    'GearChoice' => 'Gear Choice',
+    'GearOption' => 'Gear Set Item',
     'MoveCategory' => 'Category',
     _ => type,
   }}
@@ -300,10 +302,49 @@ characterClass:
   baseHp: Base HP
   damageDice: Damage Dice
   isSpellcaster:
-    title: Spellcaster
+    title: Spellcasting class
     subtitle: |-
-      Spellcaster classes are prompted to select spells (as well as moves) during character
+      Spellcasters are prompted to select spells (as well as moves) during character
       creation and leveling up.
+  stats: Stats
+  bio: Backgrounds
+  startingGear: Starting Gear Selections
+
+startingGear:
+  title: Edit Starting Gear
+  choice:
+    title(int index): Choice $index
+    helpText: A choice is a list of selections the player can make.
+      It provides a possible set of items & coins that the player can select from.
+    description:
+      label: Prompt
+      hintText: e.g. Choose your weapon
+    maxSelections:
+      label: Suggested max allowance
+      helpText:
+        This will suggest a maximum amount to select, and will display a count, but will not limit the selection.
+        Use 0 or leave blank for no limit.
+    moveUp: Move up
+    moveDown: Move down
+  selection:
+    title: Gear Set
+    helpText:
+      Each gear set consists of some amount of coins, and a list of items to be given to the character.
+      Choosing one gear set will give the character all the items and gold in that set.
+    add: Add Gear Set
+    description:
+      label: Selection description
+      hintText: e.g. Your father's old sword, and 10 coins
+    coins:
+      label: Coins
+      hintText: 0
+  option:
+    title: Gear Set Items
+    helpText: Each gear set item consists of X amount of a specific item.
+    add: Add Items
+    amount:
+      label: Amount
+      hintText: 1
 
 dice:
   suggestion(String dice): 'Suggested: $dice'

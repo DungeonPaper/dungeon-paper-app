@@ -34,7 +34,7 @@ void main() async {
   await SentryFlutter.init(
     (options) {
       options.dsn = secrets.sentryDsn;
-      options.tracesSampleRate = kDebugMode ? 1.0 : 0.5;
+      options.tracesSampleRate = kDebugMode ? 1.0 : 0.0;
       options.environment = kDebugMode ? 'development' : 'release';
     },
     appRunner: _init,
@@ -91,6 +91,7 @@ class DungeonPaperApp extends StatelessWidget {
           initialRoute: AppPages.initial,
           navigatorKey: navigatorKey,
           scaffoldMessengerKey: scaffoldMessengerKey,
+          debugShowCheckedModeBanner: false,
         ),
       ),
     );
