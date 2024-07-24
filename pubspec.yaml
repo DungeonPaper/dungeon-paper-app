@@ -1,6 +1,6 @@
 name: dungeon_paper
 description: A Dungeon World character sheet app written with Flutter.
-version: 2.0.10+316
+version: 2.0.10+317
 # The above field defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -16,7 +16,7 @@ version: 2.0.10+316
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: '>=3.2.2'
+  sdk: '>=3.3.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -58,6 +58,7 @@ dependencies:
       ref: master
   icons_launcher: ^2.0.2
   image_cropper: ^7.1.0
+  intl: ^0.19.0
   localstore: ^1.2.1
   markdown: ^7.1.1
   package_info_plus: ^8.0.0
@@ -72,12 +73,11 @@ dependencies:
   sign_in_with_apple: ^6.1.1
   skeleton_loader: ^2.0.0+4
   string_similarity: ^2.0.0
+  system_date_time_format: ^1.2.1
   url_launcher: ^6.0.20
   uuid: ^4.2.2
   wakelock_plus: 1.2.5
   wheel_spinner: ^0.7.2
-  intl: ^0.19.0
-  system_date_time_format: ^1.2.1
   # wheel_spinner:
   #   path: ../wheel_spinner
 
@@ -99,59 +99,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    # General Icons
-    # - assets/icons/armor.svg
-    # - assets/icons/book_cover.svg
-    # - assets/icons/dice_d6_numbered.svg
-    # - assets/icons/exclamation.svg
-    # - assets/icons/hand_rock.svg
-    # - assets/icons/knapsack.svg
-    # - assets/icons/riposte.svg
-    # - assets/icons/scroll_quill.svg
-    # - assets/icons/swap_bag.svg
-    # - assets/icons/coin_stack.svg
-    # - assets/icons/dumbbell.svg
-    # - assets/icons/quill.svg
-    # - assets/icons/swords.svg
-    #  Stat Icons
-    # - assets/icons/stats/stat_cha.svg
-    # - assets/icons/stats/stat_con.svg
-    # - assets/icons/stats/stat_dex.svg
-    # - assets/icons/stats/stat_int.svg
-    # - assets/icons/stats/stat_str.svg
-    # - assets/icons/stats/stat_wis.svg
-    # Dice icons
-    # - assets/icons/dice/dice_d4.svg
-    # - assets/icons/dice/dice_d6.svg
-    # - assets/icons/dice/dice_d8.svg
-    # - assets/icons/dice/dice_d10.svg
-    # - assets/icons/dice/dice_d12.svg
-    # - assets/icons/dice/dice_d20.svg
-    # Images
     - assets/images/logo.png
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  # For more information about importing assets:
+  # https://flutter.dev/assets-and-images/
   fonts:
     - family: DwIcons
       fonts:
