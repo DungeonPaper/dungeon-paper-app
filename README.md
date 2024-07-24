@@ -15,10 +15,13 @@ own app. Once that is properly set up, the app should create entities based on l
 nothing else should be created for the database beforehand. No one in this repository will provide
 any secret keys to anyone, ever.
 
+<div style="text-align: center;">
+
 ![dungeon paper](https://dungeonpaper.app/images/logo-512.png)
 
-[![android](https://img.shields.io/static/v1?label=Google%20Play&style=for-the-badge&logo=google-play&message=%E2%80%BA&labelColor=689f38&color=33691e&)](https://bit.ly/DungeonPaper-Android)
-[![ios](https://img.shields.io/static/v1?label=App%20Store&style=for-the-badge&logo=apple&message=%E2%80%BA&labelColor=000000&color=000000&)](https://bit.ly/DungeonPaper-iOS)
+[Download the latest version](https://dungeonpaper.app/download)
+
+</div>
 
 ## Features
 
@@ -65,18 +68,18 @@ don't hesitate to open an appropriate issue and I will do my best to reply promp
 
    TL;DR: Create Firebase app, setup authentication, and run
 
-   ```shell
+   ```sh
    dart pub global activate flutterfire_cli
    flutterfire configure
    ```
 
 1. Copy the `secrets.example.dart` to `secrets.dart` in the same directory:
 
-   ```dart
-   cp lib/core/utils/secrets.example.dart lib/core/utils/secrets.dart
+   ```sh
+   cp "lib/core/utils/secrets.example.dart" "lib/core/utils/secrets.dart"
    ```
 
-   Sentry DSN can remain empty to skip error reporting.
+   Sentry DSN can remain empty to disable error reporting.
 
 1. To run build scripts, use [script_runner](https://pub.dev/packages/script_runner) by running
    `dart run script_runner -h` to see a list of all available commands. Alternatively, you can
@@ -104,7 +107,7 @@ at will.
 - The app and data may be translated separately and do not depend on each other.
 - Use the build_runner package to generate Dart files from the yaml files.
 
-  ```bash
+  ```sh
   # run in watch mode, re-generates as you update the yaml
   dart run build_runner watch
   # generate files once
