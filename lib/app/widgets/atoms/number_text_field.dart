@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -30,7 +31,6 @@ class NumberTextField extends StatelessWidget {
     this.textAlignVertical,
     this.autofocus = false,
     this.readOnly = false,
-    this.toolbarOptions,
     this.showCursor,
     this.obscuringCharacter = '•',
     this.obscureText = false,
@@ -89,7 +89,6 @@ class NumberTextField extends StatelessWidget {
   final TextAlignVertical? textAlignVertical;
   final bool autofocus;
   final bool readOnly;
-  final ToolbarOptions? toolbarOptions;
   final bool? showCursor;
   final String obscuringCharacter;
   final bool obscureText;
@@ -142,6 +141,7 @@ class NumberTextField extends StatelessWidget {
               splashColor: Colors.red.withOpacity(0.2),
               visualDensity: VisualDensity.compact,
               onPressed: _decr,
+              tooltip: tr.numberFields.decrease,
             ),
         suffix: decoration?.suffixIcon ??
             IconButton(
@@ -150,6 +150,7 @@ class NumberTextField extends StatelessWidget {
               splashColor: Colors.green.withOpacity(0.2),
               visualDensity: VisualDensity.compact,
               onPressed: _incr,
+              tooltip: tr.numberFields.increase,
             ),
       ),
       keyboardType: keyboardType ??
@@ -164,7 +165,6 @@ class NumberTextField extends StatelessWidget {
       textAlignVertical: textAlignVertical,
       autofocus: autofocus,
       readOnly: readOnly,
-      toolbarOptions: toolbarOptions,
       showCursor: showCursor,
       obscuringCharacter: obscuringCharacter,
       obscureText: obscureText,

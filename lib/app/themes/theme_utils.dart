@@ -183,3 +183,16 @@ SystemUiOverlayStyle getUiOverlayStyleFor(ThemeData theme) =>
         ? SystemUiOverlayStyle.dark
         : SystemUiOverlayStyle.light;
 
+Color accessibleColorFor(Color fg, Color bg) {
+  final brightness = getBrightnessFor(bg);
+  final fgBrightness = getBrightnessFor(fg);
+  if (brightness == fgBrightness) {
+    if (brightness == Brightness.dark) {
+      return Colors.white;
+    } else {
+      return Colors.black;
+    }
+  }
+  return fg;
+}
+

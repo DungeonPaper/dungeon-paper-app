@@ -105,16 +105,7 @@ class _NavItem extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final selectedColor = colorScheme.secondary;
-    var selectedFgColor = theme.colorScheme.onSecondary;
-    final selectedBrightness = getBrightnessFor(selectedColor);
-    final selectedFgBrightness = getBrightnessFor(selectedFgColor);
-    if (selectedBrightness == selectedFgBrightness) {
-      if (selectedBrightness == Brightness.dark) {
-        selectedFgColor = Colors.white;
-      } else {
-        selectedFgColor = Colors.black;
-      }
-    }
+    final selectedFgColor = accessibleColorFor(theme.colorScheme.onSecondary, selectedColor);
     final unselectedFgColor = theme.colorScheme.onSurface;
     const duration = Duration(milliseconds: 250);
 
