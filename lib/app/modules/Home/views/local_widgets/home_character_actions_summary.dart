@@ -89,9 +89,9 @@ class HomeCharacterActionsSummary extends StatelessWidget {
 
   Color? _loadColor(double currentLoad, int maxLoad) {
     final perc = currentLoad / maxLoad;
-    if (perc > 0.75) {
+    if (perc > 1) {
       return Colors.red;
-    } else if (perc > 0.5) {
+    } else if (perc >= 0.75) {
       return Colors.orange;
     }
     return null;
