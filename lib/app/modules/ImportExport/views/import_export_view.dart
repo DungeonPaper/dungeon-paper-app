@@ -21,7 +21,8 @@ class _ImportExportViewState extends State<ImportExportView>
   @override
   void initState() {
     super.initState();
-    tab = TabController(length: 2, vsync: this)..addListener(() => setState(() {}));
+    tab = TabController(length: 2, vsync: this)
+      ..addListener(() => setState(() {}));
   }
 
   @override
@@ -33,25 +34,30 @@ class _ImportExportViewState extends State<ImportExportView>
         title: Text(tr.backup.title),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          TabBar(
-            controller: tab,
-            tabs: [
-              Tab(child: Text(tr.backup.exporting.title, style: textStyle)),
-              Tab(child: Text(tr.backup.importing.title, style: textStyle)),
+      body: Center(
+        child: SizedBox(
+          width: 800,
+          child: Column(
+            children: [
+              TabBar(
+                controller: tab,
+                tabs: [
+                  Tab(child: Text(tr.backup.exporting.title, style: textStyle)),
+                  Tab(child: Text(tr.backup.importing.title, style: textStyle)),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  controller: tab,
+                  children: [
+                    ExportView(),
+                    ImportView(),
+                  ],
+                ),
+              )
             ],
           ),
-          Expanded(
-            child: TabBarView(
-              controller: tab,
-              children: const [
-                ExportView(),
-                ImportView(),
-              ],
-            ),
-          )
-        ],
+        ),
       ),
       floatingActionButton: Consumer<ImportExportController>(
         builder: (context, controller, _) =>

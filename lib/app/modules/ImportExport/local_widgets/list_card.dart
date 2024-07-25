@@ -38,6 +38,7 @@ class ListCard<T extends WithMeta, C extends ImportExportSelectionData>
           margin: const EdgeInsets.only(top: 16),
           child: CustomExpansionTile(
             initiallyExpanded: true,
+            key: PageStorageKey(tn(T)),
             title: Row(
               children: [
                 Icon(

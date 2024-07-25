@@ -13,7 +13,8 @@ import '../controllers/export_controller.dart';
 import '../local_widgets/list_card.dart';
 
 class ExportView extends StatelessWidget {
-  const ExportView({super.key});
+  ExportView({super.key});
+  final pageStorageBucket = PageStorageBucket();
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +44,17 @@ class ExportView extends StatelessWidget {
         () => const ListCard<Race, ExportController>(type: ListCardType.export),
       ],
     );
-    return ListTileTheme.merge(
-      contentPadding: EdgeInsets.zero,
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: builder.itemCount,
-        itemBuilder: builder.itemBuilder,
+    return PageStorage(
+      bucket: pageStorageBucket,
+      child: ListTileTheme.merge(
+        contentPadding: EdgeInsets.zero,
+        child: ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: builder.itemCount,
+          itemBuilder: builder.itemBuilder,
+        ),
       ),
     );
   }
 }
+

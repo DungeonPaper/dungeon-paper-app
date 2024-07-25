@@ -13,7 +13,8 @@ import 'package:provider/provider.dart';
 import '../local_widgets/list_card.dart';
 
 class ImportView extends StatelessWidget {
-  const ImportView({super.key});
+  ImportView({super.key});
+  final pageStorageBucket = PageStorageBucket();
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +54,17 @@ class ImportView extends StatelessWidget {
                         )
                   ],
                 );
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: builder.itemCount,
-            itemBuilder: builder.itemBuilder,
+          return PageStorage(
+            bucket: pageStorageBucket,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: builder.itemCount,
+              itemBuilder: builder.itemBuilder,
+            ),
           );
         },
       ),
     );
   }
 }
+
