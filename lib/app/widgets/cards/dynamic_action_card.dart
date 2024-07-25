@@ -78,6 +78,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
 
   @override
   Widget build(BuildContext context) {
+    final cardColor = Theme.of(context).cardColor;
     return OrientationBuilder(
       builder: (context, orientation) {
         final children = _buildChildren(context);
@@ -109,6 +110,7 @@ class _DynamicActionCardState extends State<DynamicActionCard> {
         return Card(
           margin: EdgeInsets.zero,
           elevation: expanded ? 5 : 1,
+          color: cardColor,
           child: CustomExpansionTile(
             expandable: widget.expandable,
             reorderablePadding: widget.reorderablePadding,

@@ -24,7 +24,8 @@ class AbilityScoreChip extends StatelessWidget {
     final rollBadgeModifierOpacity = isDark ? 0.5 : 0.4;
     final isLight = theme.brightness == Brightness.light;
     final cardColor = stat.isDebilitated
-        ? Color.alphaBlend(DwColors.error.withOpacity(isLight ? 0.4 : 0.2), theme.scaffoldBackgroundColor)
+        ? Color.alphaBlend(DwColors.error.withOpacity(isLight ? 0.4 : 0.2),
+            theme.scaffoldBackgroundColor)
         : theme.cardColor;
 
     return Card(
@@ -46,7 +47,9 @@ class AbilityScoreChip extends StatelessWidget {
                 children: [
                   IconTheme(
                     data: IconThemeData(
-                        size: 18, color: theme.colorScheme.onSurface),
+                      size: 18,
+                      color: theme.colorScheme.onSurface,
+                    ),
                     child: Icon(stat.icon),
                   ),
                   const SizedBox(width: 4),

@@ -41,10 +41,12 @@ class DynamicActionCardMini extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardColor = Theme.of(context).cardColor;
     if (onTap != null) {
       return Material(
         color: Colors.transparent,
         child: Card(
+          color: cardColor,
           margin: EdgeInsets.zero,
           child: InkWell(
             borderRadius: borderRadius,
@@ -56,6 +58,7 @@ class DynamicActionCardMini extends StatelessWidget {
       );
     }
     return Card(
+      color: cardColor,
       margin: EdgeInsets.zero,
       child: buildCardContent(context),
     );

@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/core/utils/color_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -68,11 +70,13 @@ TextTheme copyTextThemeWith(
           ?.copyWith(fontFamily: fontFamily, color: normalColor),
     );
 
-ColorScheme createColorScheme(Color seedColor,
-    {required Brightness brightness,
-    Color? secondary,
-    Color? primary,
-    bool highContrast = false}) {
+ColorScheme createColorScheme(
+  Color seedColor, {
+  required Brightness brightness,
+  Color? secondary,
+  Color? primary,
+  bool highContrast = false,
+}) {
   final defaultBase = brightness == Brightness.light
       ? !highContrast
           ? const ColorScheme.light()
@@ -106,6 +110,13 @@ ThemeData createTheme(
     colorScheme: colorScheme,
     textTheme: copyTextThemeWith(textTheme, fontFamily: 'Nunito'),
   );
+  final foregroundDefault =
+      brightness == Brightness.light ? Colors.black : Colors.white;
+  final backgroundDefault =
+      brightness == Brightness.light ? Colors.white : Colors.black;
+  final cardBaseColor =
+      surfaceColor ?? scaffoldBackgroundColor ?? foregroundDefault;
+  final cardColor = ColorUtils.lighten(cardBaseColor, 0.025);
 
   return base.copyWith(
     // pageTransitionsTheme: const PageTransitionsTheme(
@@ -141,7 +152,7 @@ ThemeData createTheme(
       shape: rRectShape,
     ),
     chipTheme: base.chipTheme.copyWith(shape: rRectShape),
-    cardColor: surfaceColor,
+    cardColor: cardColor,
     cardTheme: base.cardTheme.copyWith(shape: rRectShape, color: surfaceColor),
     popupMenuTheme: base.popupMenuTheme.copyWith(
       shape: rRectShape,
@@ -173,7 +184,8 @@ ThemeData createTheme(
 }
 
 Brightness getCurrentPlatformBrightness() =>
-    MediaQueryData.fromView(WidgetsBinding.instance.window).platformBrightness;
+    MediaQueryData.fromView(PlatformDispatcher.instance.views.first)
+        .platformBrightness;
 
 Brightness getBrightnessFor(Color color) =>
     ThemeData.estimateBrightnessForColor(color);

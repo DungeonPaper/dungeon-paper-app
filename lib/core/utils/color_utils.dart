@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'math_utils.dart';
+
 class ColorUtils {
   static List<Color> generateRainbow(
     int length, {
@@ -19,4 +21,16 @@ class ColorUtils {
     hex = hex.replaceAll('#', '');
     return fromHex6Int(int.parse(hex, radix: 16), alpha);
   }
+
+  static Color lighten(Color original, double amount) {
+    assert(amount >= -1 && amount <= 1);
+    final hsl = HSLColor.fromColor(original);
+    final lightness = clamp(hsl.lightness + amount, 0.0, 1.0);
+    return hsl.withLightness(lightness).toColor();
+  }
+
+  static Color darken(Color original, double amount) {
+    return lighten(original, -amount);
+  }
 }
+
