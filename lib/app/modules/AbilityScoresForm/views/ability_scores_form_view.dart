@@ -36,36 +36,42 @@ class AbilityScoresFormView extends StatelessWidget {
             label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
-          body: ListView(
-            padding: const EdgeInsets.all(16).copyWith(bottom: 80),
-            children: [
-              HelpText(text: tr.abilityScores.info),
-              const SizedBox(height: 8),
-              Form(
-                child: ReorderableListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.abilityScores.stats.length,
-                  onReorder: controller.onReorder,
-                  itemBuilder: (context, index) =>
-                      _buildCard(context, controller, index),
-                ),
-              ),
-              ElevatedButton.icon(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(Routes.abilityScoreForm,
-                        arguments: AbilityScoreFormArguments(
-                          abilityScore: null,
-                          onSave: controller.addStat,
-                        )),
-                icon: const Icon(Icons.add),
-                label: Text(
-                  tr.generic.addEntity(
-                    tr.entity(tn(AbilityScore)),
+          body: Align(
+            alignment: Alignment.topCenter,
+            child: SizedBox(
+              width: 800,
+              child: ListView(
+                padding: const EdgeInsets.all(16).copyWith(bottom: 80),
+                children: [
+                  HelpText(text: tr.abilityScores.info),
+                  const SizedBox(height: 8),
+                  Form(
+                    child: ReorderableListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.abilityScores.stats.length,
+                      onReorder: controller.onReorder,
+                      itemBuilder: (context, index) =>
+                          _buildCard(context, controller, index),
+                    ),
                   ),
-                ),
+                  ElevatedButton.icon(
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed(Routes.abilityScoreForm,
+                            arguments: AbilityScoreFormArguments(
+                              abilityScore: null,
+                              onSave: controller.addStat,
+                            )),
+                    icon: const Icon(Icons.add),
+                    label: Text(
+                      tr.generic.addEntity(
+                        tr.entity(tn(AbilityScore)),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -174,3 +180,4 @@ class AbilityScoresFormView extends StatelessWidget {
     Navigator.of(context).pop();
   }
 }
+

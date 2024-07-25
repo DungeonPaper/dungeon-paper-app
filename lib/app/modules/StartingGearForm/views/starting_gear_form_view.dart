@@ -28,63 +28,70 @@ class StartingGearFormView extends StatelessWidget {
             label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
-          body: ListView(
-            padding: const EdgeInsets.all(16).copyWith(bottom: 80),
-            children: controller.availableGear
-                .map(
-                  (choice) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Card(
-                      margin: EdgeInsets.zero,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ListTile(
-                              title: Text(choice.description),
-                              subtitle: Text(
-                                choice.maxSelections != null
-                                    ? tr.createCharacter.startingGear.count
-                                        .withMax(
-                                        controller.selectionCount(choice),
-                                        choice.maxSelections!,
-                                      )
-                                    : tr.createCharacter.startingGear.count
-                                        .noMax(
-                                        controller.selectionCount(choice),
-                                      ),
-                              ),
+          body:Align(
+            alignment: Alignment.topCenter,
+
+            child: SizedBox(
+              width: 800,
+              child: ListView(
+                padding: const EdgeInsets.all(16).copyWith(bottom: 80),
+                children: controller.availableGear
+                    .map(
+                      (choice) => Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: Card(
+                          margin: EdgeInsets.zero,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                ListTile(
+                                  title: Text(choice.description),
+                                  subtitle: Text(
+                                    choice.maxSelections != null
+                                        ? tr.createCharacter.startingGear.count
+                                            .withMax(
+                                            controller.selectionCount(choice),
+                                            choice.maxSelections!,
+                                          )
+                                        : tr.createCharacter.startingGear.count
+                                            .noMax(
+                                            controller.selectionCount(choice),
+                                          ),
+                                  ),
+                                ),
+                                ...choice.selections.map(
+                                  (sel) => ListTile(
+                                    onTap: () {
+                                      controller.toggleSelect(sel);
+                                    },
+                                    leading: Checkbox(
+                                      value: controller.isSelected(sel),
+                                      onChanged: (val) {
+                                        controller.toggleSelect(sel);
+                                      },
+                                    ),
+                                    title: Text(sel.description, maxLines: 1),
+                                    subtitle: Text(
+                                      sel.options
+                                          .map((opt) =>
+                                              '${NumberFormat('#0.#').format(opt.amount)}x ${opt.item.name}')
+                                          .join(', '),
+                                    ),
+                                    dense: true,
+                                    visualDensity: VisualDensity.compact,
+                                  ),
+                                )
+                              ],
                             ),
-                            ...choice.selections.map(
-                              (sel) => ListTile(
-                                onTap: () {
-                                  controller.toggleSelect(sel);
-                                },
-                                leading: Checkbox(
-                                  value: controller.isSelected(sel),
-                                  onChanged: (val) {
-                                    controller.toggleSelect(sel);
-                                  },
-                                ),
-                                title: Text(sel.description, maxLines: 1),
-                                subtitle: Text(
-                                  sel.options
-                                      .map((opt) =>
-                                          '${NumberFormat('#0.#').format(opt.amount)}x ${opt.item.name}')
-                                      .join(', '),
-                                ),
-                                dense: true,
-                                visualDensity: VisualDensity.compact,
-                              ),
-                            )
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                )
-                .toList(),
+                    )
+                    .toList(),
+              ),
+            ),
           ),
         ),
       ),
@@ -98,3 +105,4 @@ class StartingGearFormView extends StatelessWidget {
     Navigator.of(context).pop();
   }
 }
+

@@ -39,139 +39,148 @@ class BasicInfoFormView extends StatelessWidget with UserProviderMixin {
           ),
           body: Form(
             //   // key: controller.formKey,
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              shrinkWrap: true,
-              children: [
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: controller.name,
-                  textInputAction: TextInputAction.next,
-                  validator: (val) =>
-                      val == null || val.isEmpty ? 'Cannot be empty' : null,
-                  // onChanged: (val) => updateControllers(),
-                  textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(
-                    labelText: tr.basicInfo.form.name.label,
-                    hintText: tr.basicInfo.form.name.placeholder,
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    suffixIcon: IconButton(
-                      tooltip: tr.basicInfo.form.name.random.tooltip(
-                        PlatformHelper.actionString(context),
-                      ),
-                      icon: const Icon(DwIcons.dice_d6_numbered),
-                      onPressed: () {
-                        controller.name.text =
-                            CharacterNameGenerator().generate();
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 48),
-                Center(
-                  child: CharacterAvatar.squircle(
-                    size: 174,
-                    character: Character.empty().copyWith(
-                      avatarUrl: controller.avatarUrl.value.text,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                if (controller.hasPhotoFile)
-                  SizedBox(
-                    height: 40,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: controller.isUploading
-                                ? null
-                                : () => controller.startUploadFlow(context),
-                            icon: const Icon(Icons.upload_file),
-                            label: Text(tr.basicInfo.form.photo.change),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: 800,
+                child: ListView(
+                  padding: const EdgeInsets.all(16),
+                  shrinkWrap: true,
+                  children: [
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: controller.name,
+                      textInputAction: TextInputAction.next,
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Cannot be empty' : null,
+                      // onChanged: (val) => updateControllers(),
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                        labelText: tr.basicInfo.form.name.label,
+                        hintText: tr.basicInfo.form.name.placeholder,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        suffixIcon: IconButton(
+                          tooltip: tr.basicInfo.form.name.random.tooltip(
+                            PlatformHelper.actionString(context),
                           ),
+                          icon: const Icon(DwIcons.dice_d6_numbered),
+                          onPressed: () {
+                            controller.name.text =
+                                CharacterNameGenerator().generate();
+                          },
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: controller.isUploading
-                                ? null
-                                : controller.resetPhoto,
-                            icon: const Icon(Icons.close),
-                            label: Text(tr.basicInfo.form.photo.remove),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                if (!controller.hasPhotoFile)
-                  SizedBox(
-                    height: 40,
-                    child: ElevatedButton.icon(
-                      onPressed:
-                          !controller.isUploading && userProvider.isLoggedIn
-                              ? () => controller.startUploadFlow(context)
-                              : null,
-                      icon: const Icon(Icons.upload_file),
-                      label: Text(tr.basicInfo.form.photo.choose),
-                    ),
-                  ),
-                if (userProvider.isGuest) ...[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          const WidgetSpan(
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 4),
-                              child: Icon(Icons.warning,
-                                  color: DwColors.warning, size: 16),
-                            ),
-                          ),
-                          TextSpan(text: tr.basicInfo.form.photo.guest.prefix),
-                          Hyperlink.textSpan(
-                            context,
-                            tr.basicInfo.form.photo.guest.label,
-                            onTap: () =>
-                                Navigator.of(context).pushNamed(Routes.login),
-                          ),
-                          TextSpan(text: tr.basicInfo.form.photo.guest.suffix),
-                        ],
-                        style: theme.textTheme.bodyMedium,
                       ),
                     ),
-                  )
-                ],
-                LabeledDivider(
-                  label: controller.isUploading
-                      ? Row(
+                    const SizedBox(height: 48),
+                    Center(
+                      child: CharacterAvatar.squircle(
+                        size: 174,
+                        character: Character.empty().copyWith(
+                          avatarUrl: controller.avatarUrl.value.text,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    if (controller.hasPhotoFile)
+                      SizedBox(
+                        height: 40,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 3),
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                onPressed: controller.isUploading
+                                    ? null
+                                    : () => controller.startUploadFlow(context),
+                                icon: const Icon(Icons.upload_file),
+                                label: Text(tr.basicInfo.form.photo.change),
+                              ),
                             ),
-                            const SizedBox(width: 8),
-                            Text(tr.basicInfo.form.photo.uploading),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                onPressed: controller.isUploading
+                                    ? null
+                                    : controller.resetPhoto,
+                                icon: const Icon(Icons.close),
+                                label: Text(tr.basicInfo.form.photo.remove),
+                              ),
+                            ),
                           ],
-                        )
-                      : Text(tr.basicInfo.form.photo.orSeparator),
+                        ),
+                      ),
+                    if (!controller.hasPhotoFile)
+                      SizedBox(
+                        height: 40,
+                        child: ElevatedButton.icon(
+                          onPressed:
+                              !controller.isUploading && userProvider.isLoggedIn
+                                  ? () => controller.startUploadFlow(context)
+                                  : null,
+                          icon: const Icon(Icons.upload_file),
+                          label: Text(tr.basicInfo.form.photo.choose),
+                        ),
+                      ),
+                    if (userProvider.isGuest) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              const WidgetSpan(
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 4),
+                                  child: Icon(Icons.warning,
+                                      color: DwColors.warning, size: 16),
+                                ),
+                              ),
+                              TextSpan(
+                                  text: tr.basicInfo.form.photo.guest.prefix),
+                              Hyperlink.textSpan(
+                                context,
+                                tr.basicInfo.form.photo.guest.label,
+                                onTap: () => Navigator.of(context)
+                                    .pushNamed(Routes.login),
+                              ),
+                              TextSpan(
+                                  text: tr.basicInfo.form.photo.guest.suffix),
+                            ],
+                            style: theme.textTheme.bodyMedium,
+                          ),
+                        ),
+                      )
+                    ],
+                    LabeledDivider(
+                      label: controller.isUploading
+                          ? Row(
+                              children: [
+                                const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child:
+                                      CircularProgressIndicator(strokeWidth: 3),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(tr.basicInfo.form.photo.uploading),
+                              ],
+                            )
+                          : Text(tr.basicInfo.form.photo.orSeparator),
+                    ),
+                    TextFormField(
+                      controller: controller.avatarUrl,
+                      textInputAction: TextInputAction.done,
+                      enabled: !controller.isUploading,
+                      // onChanged: (val) => updateControllers(),
+                      decoration: InputDecoration(
+                        labelText: tr.basicInfo.form.photo.url.label,
+                        hintText: tr.basicInfo.form.photo.url.placeholder,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
+                    ),
+                    const SizedBox(height: 80),
+                  ],
                 ),
-                TextFormField(
-                  controller: controller.avatarUrl,
-                  textInputAction: TextInputAction.done,
-                  enabled: !controller.isUploading,
-                  // onChanged: (val) => updateControllers(),
-                  decoration: InputDecoration(
-                    labelText: tr.basicInfo.form.photo.url.label,
-                    hintText: tr.basicInfo.form.photo.url.placeholder,
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                  ),
-                ),
-                const SizedBox(height: 80),
-              ],
+              ),
             ),
           ),
         ),

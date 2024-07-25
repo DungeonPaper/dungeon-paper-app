@@ -172,20 +172,27 @@ class HomeCharacterLayout extends StatelessWidget
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        final isWide = width > 750;
+        final isWide = width > 1100;
         if (isWide) {
-          final row = Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: clamp(width / 2, 350, 500),
-                child: Column(children: leftCol),
-              ),
-              const SizedBox(width: 16),
-              Expanded(child: rightCol),
-            ],
+          final row = SizedBox(
+            width: width,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(child: Container()),
+                      Column(children: leftCol),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(child: rightCol),
+              ],
+            ),
           );
           if (scrollable) {
             return SingleChildScrollView(
@@ -228,3 +235,4 @@ mixin HomeCharacterPaddingMixin {
         child: child,
       );
 }
+

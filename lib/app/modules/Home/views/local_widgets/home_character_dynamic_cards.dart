@@ -54,7 +54,6 @@ class HomeCharacterDynamicCards extends StatelessWidget
   Widget build(BuildContext context) {
     return CharacterProvider.consumer(
       (context, controller, _) => Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ...controller.current.actionCategories.map(

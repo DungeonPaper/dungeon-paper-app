@@ -38,185 +38,210 @@ class StartingGearEditFormView extends StatelessWidget
         ],
       ),
       body: Consumer<StartingGearEditFormController>(
-        builder: (context, ctrl, _) => ListView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: ctrl.choices.length,
-          itemBuilder: (context, i) {
-            final choice = ctrl.choices[i];
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        builder: (context, ctrl, _) => Center(
+          child: SizedBox(
+            width: 800,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemCount: ctrl.choices.length,
+              itemBuilder: (context, i) {
+                final choice = ctrl.choices[i];
+                return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          tr.startingGear.choice.title(i + 1),
-                          style: Theme.of(context).textTheme.titleLarge,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              tr.startingGear.choice.title(i + 1),
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(width: 16),
+                            HelpTooltipIcon(
+                              tooltipText: tr.startingGear.choice.helpText,
+                            ),
+                            const Expanded(child: SizedBox.shrink()),
+                            IconButton(
+                              icon: const Icon(Icons.arrow_upward),
+                              onPressed: i > 0
+                                  ? () => ctrl.moveChoiceBy(choice.data, -1)
+                                  : null,
+                              tooltip: tr.startingGear.choice.moveUp,
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.arrow_downward),
+                              onPressed: i < ctrl.choices.length - 1
+                                  ? () => ctrl.moveChoiceBy(choice.data, 1)
+                                  : null,
+                              tooltip: tr.startingGear.choice.moveDown,
+                            ),
+                            const SizedBox(width: 16),
+                            IconButton.filled(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () =>
+                                  awaitDeleteConfirmation<GearChoice>(
+                                      context,
+                                      choice.description.text,
+                                      () => ctrl.removeChoice(choice.data)),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 16),
-                        HelpTooltipIcon(
-                          tooltipText: tr.startingGear.choice.helpText,
+                        const SizedBox(height: 8),
+                        TextField(
+                          decoration: InputDecoration(
+                            label:
+                                Text(tr.startingGear.choice.description.label),
+                            hintText:
+                                tr.startingGear.choice.description.hintText,
+                          ),
+                          controller: choice.description,
                         ),
-                        const Expanded(child: SizedBox.shrink()),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_upward),
-                          onPressed: i > 0
-                              ? () => ctrl.moveChoiceBy(choice.data, -1)
-                              : null,
-                          tooltip: tr.startingGear.choice.moveUp,
+                        const SizedBox(height: 16),
+                        _buildSuggestedMaxAllowance(context, choice),
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Text(
+                              tr.startingGear.selection.title,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(width: 8),
+                            HelpTooltipIcon(
+                              tooltipText: tr.startingGear.selection.helpText,
+                              size: 20,
+                            ),
+                          ],
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_downward),
-                          onPressed: i < ctrl.choices.length - 1
-                              ? () => ctrl.moveChoiceBy(choice.data, 1)
-                              : null,
-                          tooltip: tr.startingGear.choice.moveDown,
-                        ),
-                        const SizedBox(width: 16),
-                        IconButton.filled(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () => awaitDeleteConfirmation<GearChoice>(
-                              context,
-                              choice.description.text,
-                              () => ctrl.removeChoice(choice.data)),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      decoration: InputDecoration(
-                        label: Text(tr.startingGear.choice.description.label),
-                        hintText: tr.startingGear.choice.description.hintText,
-                      ),
-                      controller: choice.description,
-                    ),
-                    const SizedBox(height: 16),
-                    _buildSuggestedMaxAllowance(context, choice),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Text(
-                          tr.startingGear.selection.title,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(width: 8),
-                        HelpTooltipIcon(
-                          tooltipText: tr.startingGear.selection.helpText,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    for (final selection in choice.selections)
-                      Builder(
-                        builder: (context) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: borderBox,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                        const SizedBox(height: 8),
+                        for (final selection in choice.selections)
+                          Builder(
+                            builder: (context) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: borderBox,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Expanded(
-                                        child: TextField(
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: TextField(
+                                              decoration: InputDecoration(
+                                                label: Text(tr
+                                                    .startingGear
+                                                    .selection
+                                                    .description
+                                                    .label),
+                                                hintText: tr
+                                                    .startingGear
+                                                    .selection
+                                                    .description
+                                                    .hintText,
+                                              ),
+                                              controller: selection.description,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 16),
+                                          IconButton.filled(
+                                            icon: const Icon(Icons.delete),
+                                            onPressed: () =>
+                                                ctrl.removeSelection(
+                                                    choice.data,
+                                                    selection.data),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 16),
+                                      SizedBox(
+                                        width: 200,
+                                        child: NumberTextField(
+                                          numberType: NumberType.double,
                                           decoration: InputDecoration(
                                             label: Text(tr.startingGear
-                                                .selection.description.label),
+                                                .selection.coins.label),
                                             hintText: tr.startingGear.selection
-                                                .description.hintText,
+                                                .coins.hintText,
                                           ),
-                                          controller: selection.description,
+                                          controller: selection.coins,
                                         ),
                                       ),
-                                      const SizedBox(width: 16),
-                                      IconButton.filled(
-                                        icon: const Icon(Icons.delete),
-                                        onPressed: () => ctrl.removeSelection(
-                                            choice.data, selection.data),
+                                      const SizedBox(height: 16),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            tr.startingGear.option.title,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          HelpTooltipIcon(
+                                            tooltipText:
+                                                tr.startingGear.option.helpText,
+                                            size: 20,
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 16),
-                                  SizedBox(
-                                    width: 200,
-                                    child: NumberTextField(
-                                      numberType: NumberType.double,
-                                      decoration: InputDecoration(
-                                        label: Text(tr.startingGear.selection
-                                            .coins.label),
-                                        hintText: tr.startingGear.selection
-                                            .coins.hintText,
-                                      ),
-                                      controller: selection.coins,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        tr.startingGear.option.title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      HelpTooltipIcon(
-                                        tooltipText:
-                                            tr.startingGear.option.helpText,
-                                        size: 20,
-                                      ),
-                                    ],
-                                  ),
-                                  if (selection.options.isNotEmpty)
-                                    const SizedBox(height: 16),
-                                  for (final option in selection.options)
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 8),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(16),
-                                        decoration: borderBox,
-                                        child: Builder(
-                                          builder: _buildOptionRow(context,
-                                              ctrl, choice, selection, option),
+                                      if (selection.options.isNotEmpty)
+                                        const SizedBox(height: 16),
+                                      for (final option in selection.options)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 8),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(16),
+                                            decoration: borderBox,
+                                            child: Builder(
+                                              builder: _buildOptionRow(
+                                                  context,
+                                                  ctrl,
+                                                  choice,
+                                                  selection,
+                                                  option),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  if (selection.options.isEmpty)
-                                    const SizedBox(height: 16),
-                                  Row(
-                                    children: [
-                                      ElevatedButton.icon(
-                                        onPressed: () => ctrl.selectItemsToAdd(
-                                            choice.data, selection.data),
-                                        icon: const Icon(Icons.add),
-                                        label: Text(tr.startingGear.option.add),
+                                      if (selection.options.isEmpty)
+                                        const SizedBox(height: 16),
+                                      Row(
+                                        children: [
+                                          ElevatedButton.icon(
+                                            onPressed: () =>
+                                                ctrl.selectItemsToAdd(
+                                                    choice.data,
+                                                    selection.data),
+                                            icon: const Icon(Icons.add),
+                                            label: Text(
+                                                tr.startingGear.option.add),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ElevatedButton.icon(
-                      onPressed: () => ctrl.addSelection(choice.data),
-                      icon: const Icon(Icons.add),
-                      label: Text(tr.startingGear.selection.add),
+                                ),
+                              );
+                            },
+                          ),
+                        ElevatedButton.icon(
+                          onPressed: () => ctrl.addSelection(choice.data),
+                          icon: const Icon(Icons.add),
+                          label: Text(tr.startingGear.selection.add),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          },
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
