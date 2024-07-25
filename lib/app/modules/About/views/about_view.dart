@@ -4,6 +4,7 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/hyperlink.dart';
 import 'package:dungeon_paper/app/widgets/atoms/rainbow_text.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +91,17 @@ class AboutView extends StatelessWidget {
                     isThreeLine: true,
                     visualDensity: VisualDensity.compact,
                   ),
+              if (!PlatformHelper.isIOS)
+                () => ListTile(
+                      leading: const Icon(Icons.monetization_on),
+                      title: Text(tr.about.donate.title),
+                      subtitle: Text(tr.about.donate.subtitle,
+                          style: textTheme.bodySmall),
+                      onTap: () =>
+                          launchUrl(Uri.parse('https://ko-fi.com/casraf')),
+                      isThreeLine: true,
+                      visualDensity: VisualDensity.compact,
+                    ),
               () => const Divider(),
               () => Padding(
                     padding:

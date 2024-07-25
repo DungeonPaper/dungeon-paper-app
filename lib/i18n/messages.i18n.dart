@@ -1258,6 +1258,7 @@ class AboutMessages {
   ChangelogAboutMessages get changelog => ChangelogAboutMessages(this);
   DiscordAboutMessages get discord => DiscordAboutMessages(this);
   FeedbackAboutMessages get feedback => FeedbackAboutMessages(this);
+  DonateAboutMessages get donate => DonateAboutMessages(this);
   SocialsAboutMessages get socials => SocialsAboutMessages(this);
 
   /// ```dart
@@ -1321,6 +1322,22 @@ class FeedbackAboutMessages {
   /// ```
   String get subtitle =>
       """We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.""";
+}
+
+class DonateAboutMessages {
+  final AboutMessages _parent;
+  const DonateAboutMessages(this._parent);
+
+  /// ```dart
+  /// "Make a Donation"
+  /// ```
+  String get title => """Make a Donation""";
+
+  /// ```dart
+  /// "If you are looking for a way to support the project, you can make a donation on the official Ko-fi page of the developer. Click this to be redirected to the Ko-fi page."
+  /// ```
+  String get subtitle =>
+      """If you are looking for a way to support the project, you can make a donation on the official Ko-fi page of the developer. Click this to be redirected to the Ko-fi page.""";
 }
 
 class SocialsAboutMessages {
@@ -4077,6 +4094,9 @@ Map<String, String> get messagesMap => {
       """about.feedback.title""": """Send Feedback""",
       """about.feedback.subtitle""":
           """We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.""",
+      """about.donate.title""": """Make a Donation""",
+      """about.donate.subtitle""":
+          """If you are looking for a way to support the project, you can make a donation on the official Ko-fi page of the developer. Click this to be redirected to the Ko-fi page.""",
       """about.socials.title""": """Links""",
       """about.socials.twitter""": """Twitter""",
       """about.socials.facebook""": """Facebook""",

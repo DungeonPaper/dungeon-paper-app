@@ -262,6 +262,9 @@ about:
   feedback:
     title: Send Feedback
     subtitle: We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.
+  donate:
+    title: Make a Donation
+    subtitle: If you are looking for a way to support the project, you can make a donation on the official Ko-fi page of the developer. Click this to be redirected to the Ko-fi page.
   socials:
     title: Links
     twitter: Twitter
