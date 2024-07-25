@@ -20,7 +20,8 @@ class ChangelogEntry {
   final String content;
 
   ChangelogEntry._(this.version, this.content);
-
+  ChangelogEntry.unreleased(this.version)
+      : content = 'The version you are using has no changelog entry.';
 
   factory ChangelogEntry.parse(String raw) {
     final lines = raw.split('\n');

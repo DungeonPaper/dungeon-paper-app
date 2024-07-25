@@ -17,10 +17,17 @@ class ChangelogController extends ChangeNotifier {
     fetchChangelog();
   }
 
-  List<ChangelogEntry> get entries => _entries;
+  List<ChangelogEntry> get entries {
+    return _entries;
+  }
 
   void parseChangelog(String changelog) {
     _entries = ChangelogParser(changelog).entries;
+    final currentOrNewerExists =
+        _entries.where((e) => e.version >= currentVersion).isNotEmpty;
+    if (!currentOrNewerExists) {
+      _entries.insert(0, ChangelogEntry.unreleased(currentVersion));
+    }
     debugPrint('Parsed ${_entries.length} entries');
     notifyListeners();
   }

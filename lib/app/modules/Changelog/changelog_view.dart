@@ -22,54 +22,61 @@ class ChangelogView extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return ListView.builder(
-            itemCount: controller.entries.length,
-            itemBuilder: (context, index) {
-              final isLatest = index == 0;
-              final entry = controller.entries[index];
-              final version = entry.version.toString();
-              final isCurrent = entry.version == controller.currentVersion;
-              final content = entry.content;
+          return Align(
+            alignment: Alignment.topCenter,
+            child: SizedBox(
+              width: 800,
+              child: ListView.builder(
+                itemCount: controller.entries.length,
+                itemBuilder: (context, index) {
+                  final isLatest = index == 0;
+                  final entry = controller.entries[index];
+                  final version = entry.version.toString();
+                  final isCurrent = entry.version == controller.currentVersion;
+                  final content = entry.content;
 
-              return ExpansionTile(
-                title: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 8,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Text(version,
-                          style: Theme.of(context).textTheme.titleLarge),
+                  return ExpansionTile(
+                    title: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 8,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Text(version,
+                              style: Theme.of(context).textTheme.titleLarge),
+                        ),
+                        if (isLatest)
+                          AdvancedChip(
+                            label: Text(tr.changelog.tags.latest),
+                            backgroundColor: Colors.green,
+                            visualDensity: VisualDensity.compact,
+                            padding: EdgeInsets.zero,
+                          ),
+                        if (isCurrent)
+                          AdvancedChip(
+                            label: Text(tr.changelog.tags.current),
+                            backgroundColor: Colors.blue,
+                            visualDensity: VisualDensity.compact,
+                            padding: EdgeInsets.zero,
+                          ),
+                      ],
                     ),
-                    if (isLatest)
-                      AdvancedChip(
-                        label: Text(tr.changelog.tags.latest),
-                        backgroundColor: Colors.green,
-                        visualDensity: VisualDensity.compact,
-                        padding: EdgeInsets.zero,
+                    controlAffinity: ListTileControlAffinity.platform,
+                    initiallyExpanded:
+                        entry.version >= controller.currentVersion,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 32),
+                        child: SizedBox(
+                          width: 800,
+                          child: MarkdownBody(data: content),
+                        ),
                       ),
-                    if (isCurrent)
-                      AdvancedChip(
-                        label: Text(tr.changelog.tags.current),
-                        backgroundColor: Colors.blue,
-                        visualDensity: VisualDensity.compact,
-                        padding: EdgeInsets.zero,
-                      ),
-                  ],
-                ),
-                controlAffinity: ListTileControlAffinity.platform,
-                initiallyExpanded: entry.version >= controller.currentVersion,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 600,
-                      child: MarkdownBody(data: content),
-                    ),
-                  ),
-                ],
-              );
-            },
+                    ],
+                  );
+                },
+              ),
+            ),
           );
         },
       ),
