@@ -1,4 +1,5 @@
 import 'package:dungeon_paper/core/global_keys.dart';
+import 'package:dungeon_paper/core/utils/color_utils.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'theme_utils.dart';
@@ -15,6 +16,7 @@ final parchmentTheme = createTheme(
     primary: parchmentPrimaryColor,
     // secondary: parchmentSecondaryColor,
   ),
+  surfaceColor: ColorUtils.lighten(parchmentBackgroundColor, 0.05),
   scaffoldBackgroundColor: parchmentBackgroundColor,
   brightness: Brightness.light,
 );
@@ -26,6 +28,7 @@ final legacyTheme = createTheme(
     primary: const Color.fromARGB(255, 17, 76, 95),
     secondary: const Color.fromARGB(255, 17, 76, 95),
   ),
+  surfaceColor: const Color.fromARGB(255, 255, 255, 255),
   scaffoldBackgroundColor: const Color.fromARGB(255, 136, 212, 152),
   brightness: Brightness.light,
 );
@@ -36,6 +39,7 @@ final darkTheme = createTheme(
     brightness: Brightness.dark,
     secondary: secondaryColor,
   ),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 20, 18, 24),
   brightness: Brightness.dark,
 );
 

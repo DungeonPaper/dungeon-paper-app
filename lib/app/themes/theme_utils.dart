@@ -110,10 +110,9 @@ ThemeData createTheme(
     colorScheme: colorScheme,
     textTheme: copyTextThemeWith(textTheme, fontFamily: 'Nunito'),
   );
-  final foregroundDefault =
-      brightness == Brightness.light ? Colors.black : Colors.white;
-  final backgroundDefault =
-      brightness == Brightness.light ? Colors.white : Colors.black;
+  final isLight = brightness == Brightness.light;
+  final foregroundDefault = isLight ? Colors.black : Colors.white;
+  // final backgroundDefault = isLight ? Colors.white : Colors.black;
   final cardBaseColor =
       surfaceColor ?? scaffoldBackgroundColor ?? foregroundDefault;
   final cardColor = ColorUtils.lighten(cardBaseColor, 0.025);

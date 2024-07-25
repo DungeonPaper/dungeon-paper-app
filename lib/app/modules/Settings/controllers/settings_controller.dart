@@ -36,7 +36,7 @@ class SettingsController extends ChangeNotifier
 
   void setDarkTheme(int theme) {
     updateSettings(
-      settings.copyWith(defaultLightTheme: theme),
+      settings.copyWith(defaultDarkTheme: theme),
     );
     if (user.brightness == Brightness.dark) {
       if (maybeChar != null) {
