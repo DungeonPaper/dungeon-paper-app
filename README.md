@@ -1,8 +1,9 @@
 # Dungeon Paper
 
-[![facebook](https://img.shields.io/static/v1?label=Like&style=social&logo=facebook&message=%20)](https://bit.ly/DungeonPaper-Facebook)
-[![twitter](https://img.shields.io/twitter/follow/espadrine?label=Follow&style=social)](https://bit.ly/DungeonPaper-Twitter)
-[![discord](https://img.shields.io/discord/719848105586982915?label=Chat&logo=discord&style=social)](https://bit.ly/DungeonPaper-Discord)
+[![GitHub Stars](https://img.shields.io/github/stars/DungeonPaper/dungeon-paper-app?style=flat&logo=github&label=GitHub%20Stars)](https://bit.ly/DungeonPaper-GitHub)
+[![Facebook](https://img.shields.io/badge/Facebook-%40?style=flat&logo=Facebook&color=%230866ff)](https://bit.ly/DungeonPaper-Facebook)
+[![X](https://img.shields.io/badge/X-%40?style=flat&logo=x&logoColor=white&color=black)](https://bit.ly/DungeonPaper-Twitter)
+[![Discord](https://img.shields.io/badge/Discord-%40?style=flat&logo=discord&logoColor=white&color=%235865F2)](https://bit.ly/DungeonPaper-Discord)
 
 Dungeon World players, this is the app for you!
 
@@ -15,13 +16,13 @@ own app. Once that is properly set up, the app should create entities based on l
 nothing else should be created for the database beforehand. No one in this repository will provide
 any secret keys to anyone, ever.
 
-<div style="text-align: center;">
+<p align="center">
 
 ![dungeon paper](https://dungeonpaper.app/images/logo-512.png)
 
 [Download the latest version](https://dungeonpaper.app/download)
 
-</div>
+</p>
 
 ## Features
 
