@@ -41,6 +41,14 @@ class UploadResponse {
 
 Future<CroppedFile?> _pickAndCrop(BuildContext context) async {
   final theme = Theme.of(context);
+  final colorScheme = theme.colorScheme;
+  final settings = [
+    AndroidUiSettings(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      toolbarWidgetColor: colorScheme.secondary,
+    ),
+    WebUiSettings(context: context),
+  ];
   final res = await FlutterFileDialog.pickFile(
     params: const OpenFileDialogParams(
       dialogType: OpenFileDialogType.image,
@@ -48,21 +56,16 @@ Future<CroppedFile?> _pickAndCrop(BuildContext context) async {
       mimeTypesFilter: ['image/*'],
     ),
   );
-
   if (res == null) {
     return null;
   }
 
-  final colorScheme = theme.colorScheme;
   final cropped = await ImageCropper().cropImage(
     sourcePath: res,
     aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-    uiSettings: [
-      AndroidUiSettings(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        toolbarWidgetColor: colorScheme.secondary,
-      ),
-    ],
+    compressQuality: 100,
+    compressFormat: ImageCompressFormat.png,
+    uiSettings: settings,
   );
 
   return cropped;

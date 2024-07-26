@@ -10,6 +10,7 @@ import 'package:dungeon_paper/core/utils/builder_utils.dart';
 import 'package:dungeon_paper/core/utils/email_address_validator.dart';
 import 'package:dungeon_paper/core/utils/password_validator.dart';
 import 'package:dungeon_paper/core/utils/string_validator.dart';
+import 'package:dungeon_paper/core/utils/upload_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +69,7 @@ class AccountView extends StatelessWidget {
                     : const Icon(Icons.image),
                 enabled: !controller.uploading,
                 onTap:
-                    !controller.uploading ? () => _uploadImage(context) : null,
+                    !controller.uploading ? () => _uploadImage(controller, context) : null,
               ),
             ),
         () => Consumer<AccountController>(
@@ -151,7 +152,8 @@ class AccountView extends StatelessWidget {
                       username: controller.user.username,
                     );
                     // A deletion request for your account was sent successfully
-                    CustomSnackBar.show(content: tr.account.deleteAccount.success);
+                    CustomSnackBar.show(
+                        content: tr.account.deleteAccount.success);
                   },
                 ),
               ),
@@ -240,7 +242,9 @@ class AccountView extends StatelessWidget {
     );
   }
 
-  void _uploadImage(BuildContext context) {}
+  void _uploadImage(AccountController controller, BuildContext context) {
+    controller.uploadPhoto(context);
+  }
 
   Future<void> Function() unlinkProvider(BuildContext context,
           AccountController controller, ProviderName provider) =>

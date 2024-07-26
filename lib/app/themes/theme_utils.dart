@@ -137,14 +137,14 @@ ThemeData createTheme(
     ),
     checkboxTheme: base.checkboxTheme.copyWith(
       fillColor:
-          MaterialStateProperty.resolveWith((states) => colorScheme.secondary),
-      checkColor: MaterialStateProperty.resolveWith(
+          WidgetStateProperty.resolveWith((states) => colorScheme.secondary),
+      checkColor: WidgetStateProperty.resolveWith(
           (states) => colorScheme.onSecondary),
     ),
     switchTheme: base.switchTheme.copyWith(
       thumbColor:
-          MaterialStateProperty.resolveWith((states) => colorScheme.secondary),
-      trackColor: MaterialStateProperty.resolveWith(
+          WidgetStateProperty.resolveWith((states) => colorScheme.secondary),
+      trackColor: WidgetStateProperty.resolveWith(
           (states) => colorScheme.secondaryContainer),
     ),
     dialogTheme: base.dialogTheme.copyWith(
