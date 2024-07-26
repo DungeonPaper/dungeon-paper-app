@@ -1525,11 +1525,8 @@ class CharacterClassMessages {
   /// "Backgrounds"
   /// ```
   String get bio => """Backgrounds""";
-
-  /// ```dart
-  /// "Starting Gear Selections"
-  /// ```
-  String get startingGear => """Starting Gear Selections""";
+  StartingGearCharacterClassMessages get startingGear =>
+      StartingGearCharacterClassMessages(this);
 }
 
 class IsSpellcasterCharacterClassMessages {
@@ -1552,6 +1549,16 @@ class IsSpellcasterCharacterClassMessages {
 creation and leveling up.""";
 }
 
+class StartingGearCharacterClassMessages {
+  final CharacterClassMessages _parent;
+  const StartingGearCharacterClassMessages(this._parent);
+
+  /// ```dart
+  /// "Starting Gear Selections"
+  /// ```
+  String get label => """Starting Gear Selections""";
+}
+
 class StartingGearMessages {
   final Messages _parent;
   const StartingGearMessages(this._parent);
@@ -1559,7 +1566,22 @@ class StartingGearMessages {
   /// ```dart
   /// "Edit Starting Gear"
   /// ```
-  String get title => """Edit Starting Gear""";
+  String get titleEdit => """Edit Starting Gear""";
+
+  /// ```dart
+  /// "Select Starting Gear"
+  /// ```
+  String get titleSelect => """Select Starting Gear""";
+
+  /// ```dart
+  /// "$amt G"
+  /// ```
+  String coins(String amt) => """$amt G""";
+
+  /// ```dart
+  /// "${amt}× $name"
+  /// ```
+  String item(String amt, String name) => """${amt}× $name""";
   ChoiceStartingGearMessages get choice => ChoiceStartingGearMessages(this);
   SelectionStartingGearMessages get selection =>
       SelectionStartingGearMessages(this);
@@ -2972,15 +2994,14 @@ class StartingGearCreateCharacterMessages {
       """Select your starting gear determined by class (optional)""";
 
   /// ```dart
-  /// "$amt ${_plural(double.tryParse(amt)?.ceil() ?? 0, one: 'coin', many: 'coins')}"
+  /// "$amt G"
   /// ```
-  String coins(String amt) =>
-      """$amt ${_plural(double.tryParse(amt)?.ceil() ?? 0, one: 'coin', many: 'coins')}""";
+  String coins(String amt) => """$amt G""";
 
   /// ```dart
-  /// "$amt × $name"
+  /// "${amt}× $name"
   /// ```
-  String item(String amt, String name) => """$amt × $name""";
+  String item(String amt, String name) => """${amt}× $name""";
   CountStartingGearCreateCharacterMessages get count =>
       CountStartingGearCreateCharacterMessages(this);
 }
@@ -4128,8 +4149,9 @@ Map<String, String> get messagesMap => {
 creation and leveling up.""",
       """characterClass.stats""": """Stats""",
       """characterClass.bio""": """Backgrounds""",
-      """characterClass.startingGear""": """Starting Gear Selections""",
-      """startingGear.title""": """Edit Starting Gear""",
+      """characterClass.startingGear.label""": """Starting Gear Selections""",
+      """startingGear.titleEdit""": """Edit Starting Gear""",
+      """startingGear.titleSelect""": """Select Starting Gear""",
       """startingGear.choice.helpText""":
           """A choice is a list of selections the player can make. It provides a possible set of items & coins that the player can select from.""",
       """startingGear.choice.description.label""": """Prompt""",

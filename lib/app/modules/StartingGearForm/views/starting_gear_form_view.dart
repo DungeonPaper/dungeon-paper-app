@@ -21,7 +21,7 @@ class StartingGearFormView extends StatelessWidget {
         dirty: controller.dirty,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(tr.generic.selectEntity(tr.entity(tn(GearSelection)))),
+            title: Text(tr.startingGear.titleSelect),
           ),
           floatingActionButton: AdvancedFloatingActionButton.extended(
             onPressed: () => _save(context),
@@ -73,10 +73,20 @@ class StartingGearFormView extends StatelessWidget {
                                     ),
                                     title: Text(sel.description, maxLines: 1),
                                     subtitle: Text(
-                                      sel.options
-                                          .map((opt) =>
-                                              '${NumberFormat('#0.#').format(opt.amount)}x ${opt.item.name}')
-                                          .join(', '),
+                                      [
+                                        if (sel.coins > 0)
+                                          tr.startingGear.coins(
+                                            NumberFormat('#0.#')
+                                                .format(sel.coins),
+                                          ),
+                                        ...sel.options.map(
+                                          (opt) => tr.startingGear.item(
+                                            NumberFormat('#0.#')
+                                                .format(opt.amount),
+                                            opt.item.name,
+                                          ),
+                                        ),
+                                      ].join(', '),
                                     ),
                                     dense: true,
                                     visualDensity: VisualDensity.compact,

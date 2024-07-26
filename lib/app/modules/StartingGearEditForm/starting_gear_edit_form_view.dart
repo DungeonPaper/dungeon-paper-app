@@ -1,5 +1,4 @@
 import 'package:dungeon_paper/app/data/models/gear_choice.dart';
-import 'package:dungeon_paper/app/data/models/gear_selection.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/modules/StartingGearEditForm/starting_gear_edit_form_controller.dart';
 import 'package:dungeon_paper/app/widgets/atoms/help_tooltip_icon.dart';
@@ -27,7 +26,7 @@ class StartingGearEditFormView extends StatelessWidget
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(tr.startingGear.title),
+        title: Text(tr.startingGear.titleEdit),
         centerTitle: true,
         actions: [
           IconButton(

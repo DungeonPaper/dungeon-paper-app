@@ -311,10 +311,14 @@ characterClass:
       creation and leveling up.
   stats: Stats
   bio: Backgrounds
-  startingGear: Starting Gear Selections
+  startingGear:
+    label: Starting Gear Selections
 
 startingGear:
-  title: Edit Starting Gear
+  titleEdit: Edit Starting Gear
+  titleSelect: Select Starting Gear
+  coins(String amt): $amt G
+  item(String amt, String name): ${amt}× $name
   choice:
     title(int index): Choice $index
     helpText: A choice is a list of selections the player can make.
@@ -622,8 +626,8 @@ createCharacter:
     description(String cls): Level 1 $cls
   startingGear:
     helpText: Select your starting gear determined by class (optional)
-    coins(String amt): "$amt ${_plural(double.tryParse(amt)?.ceil() ?? 0, one: 'coin', many: 'coins')}"
-    item(String amt, String name): $amt × $name
+    coins(String amt): $amt G
+    item(String amt, String name): ${amt}× $name
     count:
       withMax(int cnt, int max): '$cnt selected (class allowance: $max)'
       noMax(int cnt): $cnt selected

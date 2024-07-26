@@ -95,8 +95,10 @@ class CharacterClassForm extends StatelessWidget {
           () => Text(tr.characterClass.bio,
               style: Theme.of(context).textTheme.titleLarge),
           () => AlignmentValuesField(controller: controller.alignmentValues),
-          () => Text(tr.characterClass.startingGear,
-              style: Theme.of(context).textTheme.bodySmall),
+          () => Text(
+                tr.characterClass.startingGear.label,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
           () => Wrap(
                 alignment: WrapAlignment.start,
                 crossAxisAlignment: WrapCrossAlignment.center,

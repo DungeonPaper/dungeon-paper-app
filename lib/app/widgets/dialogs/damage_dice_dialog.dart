@@ -40,7 +40,7 @@ class _DamageDiceDialogState extends State<DamageDiceDialog> {
     return AlertDialog(
       title: Row(
         children: [
-          const Icon(DwIcons.dumbbell, size: 32),
+          const Icon(DwIcons.swords, size: 32),
           const SizedBox(width: 12),
           Expanded(child: Text(tr.character.data.damageDice)),
         ],
