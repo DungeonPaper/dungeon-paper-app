@@ -12,7 +12,7 @@ class Monster extends dw.Monster implements WithMeta {
     required super.instinct,
     required super.tags,
     required super.moves,
-  })  : _meta = meta;
+  }) : _meta = meta;
 
   @override
   Meta get meta => _meta;

@@ -17,7 +17,8 @@ import 'package:dungeon_world_data/dungeon_world_data.dart' as dw;
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class CreateCharacterController extends ChangeNotifier with RepositoryProviderMixin {
+class CreateCharacterController extends ChangeNotifier
+    with RepositoryProviderMixin {
   var name = '';
   var avatarUrl = '';
   CharacterClass? characterClass;
@@ -30,7 +31,8 @@ class CreateCharacterController extends ChangeNotifier with RepositoryProviderMi
 
   var dirty = false;
 
-  static CreateCharacterController of(BuildContext context, {bool listen = false}) =>
+  static CreateCharacterController of(BuildContext context,
+          {bool listen = false}) =>
       Provider.of<CreateCharacterController>(context, listen: listen);
   static Widget consumer(
     Widget Function(BuildContext, CreateCharacterController, Widget?) builder,
@@ -55,7 +57,7 @@ class CreateCharacterController extends ChangeNotifier with RepositoryProviderMi
     setDirty();
   }
 
-  void setClass( CharacterClass cls) {
+  void setClass(CharacterClass cls) {
     characterClass = cls;
     setStartingGear(
       cls.gearChoices

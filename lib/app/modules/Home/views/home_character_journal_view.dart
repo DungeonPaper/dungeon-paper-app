@@ -214,4 +214,3 @@ class HomeCharacterJournalView extends StatelessWidget
     );
   }
 }
-

@@ -88,4 +88,3 @@ class ClassAlignmentsArguments {
     this.preselected,
   });
 }
-

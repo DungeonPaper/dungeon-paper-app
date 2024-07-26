@@ -122,4 +122,3 @@ class _EntityShareFormState<T extends WithMeta> extends State<EntityShareForm>
     widget.onChange(Meta.forkMeta(source!, user));
   }
 }
-

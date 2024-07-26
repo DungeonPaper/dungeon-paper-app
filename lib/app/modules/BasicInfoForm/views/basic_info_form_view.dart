@@ -196,4 +196,3 @@ class BasicInfoFormView extends StatelessWidget with UserProviderMixin {
     Navigator.of(context).pop();
   }
 }
-

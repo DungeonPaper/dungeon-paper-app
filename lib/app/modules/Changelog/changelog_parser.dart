@@ -31,4 +31,3 @@ class ChangelogEntry {
     return ChangelogEntry._(version, content);
   }
 }
-

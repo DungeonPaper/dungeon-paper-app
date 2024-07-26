@@ -19,7 +19,7 @@ class DiceIcon extends StatelessWidget {
     super.key,
     this.size,
     this.color,
-  })  : sides = dice.sides;
+  }) : sides = dice.sides;
 
   @override
   Widget build(BuildContext context) {

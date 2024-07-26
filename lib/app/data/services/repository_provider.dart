@@ -479,4 +479,3 @@ mixin RepositoryProviderMixin {
       RepositoryProvider.of(appGlobalKey.currentContext!);
   RepositoryProvider get repository => repo;
 }
-

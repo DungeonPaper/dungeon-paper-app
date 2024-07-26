@@ -64,7 +64,6 @@ class LibraryListController<T extends WithMeta, F extends EntityFilters<T>>
     super.dispose();
   }
 
-
   void setFilters(FiltersGroup group, F? filters) {
     this.filters[group] = filters;
     notifyListeners();
@@ -228,4 +227,3 @@ abstract class LibraryListArguments<T extends WithMeta,
     FiltersGroup? initialTab = FiltersGroup.playbook,
   }) : initialTab = initialTab ?? FiltersGroup.playbook;
 }
-

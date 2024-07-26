@@ -104,4 +104,3 @@ class ExpBar extends StatelessWidget {
     );
   }
 }
-

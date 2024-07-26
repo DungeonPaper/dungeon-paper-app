@@ -157,13 +157,14 @@ class LoginView extends StatelessWidget {
                                   final controller =
                                       Provider.of<LoginController>(context,
                                           listen: false);
-                                  final res = PasswordValidator().validator(pwd) ??
-                                      (pwd == controller.password.text
-                                          ? null
-                                          : tr.auth.signup.password.confirm
-                                              .error);
-                                              debugPrint('pwd: $res');
-                                              return res;
+                                  final res =
+                                      PasswordValidator().validator(pwd) ??
+                                          (pwd == controller.password.text
+                                              ? null
+                                              : tr.auth.signup.password.confirm
+                                                  .error);
+                                  debugPrint('pwd: $res');
+                                  return res;
                                 },
                               ),
                             ],
@@ -238,4 +239,3 @@ class LoginView extends StatelessWidget {
     );
   }
 }
-

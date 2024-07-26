@@ -138,8 +138,8 @@ ThemeData createTheme(
     checkboxTheme: base.checkboxTheme.copyWith(
       fillColor:
           WidgetStateProperty.resolveWith((states) => colorScheme.secondary),
-      checkColor: WidgetStateProperty.resolveWith(
-          (states) => colorScheme.onSecondary),
+      checkColor:
+          WidgetStateProperty.resolveWith((states) => colorScheme.onSecondary),
     ),
     switchTheme: base.switchTheme.copyWith(
       thumbColor:
@@ -206,4 +206,3 @@ Color accessibleColorFor(Color fg, Color bg) {
   }
   return fg;
 }
-

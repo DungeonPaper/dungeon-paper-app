@@ -637,8 +637,12 @@ class RichButton {
       [String? suffix, int? selectionStartOffset, int? selectionEndOffset]) {
     final isAuto = behavior == RichButtonTextBehavior.auto;
     final isWrap = behavior == RichButtonTextBehavior.wrap;
-    final hasPrefix = isWrap || (prefix.isNotEmpty && isAuto) || behavior == RichButtonTextBehavior.prefix;
-    final hasSuffix = isWrap || (suffix?.isNotEmpty == true && isAuto) || behavior == RichButtonTextBehavior.suffix;
+    final hasPrefix = isWrap ||
+        (prefix.isNotEmpty && isAuto) ||
+        behavior == RichButtonTextBehavior.prefix;
+    final hasSuffix = isWrap ||
+        (suffix?.isNotEmpty == true && isAuto) ||
+        behavior == RichButtonTextBehavior.suffix;
     suffix ??= prefix;
     // final shouldWrap = (isAuto && !controller.selection.isCollapsed)
 
@@ -670,4 +674,3 @@ class RichButton {
     };
   }
 }
-

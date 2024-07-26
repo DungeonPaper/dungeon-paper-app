@@ -205,4 +205,3 @@ class RectClipper extends CustomClipper<Rect> {
       oldClipper.size.width != size.width ||
       oldClipper.size.height != size.height;
 }
-

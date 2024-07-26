@@ -127,4 +127,3 @@ class NoteFormArguments extends LibraryEntityFormArguments<Note> {
     required super.formContext,
   });
 }
-

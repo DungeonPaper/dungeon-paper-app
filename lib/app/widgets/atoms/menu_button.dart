@@ -180,7 +180,8 @@ class MenuButton<V> extends StatelessWidget {
             return PopupMenuItem<V>(
               value: entry.value,
               enabled: !entry.disabled,
-              child: PopupMenuItemListTile(icon: entry.icon, label: entry.label),
+              child:
+                  PopupMenuItemListTile(icon: entry.icon, label: entry.label),
             );
           } else {
             return e;

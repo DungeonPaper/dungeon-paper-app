@@ -201,4 +201,3 @@ class LibraryCardList<T extends WithMeta, F extends EntityFilters<T>>
     throw TypeError();
   }
 }
-

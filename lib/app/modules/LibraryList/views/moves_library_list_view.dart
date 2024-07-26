@@ -95,4 +95,3 @@ class MoveLibraryListArguments extends LibraryListArguments<Move, MoveFilters> {
           },
         );
 }
-

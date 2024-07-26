@@ -87,4 +87,3 @@ class CircularRevealTransitionBuilder<T> extends PageRouteBuilder {
     );
   }
 }
-

@@ -38,4 +38,3 @@ class HomeCharacterActionsFilters extends StatelessWidget {
     );
   }
 }
-

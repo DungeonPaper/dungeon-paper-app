@@ -538,4 +538,3 @@ class HomeCharacterDynamicCards extends StatelessWidget
     ];
   }
 }
-

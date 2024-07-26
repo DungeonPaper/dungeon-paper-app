@@ -84,4 +84,3 @@ class _AlignmentValuesFieldState extends State<AlignmentValuesField> {
     );
   }
 }
-

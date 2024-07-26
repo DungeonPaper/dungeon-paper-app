@@ -44,7 +44,7 @@ class BondsFlagsFormController extends ChangeNotifier {
   }
 
   void removeBond(int index) {
-  debugPrint('remove bond $index');
+    debugPrint('remove bond $index');
     bonds.removeAt(index);
     bondsCtrls[index].removeListener(_setDirty);
     bondsCtrls.removeAt(index);
@@ -115,4 +115,3 @@ class BondsFlagsFormArguments {
     required this.onChanged,
   });
 }
-

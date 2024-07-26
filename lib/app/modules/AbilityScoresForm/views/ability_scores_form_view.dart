@@ -180,4 +180,3 @@ class AbilityScoresFormView extends StatelessWidget {
     Navigator.of(context).pop();
   }
 }
-

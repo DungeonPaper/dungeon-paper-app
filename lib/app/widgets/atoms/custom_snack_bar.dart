@@ -10,12 +10,13 @@ class CustomSnackBar extends SnackBar {
 
   final String? title;
 
-  static Widget _getContent(
-      String? title, String content) {
+  static Widget _getContent(String? title, String content) {
     if (title != null && title.isNotEmpty) {
       return Column(
         children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+          Text(title,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           Text(content),
         ],
       );
@@ -30,4 +31,3 @@ class CustomSnackBar extends SnackBar {
     );
   }
 }
-

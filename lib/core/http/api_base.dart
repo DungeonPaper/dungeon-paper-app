@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
 class ApiBase {
   final String baseUrl;
 
@@ -52,4 +51,3 @@ class Response extends http.Response {
 
   Map<String, dynamic> get json => jsonDecode(body);
 }
-

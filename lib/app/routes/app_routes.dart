@@ -151,7 +151,8 @@ abstract class Routes {
   static const changelog = _Paths.changelog;
 
   /// `/class/start-gear`
-  static const createClassStartingGear = _Paths.characterClass + _Paths.startingGear;
+  static const createClassStartingGear =
+      _Paths.characterClass + _Paths.startingGear;
 }
 
 abstract class _Paths {

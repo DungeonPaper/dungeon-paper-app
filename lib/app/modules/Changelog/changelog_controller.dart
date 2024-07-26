@@ -54,4 +54,3 @@ class ChangelogController extends ChangeNotifier {
     currentVersion = version;
   }
 }
-

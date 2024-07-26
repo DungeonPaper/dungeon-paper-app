@@ -301,4 +301,3 @@ class NumberInputFormatter extends TextInputFormatter {
     return oldValue;
   }
 }
-

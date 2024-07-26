@@ -88,4 +88,3 @@ class CharacterClassCard extends StatelessWidget {
     ].join('\n');
   }
 }
-

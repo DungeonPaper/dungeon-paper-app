@@ -68,8 +68,9 @@ class AccountView extends StatelessWidget {
                       )
                     : const Icon(Icons.image),
                 enabled: !controller.uploading,
-                onTap:
-                    !controller.uploading ? () => _uploadImage(controller, context) : null,
+                onTap: !controller.uploading
+                    ? () => _uploadImage(controller, context)
+                    : null,
               ),
             ),
         () => Consumer<AccountController>(
@@ -447,4 +448,3 @@ class _PasswordFieldDialogState extends State<PasswordFieldDialog> {
     return PasswordValidator().validator(value);
   }
 }
-

@@ -111,4 +111,3 @@ class SelectCharacterThemeView extends StatelessWidget {
     );
   }
 }
-

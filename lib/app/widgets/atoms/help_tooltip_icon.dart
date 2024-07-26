@@ -14,4 +14,3 @@ class HelpTooltipIcon extends StatelessWidget {
     );
   }
 }
-

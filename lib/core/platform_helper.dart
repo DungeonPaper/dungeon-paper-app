@@ -259,4 +259,3 @@ class PlatformHelper {
     return android!;
   }
 }
-

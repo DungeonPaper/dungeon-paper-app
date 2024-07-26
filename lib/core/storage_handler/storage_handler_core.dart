@@ -175,4 +175,3 @@ class StorageHandler implements StorageDelegate {
         onError: onError, onDone: onDone, cancelOnError: cancelOnError);
   }
 }
-

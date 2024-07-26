@@ -134,7 +134,8 @@ class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
   }
 
   Future<User?> _migrateUser(fba.User user) async {
-    final migrationDetails = await Navigator.of(navigatorKey.currentContext!).pushNamed(
+    final migrationDetails =
+        await Navigator.of(navigatorKey.currentContext!).pushNamed(
       Routes.migration,
       arguments: MigrationArguments(email: user.email ?? ''),
     ) as MigrationDetails?;
@@ -249,4 +250,3 @@ mixin UserProviderMixin {
       UserProvider.of(appGlobalKey.currentContext!);
   User get user => userProvider.current;
 }
-

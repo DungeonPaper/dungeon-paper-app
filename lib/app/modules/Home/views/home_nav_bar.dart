@@ -105,7 +105,8 @@ class _NavItem extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final selectedColor = colorScheme.secondary;
-    final selectedFgColor = accessibleColorFor(theme.colorScheme.onSecondary, selectedColor);
+    final selectedFgColor =
+        accessibleColorFor(theme.colorScheme.onSecondary, selectedColor);
     final unselectedFgColor = theme.colorScheme.onSurface;
     const duration = Duration(milliseconds: 250);
 
@@ -152,4 +153,3 @@ class _NavItem extends StatelessWidget {
     );
   }
 }
-

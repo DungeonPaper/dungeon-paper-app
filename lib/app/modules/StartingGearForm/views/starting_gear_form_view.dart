@@ -28,9 +28,8 @@ class StartingGearFormView extends StatelessWidget {
             label: Text(tr.generic.save),
             icon: const Icon(Icons.save),
           ),
-          body:Align(
+          body: Align(
             alignment: Alignment.topCenter,
-
             child: SizedBox(
               width: 800,
               child: ListView(
@@ -105,4 +104,3 @@ class StartingGearFormView extends StatelessWidget {
     Navigator.of(context).pop();
   }
 }
-

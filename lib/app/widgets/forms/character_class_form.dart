@@ -243,4 +243,3 @@ class CharacterClassFormArguments
     required super.formContext,
   });
 }
-

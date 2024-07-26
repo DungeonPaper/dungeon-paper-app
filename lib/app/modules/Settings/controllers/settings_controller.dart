@@ -58,4 +58,3 @@ class SettingsController extends ChangeNotifier
     return userProvider.updateUser(user.copyWith(settings: settings));
   }
 }
-

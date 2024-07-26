@@ -292,4 +292,3 @@ class GearOptionData {
     amount.text = data.amount.toString();
   }
 }
-

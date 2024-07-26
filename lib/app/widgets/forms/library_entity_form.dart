@@ -32,11 +32,12 @@ class LibraryEntityForm<
           ),
           body: Center(
             child: SizedBox(
-            width: 800,
+              width: 800,
               child: ItemBuilder.lazyListView(
                 padding: const EdgeInsets.all(16).copyWith(bottom: 80),
-                children:
-                    children.joinObjects(() => const SizedBox(height: 16)).toList(),
+                children: children
+                    .joinObjects(() => const SizedBox(height: 16))
+                    .toList(),
                 // trailing: [
                 //   () => const Divider(height: 64),
                 //   () => EntityShareForm(
@@ -73,6 +74,7 @@ abstract class LibraryEntityFormController<T extends WithMeta,
   var dirty = false;
   late final Args args;
   bool afterInit = false;
+
   /// Creates listeners for each field and sets the initial value cache.
   List<ValueNotifier> get fields;
   late Meta meta;
@@ -172,4 +174,3 @@ class LibraryEntityFormArguments<T extends WithMeta> {
     required this.formContext,
   });
 }
-

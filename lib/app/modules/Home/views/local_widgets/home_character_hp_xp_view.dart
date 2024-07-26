@@ -21,7 +21,8 @@ class HomeCharacterHpExpView extends StatelessWidget {
                 builder: (_) => const HPDialog(),
               ),
               child: Tooltip(
-                message: tr.hp.bar.tooltip(PlatformHelper.actionString(context)),
+                message:
+                    tr.hp.bar.tooltip(PlatformHelper.actionString(context)),
                 preferBelow: false,
                 child: const Padding(
                   padding: EdgeInsets.all(4),
@@ -40,7 +41,8 @@ class HomeCharacterHpExpView extends StatelessWidget {
                 builder: (_) => const EXPDialog(),
               ),
               child: Tooltip(
-                message: tr.xp.bar.tooltip(PlatformHelper.actionString(context)),
+                message:
+                    tr.xp.bar.tooltip(PlatformHelper.actionString(context)),
                 preferBelow: false,
                 child: const Padding(
                   padding: EdgeInsets.all(4),
@@ -52,4 +54,3 @@ class HomeCharacterHpExpView extends StatelessWidget {
         ],
       );
 }
-

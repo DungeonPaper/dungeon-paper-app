@@ -235,4 +235,3 @@ mixin HomeCharacterPaddingMixin {
         child: child,
       );
 }
-

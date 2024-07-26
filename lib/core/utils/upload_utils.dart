@@ -131,4 +131,3 @@ Future<UploadResponse?> cropAndUploadPhoto(
     downloadURL: downloadURL,
   );
 }
-

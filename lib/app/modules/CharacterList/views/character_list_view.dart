@@ -118,4 +118,3 @@ class CharacterListPageView extends StatelessWidget with UserProviderMixin {
     );
   }
 }
-

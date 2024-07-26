@@ -138,7 +138,8 @@ class _LibraryListViewState<T extends WithMeta, F extends EntityFilters<T>>
                           totalItemCount: controller.builtInListRaw.length,
                           itemCount: controller.builtInList.length,
                           itemBuilder: (context, index) {
-                            final item = controller.builtInList.elementAt(index);
+                            final item =
+                                controller.builtInList.elementAt(index);
                             return _wrapWithSelection(
                                 context, item, FiltersGroup.playbook);
                           },
@@ -280,4 +281,3 @@ class _LibraryListViewState<T extends WithMeta, F extends EntityFilters<T>>
         },
       );
 }
-

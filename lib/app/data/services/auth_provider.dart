@@ -189,4 +189,3 @@ mixin AuthProviderMixin {
   AuthProvider get authProvider =>
       AuthProvider.of(appGlobalKey.currentContext!);
 }
-

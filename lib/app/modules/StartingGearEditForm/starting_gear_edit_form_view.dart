@@ -343,4 +343,3 @@ class StartingGearEditFormView extends StatelessWidget
     };
   }
 }
-

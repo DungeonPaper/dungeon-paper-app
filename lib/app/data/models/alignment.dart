@@ -236,4 +236,3 @@ class AlignmentValues extends dw.AlignmentValues {
   @override
   String toString() => 'AlignmentValues($debugProperties)';
 }
-

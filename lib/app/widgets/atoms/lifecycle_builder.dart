@@ -19,7 +19,7 @@ class LifecycleView extends StatefulWidget {
     this.onInit,
     this.onDispose,
     required this.builder,
-  })  : child = null;
+  }) : child = null;
 
   static Widget Function(BuildContext context) childBuilder(Widget child) =>
       (_) => child;

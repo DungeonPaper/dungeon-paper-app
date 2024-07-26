@@ -73,8 +73,7 @@ class CustomExpansionTile extends StatefulWidget {
     this.minIconWidth = 20,
     this.reorderablePadding = false,
     this.controller,
-  })  :
-        assert(
+  })  : assert(
           expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
           'CrossAxisAlignment.baseline is not supported since the expanded children '
           'are aligned in a column, not a row. Try to use another constant.',
@@ -112,8 +111,7 @@ class CustomExpansionTile extends StatefulWidget {
     this.minIconWidth = 20,
     this.reorderablePadding = false,
     this.controller,
-  })  :
-        assert(
+  })  : assert(
           expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
           'CrossAxisAlignment.baseline is not supported since the expanded children '
           'are aligned in a column, not a row. Try to use another constant.',
@@ -261,7 +259,7 @@ class CustomExpansionTile extends StatefulWidget {
   final ListTileControlAffinity? controlAffinity;
 
   final bool reorderablePadding;
-  
+
   final CustomExpansionTileController? controller;
 
   @override
@@ -296,8 +294,10 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
     _animationController = AnimationController(duration: _kExpand, vsync: this);
     _heightFactor = _animationController.drive(_easeInTween);
     _iconTurns = _animationController.drive(_halfTween.chain(_easeInTween));
-    _headerColor = _animationController.drive(_headerColorTween.chain(_easeInTween));
-    _iconColor = _animationController.drive(_iconColorTween.chain(_easeOutTween));
+    _headerColor =
+        _animationController.drive(_headerColorTween.chain(_easeInTween));
+    _iconColor =
+        _animationController.drive(_iconColorTween.chain(_easeOutTween));
 
     _isExpanded = PageStorage.of(context).readState(context) as bool? ??
         widget.initiallyExpanded;
@@ -351,13 +351,18 @@ class _CustomExpansionTileState extends State<CustomExpansionTile>
   }
 
   Widget? _buildLeadingIcon(BuildContext context) {
-    if (!widget.expandable || _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.leading) return null;
+    if (!widget.expandable ||
+        _effectiveAffinity(widget.controlAffinity) !=
+            ListTileControlAffinity.leading) return null;
     return _buildIcon(context);
   }
 
   Widget? _buildTrailingIcon(BuildContext context) {
-    if (!widget.expandable || _effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing) return null;
-    if (widget.reorderablePadding && PlatformHelper.currentInteractionType == InteractionType.mouse) {
+    if (!widget.expandable ||
+        _effectiveAffinity(widget.controlAffinity) !=
+            ListTileControlAffinity.trailing) return null;
+    if (widget.reorderablePadding &&
+        PlatformHelper.currentInteractionType == InteractionType.mouse) {
       return Padding(
         padding: const EdgeInsets.only(right: 24),
         child: _buildIcon(context),

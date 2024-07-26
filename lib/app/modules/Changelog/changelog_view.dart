@@ -66,7 +66,8 @@ class ChangelogView extends StatelessWidget {
                         entry.version >= controller.currentVersion,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 32),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 32),
                         child: SizedBox(
                           width: 800,
                           child: MarkdownBody(data: content),
@@ -83,4 +84,3 @@ class ChangelogView extends StatelessWidget {
     );
   }
 }
-

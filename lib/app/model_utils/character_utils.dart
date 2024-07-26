@@ -173,4 +173,3 @@ class CharacterUtils {
     CustomSnackBar.show(content: tr.actions.classActions.markXP.success);
   }
 }
-

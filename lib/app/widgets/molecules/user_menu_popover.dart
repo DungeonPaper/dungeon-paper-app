@@ -15,7 +15,8 @@ import 'package:provider/provider.dart';
 import '../atoms/character_avatar.dart';
 import '../atoms/user_avatar.dart';
 
-class UserMenuPopover extends StatelessWidget with CharacterProviderMixin, UserProviderMixin {
+class UserMenuPopover extends StatelessWidget
+    with CharacterProviderMixin, UserProviderMixin {
   const UserMenuPopover({super.key});
 
   @override

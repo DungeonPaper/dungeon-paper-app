@@ -33,4 +33,3 @@ class ColorUtils {
     return lighten(original, -amount);
   }
 }
-

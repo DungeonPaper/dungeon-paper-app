@@ -10,7 +10,7 @@ class GearChoice extends dw.GearChoice {
     required List<GearSelection> super.selections,
     super.preselect,
     super.maxSelections,
-  })  : _selections = selections;
+  }) : _selections = selections;
 
   @override
   List<GearSelection> get selections => _selections;

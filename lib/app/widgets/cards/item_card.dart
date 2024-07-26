@@ -87,8 +87,7 @@ class ItemCard extends StatelessWidget {
                   numberType: NumberType.double,
                   onChanged: (str) => onSave?.call(
                     item.copyWithInherited(
-                      amount: double.tryParse(str) ??
-                          item.amount,
+                      amount: double.tryParse(str) ?? item.amount,
                     ),
                   ),
                   controller: TextEditingController(
@@ -127,4 +126,3 @@ class ItemCard extends StatelessWidget {
     );
   }
 }
-

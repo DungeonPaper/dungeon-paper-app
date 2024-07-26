@@ -84,4 +84,3 @@ class PrimaryChip extends StatelessWidget {
 extension on bool {
   int get cInt => this ? 1 : 0;
 }
-
