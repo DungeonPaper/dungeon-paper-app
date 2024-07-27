@@ -55,6 +55,8 @@ class SettingsController extends ChangeNotifier
   }
 
   Future<void> updateSettings(UserSettings settings) {
-    return userProvider.updateUser(user.copyWith(settings: settings));
+    final res = userProvider.updateUser(user.copyWith(settings: settings));
+    notifyListeners();
+    return res;
   }
 }
