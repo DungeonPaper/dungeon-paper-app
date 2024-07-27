@@ -200,11 +200,12 @@ class StartingGearEditFormView extends StatelessWidget
                                             decoration: borderBox,
                                             child: Builder(
                                               builder: _buildOptionRow(
-                                                  context,
-                                                  ctrl,
-                                                  choice,
-                                                  selection,
-                                                  option),
+                                                context,
+                                                ctrl,
+                                                choice,
+                                                selection,
+                                                option,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -215,11 +216,13 @@ class StartingGearEditFormView extends StatelessWidget
                                           ElevatedButton.icon(
                                             onPressed: () =>
                                                 ctrl.selectItemsToAdd(
-                                                    choice.data,
-                                                    selection.data),
+                                              choice.data,
+                                              selection.data,
+                                            ),
                                             icon: const Icon(Icons.add),
                                             label: Text(
-                                                tr.startingGear.option.add),
+                                              tr.startingGear.option.add,
+                                            ),
                                           ),
                                         ],
                                       ),

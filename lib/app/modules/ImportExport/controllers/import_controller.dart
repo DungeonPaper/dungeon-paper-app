@@ -110,8 +110,12 @@ class ImportController extends ChangeNotifier
   }
 
   void pickImportFile(BuildContext context) async {
-    final result = await FilePicker.platform
-        .pickFiles(type: FileType.custom, allowedExtensions: ['json']);
+    final parent = ImportExportController.of(context);
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['json'],
+      withData: true,
+    );
     if (result == null) {
       CustomSnackBar.show(
         title: tr.backup.importing.error.title,
@@ -124,6 +128,7 @@ class ImportController extends ChangeNotifier
     final filestring = utf8.decode(filedata as List<int>);
     final filejson = json.decode(filestring);
     toImport = ImportSelections.fromJson(filejson);
+    parent.notifyListeners();
     notifyListeners();
   }
 
@@ -137,9 +142,10 @@ class ImportController extends ChangeNotifier
       final navigator = Navigator.of(context);
 
       showDialog(
-          context: context,
-          builder: (_) => const ImportProgressDialog(),
-          barrierDismissible: false);
+        context: context,
+        builder: (_) => const ImportProgressDialog(),
+        barrierDismissible: false,
+      );
       importStep = Character;
 
       await Future.delayed(const Duration(milliseconds: 500));
@@ -180,7 +186,7 @@ class ImportController extends ChangeNotifier
       await Future.delayed(const Duration(milliseconds: 500));
       navigator.pop();
 
-      CustomSnackBar(
+      CustomSnackBar.show(
         title: tr.backup.importing.success.title,
         content: tr.backup.importing.success.message,
       );

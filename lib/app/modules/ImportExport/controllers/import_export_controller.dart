@@ -16,6 +16,8 @@ class ImportExportController extends ChangeNotifier {
   void Function()? doImport(BuildContext context) =>
       Provider.of<ImportController>(context, listen: false)
           .getDoImport(context);
+
+  static ImportExportController of(BuildContext context) => Provider.of(context, listen: false);
 }
 
 abstract class ImportExportSelectionData {
