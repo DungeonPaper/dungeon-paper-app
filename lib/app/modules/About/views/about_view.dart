@@ -142,12 +142,14 @@ class AboutView extends StatelessWidget {
                           url: 'https://bit.ly/DungeonPaper-GitHub',
                           color: const Color.fromARGB(255, 33, 32, 32),
                         ),
-                        _SocialButton(
-                          icon: Icon(DwIcons.providerIcon(ProviderName.google)),
-                          label: Text(tr.about.socials.google),
-                          url: 'https://bit.ly/DungeonPaper-Android',
-                          color: const Color.fromARGB(255, 1, 135, 95),
-                        ),
+                        if (!PlatformHelper.isIOS)
+                          _SocialButton(
+                            icon:
+                                Icon(DwIcons.providerIcon(ProviderName.google)),
+                            label: Text(tr.about.socials.google),
+                            url: 'https://bit.ly/DungeonPaper-Android',
+                            color: const Color.fromARGB(255, 1, 135, 95),
+                          ),
                         _SocialButton(
                           icon: Icon(DwIcons.providerIcon(ProviderName.apple)),
                           label: Text(tr.about.socials.apple),

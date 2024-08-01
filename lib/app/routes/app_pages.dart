@@ -1,10 +1,7 @@
-import 'package:dungeon_paper/app/modules/StartingGearEditForm/starting_gear_edit_form_controller.dart';
-import 'package:dungeon_paper/app/modules/StartingGearEditForm/starting_gear_edit_form_view.dart';
-import 'package:dungeon_paper/app/routes/custom_transitions.dart';
-import 'package:dungeon_paper/core/route_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/route_arguments.dart';
 import '../data/models/character_class.dart';
 import '../data/models/item.dart';
 import '../data/models/meta.dart';
@@ -64,6 +61,8 @@ import '../modules/SendFeedback/controllers/send_feedback_controller.dart';
 import '../modules/SendFeedback/views/send_feedback_view.dart';
 import '../modules/Settings/controllers/settings_controller.dart';
 import '../modules/Settings/views/settings_view.dart';
+import '../modules/StartingGearEditForm/starting_gear_edit_form_controller.dart';
+import '../modules/StartingGearEditForm/starting_gear_edit_form_view.dart';
 import '../modules/StartingGearForm/controllers/starting_gear_form_controller.dart';
 import '../modules/StartingGearForm/views/starting_gear_form_view.dart';
 import '../modules/UniversalSearch/controllers/universal_search_controller.dart';
@@ -76,23 +75,23 @@ import '../widgets/forms/race_form.dart';
 import '../widgets/forms/spell_form.dart';
 import '../widgets/molecules/user_menu_popover.dart';
 import '../widgets/views/roll_dice_view.dart';
-// import 'custom_transitions.dart';
+import 'custom_transitions.dart';
 
 part 'app_routes.dart';
 
 class DefaultPageRoute<T> extends PageRouteBuilder<T>
     with MaterialRouteTransitionMixin<T> {
-  DefaultPageRoute(
-      {required this.builder,
-      super.settings,
-      super.fullscreenDialog,
-      super.opaque})
-      : super(pageBuilder: (ctx, _, __) => builder(ctx));
+  DefaultPageRoute({
+    required this.builder,
+    super.settings,
+    super.fullscreenDialog,
+    super.opaque,
+  }) : super(pageBuilder: (ctx, _, __) => builder(ctx));
   final WidgetBuilder builder;
 
   @override
   Widget buildContent(BuildContext context) {
-    return this.builder(context);
+    return builder(context);
   }
 }
 
@@ -338,22 +337,22 @@ class AppPages {
           create: (_) => AbilityScoreFormController(context),
         ),
 
-    _Paths.account: (context) => ChangeNotifierProvider(
+    Routes.account: (context) => ChangeNotifierProvider(
           child: const AccountView(),
           create: (_) => AccountController(),
         ),
 
-    _Paths.sendFeedback: (context) => ChangeNotifierProvider(
+    Routes.sendFeedback: (context) => ChangeNotifierProvider(
           child: const SendFeedbackView(),
           create: (_) => SendFeedbackController(),
         ),
 
-    _Paths.campaigns: (context) => ChangeNotifierProvider(
+    Routes.campaigns: (context) => ChangeNotifierProvider(
           child: const CampaignsListView(),
           create: (_) => CampaignsListController(),
         ),
 
-    _Paths.changelog: (context) => ChangeNotifierProvider(
+    Routes.changelog: (context) => ChangeNotifierProvider(
           child: const ChangelogView(),
           create: (_) => ChangelogController(),
         ),
