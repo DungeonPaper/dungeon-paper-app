@@ -24,6 +24,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'app/data/services/character_provider.dart';
 import 'app/data/services/intl_service.dart';
 import 'app/themes/themes.dart';
+import 'core/platform_helper.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -48,7 +49,9 @@ Future<void> _init() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
   await initRemoteConfig();
-  await windowInit();
+  if (PlatformHelper.isDesktop) {
+    await windowInit();
+  }
   FlutterNativeSplash.remove();
   runApp(const DungeonPaperApp());
 }
