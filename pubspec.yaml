@@ -57,7 +57,7 @@ dependencies:
       url: https://github.com/chenasraf/i18n.git
       ref: master
   icons_launcher: ^2.0.2
-  image_cropper: ^7.1.0
+  image_cropper: ^8.0.1
   intl: ^0.19.0
   localstore: ^1.2.1
   markdown: ^7.1.1
@@ -76,7 +76,7 @@ dependencies:
   system_date_time_format: ^1.2.1
   url_launcher: ^6.0.20
   uuid: ^4.2.2
-  wakelock_plus: 1.2.5
+  wakelock_plus: ^1.2.7
   wheel_spinner: ^0.7.2
   window_manager: ^0.4.0
   easy_debounce: ^2.0.3
