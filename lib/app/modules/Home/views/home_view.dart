@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/core/shared_preferences.dart';
+import 'package:window_manager/window_manager.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
 import 'package:dungeon_paper/app/data/services/loading_provider.dart';
@@ -13,6 +15,7 @@ import 'package:dungeon_paper/app/widgets/atoms/page_controller_fractional_box.d
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 
 import 'home_character_view.dart';
 import 'home_fab.dart';
@@ -73,7 +76,8 @@ class HomeView extends StatelessWidget
   }
 }
 
-class HomeEmptyState extends StatelessWidget with UserProviderMixin {
+class HomeEmptyState extends StatelessWidget
+    with UserProviderMixin, WindowListener {
   const HomeEmptyState({super.key});
 
   @override
@@ -149,6 +153,44 @@ class HomeEmptyState extends StatelessWidget with UserProviderMixin {
           ],
         ),
       ),
+    );
+  }
+
+  @override
+  onWindowBlur() {
+    debugPrint('Window blurred');
+  }
+
+  @override
+  void onWindowFocus() {
+    debugPrint('Window focused');
+  }
+
+  @override
+  void onWindowMove() {
+    EasyDebounce.debounce(
+      'windowMove',
+      const Duration(milliseconds: 500),
+      () async {
+        final position = await windowManager.getPosition();
+        debugPrint('Window moved to $position');
+        prefs.setInt('windowX', position.dx.toInt());
+        prefs.setInt('windowY', position.dy.toInt());
+      },
+    );
+  }
+
+  @override
+  void onWindowResize() async {
+    EasyDebounce.debounce(
+      'windowResize',
+      const Duration(milliseconds: 500),
+      () async {
+        final size = await windowManager.getSize();
+        debugPrint('Window resized to $size');
+        prefs.setInt('windowWidth', size.width.toInt());
+        prefs.setInt('windowHeight', size.height.toInt());
+      },
     );
   }
 }

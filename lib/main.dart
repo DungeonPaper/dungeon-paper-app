@@ -9,6 +9,7 @@ import 'package:dungeon_paper/core/multi_platform_scroll_behavior.dart';
 import 'package:dungeon_paper/core/pref_keys.dart';
 import 'package:dungeon_paper/core/remote_config.dart';
 import 'package:dungeon_paper/core/shared_preferences.dart';
+import 'package:dungeon_paper/core/window_manager.dart';
 import 'package:dungeon_paper/core/utils/secrets_base.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:dungeon_world_data/base.dart';
@@ -47,6 +48,7 @@ Future<void> _init() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
   await initRemoteConfig();
+  await windowInit();
   FlutterNativeSplash.remove();
   runApp(const DungeonPaperApp());
 }

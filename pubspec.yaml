@@ -78,6 +78,8 @@ dependencies:
   uuid: ^4.2.2
   wakelock_plus: 1.2.5
   wheel_spinner: ^0.7.2
+  window_manager: ^0.4.0
+  easy_debounce: ^2.0.3
   # wheel_spinner:
   #   path: ../wheel_spinner
 
