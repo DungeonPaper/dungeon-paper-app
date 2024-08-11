@@ -88,6 +88,73 @@ scripts:
   - name: macos:pod:update
     cmd: pushd macos; pod repo update && pod install; popd
     description: Install Pods for macOS
+  - name: macos:release
+    cmd: macos:build:app && macos:pack
+    description: Builds, and places the output in release/ dir.
+  - name: macos:pack
+    description: Package macOS app into pkg file
+    cmd: |-
+      app="build/macos/Build/Products/Release/Dungeon Paper.app"
+      title="Dungeon Paper"
+      name=$(dart run btool get packageName)
+      version=$(dart run btool get packageVersion)
+      outdir="release/macos"
+      tmp="$outdir/pack.temp.dmg"
+      dmgout="$name-$version.dmg"
+      source="macos/build/dmg"
+
+      rm -rf "$source"
+      mkdir -p "$source/.background"
+      cp -r "$app" "$source"
+      cp "assets/images/dmg_bg.png" "$source/.background/background.png"
+      ln -s "/Applications" "$source/Applications"
+      size=$(du -sk "$source" | awk '{print $1}')
+      size=$(($size + (1024 * 10)))
+      echo "Creating DMG: $dmgout"
+      hdiutil create -srcfolder "$source" -volname "$title" -fs HFS+ \
+        -fsargs "-c c=64,a=16,e=16" -format UDRW -size "${size}k" "$tmp"
+      echo "Attaching $tmp"
+      device=$(hdiutil attach -readwrite -noverify -noautoopen "$tmp" | \
+         egrep '^/dev/' | sed 1q | awk '{print $1}')
+      sleep 0.5
+      echo "Making layout modifications"
+      echo "
+        tell application \"Finder\"
+          tell disk \"$title\"
+            open
+            set current view of container window to icon view
+            set toolbar visible of container window to false
+            set statusbar visible of container window to false
+            set the bounds of container window to {400, 200, 900, 500}
+            set theViewOptions to the icon view options of container window
+            set arrangement of theViewOptions to not arranged
+            set icon size of theViewOptions to 112
+            set background picture of theViewOptions to file \".background:background.png\"
+            # make new alias file at container window to POSIX file \"/Applications\" with properties {name:\"Applications\"}
+            set position of item \"$title\" of container window to {112, 112}
+            set position of item \"Applications\" of container window to {387, 112}
+            close
+            open
+            update without registering applications
+            delay 5
+            close
+          end tell
+        end tell
+      " | osascript
+      chmod -Rf go-w "/Volumes/$title"
+      sync
+      sync
+      echo "Detaching $tmp"
+      hdiutil detach "$device"
+      echo "Converting $tmp to $dmgout"
+      [[ -f "release/macos/$dmgout" ]] && rm "$outdir/$dmgout"
+      hdiutil convert "$tmp" -format UDZO -imagekey zlib-level=9 -o "$outdir/$dmgout"
+      rm -f "$tmp"
+      webdir="../dungeon-paper-website/public/downloads/macos"
+      mkdir -p "$webdir"
+      cp "$outdir/$dmgout" "$webdir"
+      cp "$webdir/$dmgout" "$webdir/$name-latest.dmg"
+      [[ ! -f "$(which open)" ]] || open release/macos
 
   # ===============================================================================================
   # Web
