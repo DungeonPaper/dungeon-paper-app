@@ -19,7 +19,7 @@ android_install() {
 
 android_release() {
   bundleout="$basen.aab"
-  bundle=build/app/outputs/bundle/release/app-release.aab
+  bundle="build/app/outputs/bundle/release/app-release.aab"
   mkdir -p release/android
   cp "$bundle" "release/android/$bundleout"
   android_collect_symbols
@@ -30,8 +30,9 @@ android_collect_symbols() {
   dir="$(pwd)/release/android"
   filename="symbols-$basen.zip"
   mkdir release
-  cd build/app/intermediates/merged_native_libs/release/out/lib || exit
+  pushd build/app/intermediates/merged_native_libs/release/out/lib || exit
   zip -r "$dir/$filename" ./*/*
+  popd || exit
   [[ ! -f "$(which open)" ]] || open release/android
 }
 

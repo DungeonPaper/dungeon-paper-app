@@ -22,11 +22,8 @@ scripts:
     cmd: scr android:build:all --install --push
     description: Build, push and install APK to ADB connected device
   - name: android:release
-    cmd: build android --release
+    cmd: build android --release --symbols
     description: Builds, collects debug symbols, and places the output in release/ dir.
-  - name: android:symbols:collect
-    cmd: build android --symbols
-    description: Create a zip of the debug symbols for Android
 
   # ===============================================================================================
   # iOS
