@@ -865,6 +865,22 @@ class AuthMessages {
   /// "What's new?"
   /// ```
   String get changelog => """What's new?""";
+
+  /// ```dart
+  /// "Not logged in"
+  /// ```
+  String get notLoggedIn => """Not logged in""";
+
+  /// ```dart
+  /// "$displayName (@$username)"
+  /// ```
+  String menuTitle(String displayName, String username) =>
+      """$displayName (@$username)""";
+
+  /// ```dart
+  /// "Account details"
+  /// ```
+  String menuSubtitle(String interact) => """Account details""";
   ProvidersAuthMessages get providers => ProvidersAuthMessages(this);
   ConfirmUnlinkAuthMessages get confirmUnlink =>
       ConfirmUnlinkAuthMessages(this);
@@ -1005,20 +1021,8 @@ class SignupAuthMessages {
   /// "Sign up"
   /// ```
   String get button => """Sign up""";
-  NotLoggedInSignupAuthMessages get notLoggedIn =>
-      NotLoggedInSignupAuthMessages(this);
   EmailSignupAuthMessages get email => EmailSignupAuthMessages(this);
   PasswordSignupAuthMessages get password => PasswordSignupAuthMessages(this);
-}
-
-class NotLoggedInSignupAuthMessages {
-  final SignupAuthMessages _parent;
-  const NotLoggedInSignupAuthMessages(this._parent);
-
-  /// ```dart
-  /// "Not logged in"
-  /// ```
-  String get label => """Not logged in""";
 }
 
 class EmailSignupAuthMessages {
@@ -4062,6 +4066,8 @@ Map<String, String> get messagesMap => {
       """auth.orSeparator""": """OR""",
       """auth.privacyPolicy""": """Privacy Policy""",
       """auth.changelog""": """What's new?""",
+      """auth.notLoggedIn""": """Not logged in""",
+      """auth.menuSubtitle(String interact)""": """Account details""",
       """auth.providers.unlink""": """Unlink""",
       """auth.providers.link""": """Link""",
       """auth.login.title""": """Sign In""",
@@ -4075,7 +4081,6 @@ Map<String, String> get messagesMap => {
       """auth.signup.subtitle""":
           """Enter the required details below to create your Dungeon Paper account.""",
       """auth.signup.button""": """Sign up""",
-      """auth.signup.notLoggedIn.label""": """Not logged in""",
       """auth.signup.email.label""": """Email""",
       """auth.signup.email.placeholder""": """Enter your email""",
       """auth.signup.email.error""": """Please enter a valid email address""",

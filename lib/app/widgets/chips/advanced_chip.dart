@@ -161,5 +161,9 @@ class AdvancedChip extends StatelessWidget
   BoxConstraints? get deleteIconBoxConstraints => null;
 
   @override
+  // ignore: deprecated_member_use
   MaterialStateProperty<Color?>? get color => null;
+
+  @override
+  ChipAnimationStyle? get chipAnimationStyle => null;
 }

@@ -1,7 +1,7 @@
 import 'package:dungeon_paper/app/data/services/loading_provider.dart';
 import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
-import 'package:dungeon_paper/app/widgets/atoms/user_menu.dart';
+import 'package:dungeon_paper/app/widgets/molecules/user_menu_popover.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
@@ -20,17 +20,7 @@ class HomeAppBar extends StatelessWidget
         onPressed: () =>
             Navigator.of(context).pushNamed(Routes.universalSearch),
       ),
-      actions: const [
-        // if (user.flags['su'] == true)
-        //   IconButton(
-        //     icon: const Icon(Icons.bug_report),
-        //     onPressed: () => Get.toNamed(
-        //       Routes.migration,
-        //       arguments: MigrationArguments(email: user.email),
-        //     ),
-        //   ),
-        UserMenu(),
-      ],
+      actions: const [UserMenu()],
     );
   }
 

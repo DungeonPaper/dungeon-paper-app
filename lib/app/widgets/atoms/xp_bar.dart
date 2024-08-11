@@ -57,7 +57,7 @@ class ExpBar extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Tooltip(
                       message: tr.xp.bar
-                          .plusOneTooltip(PlatformHelper.actionString(context)),
+                          .plusOneTooltip(PlatformHelper.interactionString(context)),
                       preferBelow: false,
                       child: Container(
                         decoration: BoxDecoration(

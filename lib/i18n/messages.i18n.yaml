@@ -173,6 +173,9 @@ auth:
   orSeparator: OR
   privacyPolicy: Privacy Policy
   changelog: What's new?
+  notLoggedIn: Not logged in
+  menuTitle(String displayName, String username): $displayName (@$username)
+  menuSubtitle(String interact): Account details
   providers:
     loginWith(String provider): Sign in with $provider
     signupWith(String provider): Sign up with $provider
@@ -204,8 +207,6 @@ auth:
     title: Sign Up
     subtitle: Enter the required details below to create your Dungeon Paper account.
     button: Sign up
-    notLoggedIn:
-      label: Not logged in
     email:
       label: Email
       placeholder: Enter your email

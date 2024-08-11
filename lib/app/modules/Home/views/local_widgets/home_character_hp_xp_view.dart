@@ -22,7 +22,7 @@ class HomeCharacterHpExpView extends StatelessWidget {
               ),
               child: Tooltip(
                 message:
-                    tr.hp.bar.tooltip(PlatformHelper.actionString(context)),
+                    tr.hp.bar.tooltip(PlatformHelper.interactionString(context)),
                 preferBelow: false,
                 child: const Padding(
                   padding: EdgeInsets.all(4),
@@ -42,7 +42,7 @@ class HomeCharacterHpExpView extends StatelessWidget {
               ),
               child: Tooltip(
                 message:
-                    tr.xp.bar.tooltip(PlatformHelper.actionString(context)),
+                    tr.xp.bar.tooltip(PlatformHelper.interactionString(context)),
                 preferBelow: false,
                 child: const Padding(
                   padding: EdgeInsets.all(4),

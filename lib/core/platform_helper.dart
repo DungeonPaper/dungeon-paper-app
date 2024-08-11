@@ -175,7 +175,7 @@ class PlatformHelper {
     return iOS ?? fallback0;
   }
 
-  static String actionString(BuildContext context) {
+  static String interactionString(BuildContext context) {
     return byInteractionType(
       context,
       touch: tr.platformInteractions.tap,

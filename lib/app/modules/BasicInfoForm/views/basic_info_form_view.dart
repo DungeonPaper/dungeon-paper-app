@@ -61,7 +61,7 @@ class BasicInfoFormView extends StatelessWidget with UserProviderMixin {
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         suffixIcon: IconButton(
                           tooltip: tr.basicInfo.form.name.random.tooltip(
-                            PlatformHelper.actionString(context),
+                            PlatformHelper.interactionString(context),
                           ),
                           icon: const Icon(DwIcons.dice_d6_numbered),
                           onPressed: () {

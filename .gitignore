@@ -44,7 +44,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# When cloning this project, use commands:
+# NOTE When cloning this project, use commands:
 # dart pub global activate flutterfire_cli
 # flutterfire configure
 lib/firebase_options.dart
@@ -59,3 +59,6 @@ firebase.json
 
 # FVM Version Cache
 .fvm/
+
+# MacOS related
+macos/build/dmg

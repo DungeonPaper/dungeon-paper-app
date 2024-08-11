@@ -4,16 +4,17 @@ import 'dart:ui';
 import 'package:dungeon_paper/app/data/models/campaign.dart';
 import 'package:dungeon_paper/app/data/models/character.dart';
 import 'package:dungeon_paper/app/data/services/character_provider.dart';
-import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/themes/themes.dart';
 import 'package:dungeon_paper/app/widgets/atoms/theme_brightness_switch.dart';
+import 'package:dungeon_paper/app/widgets/atoms/user_avatar.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/services/user_provider.dart';
 import '../atoms/character_avatar.dart';
-import '../atoms/user_avatar.dart';
 
 class UserMenuPopover extends StatelessWidget
     with CharacterProviderMixin, UserProviderMixin {
@@ -69,13 +70,20 @@ class UserMenuPopover extends StatelessWidget
                                         : null,
                                     visualDensity: VisualDensity.compact,
                                     title: Text(
-                                      '${userProvider.current.displayName} (@${userProvider.current.username})',
+                                      tr.auth.menuTitle(
+                                        userProvider.current.displayName,
+                                        userProvider.current.username,
+                                      ),
                                       style: textStyle,
                                     ),
                                     subtitle: Text(
                                       userProvider.current.email.isNotEmpty
-                                          ? userProvider.current.email
-                                          : tr.auth.signup.notLoggedIn.label,
+                                          ? tr.auth.menuSubtitle(
+                                              PlatformHelper.interactionString(
+                                                context,
+                                              ),
+                                            )
+                                          : tr.auth.notLoggedIn,
                                     ),
                                     trailing: userProvider.isGuest
                                         ? Row(
@@ -269,6 +277,37 @@ class UserMenuPopover extends StatelessWidget
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class UserMenu extends StatelessWidget {
+  const UserMenu({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: _buildChild(context),
+    );
+  }
+
+  Widget _buildChild(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        splashColor: Theme.of(context).splashColor,
+        onTap: () => Navigator.of(context).pushNamed(Routes.userMenu),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Consumer<UserProvider>(
+            builder: (context, controller, _) =>
+                UserAvatar(user: controller.current),
           ),
         ),
       ),
