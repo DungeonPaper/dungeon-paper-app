@@ -90,6 +90,23 @@ don't hesitate to open an appropriate issue and I will do my best to reply promp
 As mentioned above, Firebase secret keys must be your own, and so are the databases and services
 related to them. This project requires Firebase auth and Cloud Firestore to function.
 
+#### Build Tools
+
+Use `script_runner` to run build scripts.
+
+You can use these examples to start:
+
+```sh
+dart pub global activate script_runner
+
+scr -h # see all commands + help
+scr -ls [search_term] # find scripts by name, or list all scripts
+
+# e.g.
+scr -ls android # see all possible android-related scripts
+scr android:build:release # build for android release
+```
+
 ### Translations
 
 This app is currently only available in English. However, it's possible to contribute translations
