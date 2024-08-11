@@ -49,7 +49,7 @@ Future<void> _init() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
   await initRemoteConfig();
-  if (PlatformHelper.isDesktop && !PlatformHelper.isWeb) {
+  if (!PlatformHelper.isWeb && PlatformHelper.isDesktop) {
     await windowInit();
   }
   FlutterNativeSplash.remove();

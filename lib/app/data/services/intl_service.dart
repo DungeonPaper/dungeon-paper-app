@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:system_date_time_format/system_date_time_format.dart';
 
@@ -25,6 +26,9 @@ class IntlService extends ChangeNotifier {
   }
 
   static void _loadDateTimeFormats() async {
+    if (PlatformHelper.isWeb) {
+      return;
+    }
     final fmt = SystemDateTimeFormat();
     final dtFormat = await fmt.getDatePattern();
     final tmFormat = await fmt.getTimePattern();
