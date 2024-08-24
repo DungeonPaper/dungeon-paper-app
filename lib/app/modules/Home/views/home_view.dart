@@ -21,9 +21,25 @@ import 'home_character_view.dart';
 import 'home_fab.dart';
 import 'home_nav_bar.dart';
 
-class HomeView extends StatelessWidget
-    with UserProviderMixin, LoadingProviderMixin, CharacterProviderMixin {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView>
+    with
+        UserProviderMixin,
+        LoadingProviderMixin,
+        CharacterProviderMixin,
+        WindowListener {
+
+  @override
+  void initState() {
+    super.initState();
+    windowManager.addListener(this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +47,10 @@ class HomeView extends StatelessWidget
       appBar: const HomeAppBar(),
       body: Consumer2<CharacterProvider, LoadingProvider>(
         builder: (context, controller, loading, _) {
-          const children = [
-            HomeCharacterActionsView(),
-            HomeCharacterView(),
-            HomeCharacterJournalView(),
-          ];
-
-          return isLoading
+          return _isLoading
               ? const HomeLoaderView()
               : controller.maybeCurrent != null
-                  ? PageView(
-                      controller: controller.pageController,
-                      children: children.map(_fractionalSizedBox).toList(),
-                    )
+                  ? const HomePageView()
                   : const HomeEmptyState();
         },
       ),
@@ -60,24 +67,83 @@ class HomeView extends StatelessWidget
     );
   }
 
-  Widget _fractionalSizedBox(Widget child) => CharacterProvider.consumer(
-        (context, controller, _) => PageControllerFractionalBox(
-          controller: controller.pageController,
-          child: child,
-        ),
-      );
-
-  bool get isLoading {
+  bool get _isLoading {
     debugPrint('afterFirstLoad: ${loadingProvider.afterFirstLoad}, '
         'loadingUser: ${loadingProvider.loadingUser}, '
         'loadingCharacters: ${loadingProvider.loadingCharacters}');
     return !loadingProvider.afterFirstLoad &&
         (loadingProvider.loadingUser || loadingProvider.loadingCharacters);
   }
+
+  @override
+  onWindowBlur() {
+    debugPrint('Window blurred');
+  }
+
+  @override
+  void onWindowFocus() {
+    debugPrint('Window focused');
+  }
+
+  @override
+  void onWindowMove() {
+    EasyDebounce.debounce(
+      'windowMove',
+      const Duration(milliseconds: 500),
+      () async {
+        final position = await windowManager.getPosition();
+        debugPrint('Window moved to $position');
+        prefs.setInt('windowX', position.dx.toInt());
+        prefs.setInt('windowY', position.dy.toInt());
+      },
+    );
+  }
+
+  @override
+  void onWindowResize() async {
+    EasyDebounce.debounce(
+      'windowResize',
+      const Duration(milliseconds: 500),
+      () async {
+        final size = await windowManager.getSize();
+        debugPrint('Window resized to $size');
+        prefs.setInt('windowWidth', size.width.toInt());
+        prefs.setInt('windowHeight', size.height.toInt());
+      },
+    );
+  }
 }
 
-class HomeEmptyState extends StatelessWidget
-    with UserProviderMixin, WindowListener {
+class HomePageView extends StatelessWidget with LoadingProviderMixin {
+  const HomePageView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer2<CharacterProvider, LoadingProvider>(
+      builder: (context, controller, loading, _) {
+        const children = [
+          HomeCharacterActionsView(),
+          HomeCharacterView(),
+          HomeCharacterJournalView(),
+        ];
+
+        return PageView(
+          controller: controller.pageController,
+          children: children.map(_fractionalSizedBox).toList(),
+        );
+      },
+    );
+  }
+
+  Widget _fractionalSizedBox(Widget child) => CharacterProvider.consumer(
+        (context, controller, _) => PageControllerFractionalBox(
+          controller: controller.pageController,
+          child: child,
+        ),
+      );
+}
+
+class HomeEmptyState extends StatelessWidget with UserProviderMixin {
   const HomeEmptyState({super.key});
 
   @override
@@ -153,44 +219,6 @@ class HomeEmptyState extends StatelessWidget
           ],
         ),
       ),
-    );
-  }
-
-  @override
-  onWindowBlur() {
-    debugPrint('Window blurred');
-  }
-
-  @override
-  void onWindowFocus() {
-    debugPrint('Window focused');
-  }
-
-  @override
-  void onWindowMove() {
-    EasyDebounce.debounce(
-      'windowMove',
-      const Duration(milliseconds: 500),
-      () async {
-        final position = await windowManager.getPosition();
-        debugPrint('Window moved to $position');
-        prefs.setInt('windowX', position.dx.toInt());
-        prefs.setInt('windowY', position.dy.toInt());
-      },
-    );
-  }
-
-  @override
-  void onWindowResize() async {
-    EasyDebounce.debounce(
-      'windowResize',
-      const Duration(milliseconds: 500),
-      () async {
-        final size = await windowManager.getSize();
-        debugPrint('Window resized to $size');
-        prefs.setInt('windowWidth', size.width.toInt());
-        prefs.setInt('windowHeight', size.height.toInt());
-      },
     );
   }
 }

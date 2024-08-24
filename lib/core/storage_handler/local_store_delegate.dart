@@ -95,7 +95,6 @@ class LocalStorageDelegate extends StorageDelegate {
 
   @override
   Future<void> clear() async {
-    debugPrint('clearing $this');
     for (final col in Meta.allStorageKeys.values) {
       colStreams[col]?.close();
       colStreams.remove(col);
@@ -103,7 +102,6 @@ class LocalStorageDelegate extends StorageDelegate {
       if (docs == null) {
         continue;
       }
-      debugPrint('clearing $col');
       for (final doc in docs.entries) {
         if (doc.key.length < col.length + 2) {
           continue;
@@ -112,7 +110,6 @@ class LocalStorageDelegate extends StorageDelegate {
         docStreams[key]?.close();
         docStreams.remove(key);
         await storage.collection(col).doc(key).delete();
-        debugPrint('Deleted $col/$key');
       }
     }
   }
