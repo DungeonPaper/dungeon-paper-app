@@ -1,0 +1,813 @@
+_entSingle(String type): |-
+  ${switch (type) {
+    'AbilityScore' => 'Habilidade',
+    'AlignmentValue' => 'Alinhamento',
+    'CharacterClass' => 'Classe',
+    'Dice' => 'Dado',
+    'GearSelection' => 'Conjunto de Equipamento',
+    'GearChoice' => 'Escolha de Equipamento',
+    'GearOption' => 'Item do Conjunto de Equipamento',
+    'MoveCategory' => 'Categoria',
+    _ => type,
+  }}
+_entPlural(String type): |-
+  ${switch (type) {
+    'CharacterClass' => 'Classes',
+    'Dice' => 'Dados',
+    'MoveCategory' => 'Categorias',
+    _ => '${_entSingle(type)}s',
+  }}
+
+entity(String ent): '${_entSingle(ent.toString())}'
+entityPlural(String ent): '${_entPlural(ent.toString())}'
+entityCount(String ent, int cnt): '${cnt == 1 ? _entSingle(ent.toString()) : _entPlural(ent.toString())}'
+entityCountNum(String ent, int cnt): '$cnt ${entityCount(ent, cnt)}'
+
+app:
+  name: Dungeon Paper
+
+platformInteractions:
+  tap: Toque
+  drag: Arraste
+  pan: Mova
+  click: Clique
+
+generic:
+  save: Salvar
+  saveEntity(String ent): Salvar $ent
+  cancel: Cancelar
+  close: Fechar
+  done: Concluído
+  view: Visualizar
+  continue_: Continuar
+  viewEntity(String ent): Visualizar $ent
+  all: Todos
+  allEntities(String ent): Todos os $ent
+  create: Criar
+  createEntity(String ent): Criar $ent
+  add: Adicionar
+  addEntity(String ent): Adicionar $ent
+  remove: Remover
+  removeEntity(String ent): Remover $ent
+  unselect: Desmarcar
+  unselectEntity(String ent): Desmarcar $ent
+  delete: Excluir
+  deleteEntity(String ent): Excluir $ent
+  edit: Editar
+  editEntity(String ent): Editar $ent
+  yes: Sim
+  no: Não
+  noEntity(String ent): Nenhum $ent
+  select: Selecionar
+  selectEntity(String ent): Selecionar $ent
+  selected: Selecionado
+  selectAll: Selecionar Todos
+  selectNone: Selecionar Nenhum
+  my: Meu
+  myEntity(String ent): Meu $ent
+  change: Alterar
+  changeEntity(String ent): Alterar $ent
+  seeAll: Ver Todos
+  selectToAdd(String ent): Selecionar $ent para adicionar
+  name: Nome
+  entityName(String ent): Nome do $ent
+  value: Valor
+  entityValue(String ent): Valor do $ent
+  description: Descrição
+  entityDescription(String ent): Descrição do $ent
+  explanation: Explicação
+  entityExplanation(String ent): Explicação do $ent
+  noDescription: ‹Nenhuma descrição fornecida›
+  noEntitySelected(String ent): Nenhum $ent selecionado
+  noEntitySelectedRequired(String ent): Nenhum $ent selecionado (obrigatório)
+  useDefault: Usar Padrão
+
+loading:
+  user: Entrando...
+  characters: Obtendo personagens...
+  general: Carregando...
+
+errors:
+  userOperationCanceled: Operação cancelada
+  uploadError: Erro ao carregar a foto. Tente novamente mais tarde ou entre em contato com o suporte usando a página "Sobre".
+  invalidEmail: Endereço de email inválido
+  invalidPassword:
+    letter: A senha deve conter pelo menos uma letra maiúscula
+    number: A senha deve conter pelo menos um número
+  minLength(int cnt): "Deve ter pelo menos $cnt ${_plural(cnt, one: 'caractere', many: 'caracteres')}"
+  maxLength(int cnt): "Não deve ter mais de $cnt ${_plural(cnt, one: 'caractere', many: 'caracteres')}"
+  exactLength(int cnt): "Deve ter exatamente $cnt ${_plural(cnt, one: 'caractere', many: 'caracteres')}"
+  mustContain(String pattern): Deve conter $pattern
+  mustNotContain(String pattern): Não deve conter $pattern
+  onlyLetters: Deve conter apenas letras
+
+numberFields:
+  increase: '+1'
+  decrease: '-1'
+
+sort:
+  moveUp: Mover para cima
+  moveDown: Mover para baixo
+  moveEntityToTop(String ent): Mover $ent para o topo
+  moveEntityToBottom(String ent): Mover $ent para o final
+
+playbook:
+  title: Playbook
+  myLibrary: Minha Biblioteca
+  myCampaigns: Minhas Campanhas
+
+myLibrary:
+  title: Minha Biblioteca
+  reload: Recarregar Biblioteca
+  selectDisabled(String ent): Você pode remover este $ent encontrando-o na aba "Usar" e clicando em "Remover" no menu de contexto.
+  itemCount(String cnt, String type): $cnt em $type
+  libraryType(String type): |-
+    ${switch (type) {
+      'builtIn' => 'Playbook',
+      'my' => 'Minha Biblioteca',
+      _ => type,
+    }}
+  alreadyAdded: Já adicionado
+  itemTab:
+    playbook: Playbook
+    online: Online
+  emptyState:
+    title(String ent): Nenhum $ent encontrado
+    subtitle:
+      filters(String ent): Nenhum $ent encontrado nesta lista.
+      noFilters(String ent): Tente alterar a pesquisa ou os filtros para encontrar mais $ent.
+  filters:
+    clear: Limpar Filtros
+
+nav:
+  actions: Usar
+  character: Personagem
+  journal: Diário
+
+sync:
+  entity:
+    status:
+      inSync(String ent): Este $ent está sincronizado com o item vinculado da biblioteca
+      outOfSync(String ent): Este $ent está fora de sincronia com o item vinculado da biblioteca
+      detached(String ent): Este $ent não está vinculado a nenhum item da biblioteca
+
+settings:
+  title: Configurações
+  importExport: Exportar/Importar
+  _switchMode(String mode): 'Mudar para o modo ${mode}'
+  switchToDark: "${_switchMode('Escuro')}"
+  switchToLight: "${_switchMode('Claro')}"
+  categories:
+    general: Geral
+  keepAwake: Manter a tela ativa enquanto usa o aplicativo
+  defaultTheme:
+    _p(String type): Tema padrão $type
+    light: "${_p('claro')}"
+    dark: "${_p('escuro')}"
+
+user:
+  recentCharacters: Personagens Recentes
+
+auth:
+  orSeparator: OU
+  privacyPolicy: Política de Privacidade
+  changelog: O que há de novo?
+  notLoggedIn: Não conectado
+  menuTitle(String displayName, String username): $displayName (@$username)
+  menuSubtitle(String interact): Detalhes da conta
+  providers:
+    loginWith(String provider): Entrar com $provider
+    signupWith(String provider): Inscrever-se com $provider
+    unusable(String provider): Este dispositivo só suporta desvincular contas $provider.
+    # `{provider, select, facebook {Facebook} google {Google} apple {Apple} password {Dungeon Paper} other {Other}}`
+    name(String provider): |-
+      ${switch (provider) {
+        'facebook' => 'Facebook',
+        'google' => 'Google',
+        'apple' => 'Apple',
+        'password' => 'Dungeon Paper',
+        _ => 'Outro',
+      }}
+    unlink: Desvincular
+    link: Vincular
+  confirmUnlink:
+    title(String ent): Desvincular de $ent
+    body(String ent): Tem certeza de que deseja desvincular sua conta de $ent?\nAo clicar em "Desvincular", você não poderá mais fazer login com $ent.\n\nVocê poderá relinkar sua conta a qualquer momento indo para as configurações da sua conta.
+  login:
+    title: Entrar
+    subtitle: Entre na sua conta para sincronizar seus dados online e obter acesso a muitos outros recursos.
+    button: Entrar
+    noAccount:
+      label: Não tem uma conta?
+      button: Inscreva-se
+  logout:
+    button: Sair
+  signup:
+    title: Inscrever-se
+    subtitle: Insira os detalhes necessários abaixo para criar sua conta Dungeon Paper.
+    button: Inscrever-se
+    email:
+      label: Email
+      placeholder: Digite seu email
+      error: Por favor, insira um endereço de email válido
+    password:
+      label: Senha
+      placeholder: Insira uma senha
+      confirm:
+        label: Confirmar Senha
+        placeholder: Digite a mesma senha novamente
+        error: As senhas não coincidem
+
+home:
+  categories:
+    notes: Notas Marcadas
+    moves: Movimentos Favoritos
+    spells: Feitiços Preparados
+    items: Itens Equipados
+    classActions: Ações de Classe
+  summary:
+    load:
+      label(String cur, String max): 'Carga: $cur/$max'
+      tooltip: Carga Máxima
+    coins:
+      label(String amt): $amt G
+      tooltip: Moedas
+  menu:
+    character:
+      tooltip: Menu do Personagem
+      basicInfo: Informações Básicas
+      abilityScores: Pontuações de Habilidade
+      customRolls: Botões de Rolagem Rápida
+      theme: Tema do Personagem
+    bio: Biografia do Personagem
+    debilities: Debilidades
+  emptyState:
+    guest:
+      title: Entre para obter mais recursos
+      subtitle: Sincronização de dados online, compartilhamento de biblioteca, campanhas e muito mais!
+    title: Nenhum Personagem
+    subtitle: Crie um Personagem para começar
+
+about:
+  title: Sobre
+  version(String version): Versão $version
+  copyright(int year): Copyright © 2018-$year
+  author: Chen Asraf
+  changelog:
+    title: O que há de novo?
+    subtitle: Registro de mudanças das versões lançadas do Dungeon Paper
+  discord:
+    title: Junte-se ao Nosso Discord
+    subtitle: Junte-se à comunidade Discord para fazer perguntas, obter ajuda, enviar feedback ou simplesmente conversar com outros jogadores.
+  feedback:
+    title: Enviar Feedback
+    subtitle: Respondemos mais prontamente através do Discord, mas você pode nos enviar feedback, relatórios de bugs ou sugestões sobre o aplicativo diretamente aqui como alternativa.
+  donate:
+    title: Faça uma Doação
+    subtitle: Se você está procurando uma maneira de apoiar o projeto, pode fazer uma doação na página oficial do Ko-fi do desenvolvedor. Clique aqui para ser redirecionado para a página do Ko-fi.
+  socials:
+    title: Links
+    twitter: Twitter
+    facebook: Facebook
+    discord: Discord
+    github: GitHub
+    google: Play Store
+    apple: App Store
+  specialThanks: Agradecimentos Especiais
+  contributors: Contribuidores
+  icons: Créditos dos Ícones
+
+character:
+  data:
+    coins: Moedas
+    load:
+      load: Carga
+      maxLoad: Carga Máxima
+      autoMaxLoad: Usar carga base da classe + mod de FOR
+    level: Nível
+    damageDice: Dados de Dano
+    calculateDamage: Usar dados de dano da classe e itens equipados
+  header:
+    level(int lv): Nível $lv
+    characterClass(String name): $name
+    race(String name): $name
+    alignment(String alignment): $alignment
+    separator: ' ∙ '
+  noCategory: Sem Categoria
+  theme:
+    title: Tema do Personagem
+    _defaultTheme(String type): Tema padrão $type
+    defaultLight: "${_defaultTheme('claro')}"
+    defaultDark: "${_defaultTheme('escuro')}"
+
+characterClass:
+  baseLoad: Carga Base
+  baseHp: HP Base
+  damageDice: Dados de Dano
+  isSpellcaster:
+    title: Classe de Feitiçaria
+    subtitle: |-
+      Conjuradores são solicitados a selecionar feitiços (bem como movimentos) durante a criação do personagem e ao subir de nível.
+  stats: Estatísticas
+  bio: Antecedentes
+  startingGear:
+    label: Seleções de Equipamento Inicial
+
+startingGear:
+  titleEdit: Editar Equipamento Inicial
+  titleSelect: Selecionar Equipamento Inicial
+  coins(String amt): $amt G
+  item(String amt, String name): ${amt}× $name
+  choice:
+    title(int index): Escolha $index
+    helpText: Uma escolha é uma lista de seleções que o jogador pode fazer.
+      Ela fornece um conjunto possível de itens e moedas que o jogador pode selecionar.
+    description:
+      label: Prompt
+      hintText: ex. Escolha sua arma
+    maxSelections:
+      label: Limite sugerido de seleção
+      helpText:
+        Isto sugerirá uma quantidade máxima a ser selecionada e exibirá uma contagem, mas não limitará a seleção.
+        Use 0 ou deixe em branco para sem limite.
+    moveUp: Mover para cima
+    moveDown: Mover para baixo
+  selection:
+    title: Conjunto de Equipamento
+    helpText:
+      Cada conjunto de equipamento consiste em uma quantidade de moedas e uma lista de itens a serem dados ao personagem.
+      Escolher um conjunto de equipamento dará ao personagem todos os itens e ouro daquele conjunto.
+    add: Adicionar Conjunto de Equipamento
+    description:
+      label: Descrição da seleção
+      hintText: ex. A espada antiga do seu pai, e 10 moedas
+    coins:
+      label: Moedas
+      hintText: 0
+  option:
+    title: Itens do Conjunto de Equipamento
+    helpText: Cada item do conjunto de equipamento consiste em X quantidade de um item específico.
+    add: Adicionar Itens
+    amount:
+      label: Quantidade
+      hintText: 1
+
+dice:
+  suggestion(String dice): 'Sugestão: $dice'
+  form:
+    amount: Quantidade
+    sides: Lados
+    diceSeparator: d
+    modifierType:
+      fixed: Valor Fixo
+      modifier: Modificador de Atributo
+    value:
+      placeholder: Número, ex. 2 ou -1
+      label: Valor do modificador
+    modifier:
+      placeholder: Selecionar atributo
+      label: Atributo
+    statValue(String name, String key): $name ($key)
+
+  roll:
+    title:
+      rolled(int total): Rolou $total
+      rolling(int amt): "Rolando $amt ${_plural(amt, one: 'dado', many: 'dados')}"
+    action: Rolar
+    total(int amt): Total $amt
+    resultBreakdown(String dice, String mod): 'Dados: $dice | Modificador: $mod'
+
+basicInfo:
+  title: Informações Básicas
+  form:
+    name:
+      label: Nome do Personagem
+      placeholder: Digite o nome do seu personagem
+      random:
+        tooltip(String act): $act para gerar um nome aleatório
+    photo:
+      change: Alterar Foto...
+      remove: Remover Foto
+      choose: Escolher Foto...
+      guest:
+        prefix: 'Você precisa estar logado para carregar imagens. '
+        label: Entre ou crie uma conta
+        suffix: ', ou faça o upload usando seu próprio URL abaixo.'
+      uploading: CARREGANDO...
+      orSeparator: OU
+      url:
+        label: URL da Imagem
+        placeholder: Cole um URL de imagem
+
+debilities:
+  label(String name, String key): $name ($key)
+  dialog:
+    title: Debilidades
+    info: Debilidades são condições ou estados negativos temporários em que seu personagem se encontra. Quando um atributo está debilitado, ele reduz seu modificador em 1 até se recuperar.
+
+tags:
+  copyFrom(String name): 'Copiar de: $name'
+  dialog:
+    title: Informações da Tag
+
+dialogs:
+  confirmations:
+    delete:
+      title(String ent): Excluir $ent?
+      body(String ent, String name): Tem certeza de que deseja remover o $ent "$name" da lista?
+    exit:
+      title: Você tem certeza?
+      body: Voltar perderá todas as mudanças não salvas.\nTem certeza de que deseja voltar?
+      ok: Sair e Descartar
+      cancel: Continuar editando
+    deleteAccount:
+      step1:
+        title: Excluir sua Conta?
+        body: Tem certeza de que deseja excluir sua conta?\n\nEsta ação não pode ser desfeita.
+      step2:
+        title: Tem certeza mesmo?
+        body: Não salvamos nenhum dado de contas excluídas. Todos os seus dados serão permanentemente deletados.\n\nTem certeza de que deseja excluir sua conta?\n\nPor favor, confirme uma última vez.
+
+moves:
+  category:
+    shortName(String cat): |-
+      ${switch (cat) {
+        'starting' => 'Inicial',
+        'basic' => 'Básico',
+        'special' => 'Especial',
+        'advanced1' => 'Avançado',
+        'advanced2' => 'Avançado+',
+        _ => 'Outro'
+      }}
+    mediumName(String cat): |-
+      ${switch (cat) {
+        'starting' => 'Inicial',
+        'basic' => 'Básico',
+        'special' => 'Especial',
+        'advanced1' => 'Avançado (1-5)',
+        'advanced2' => 'Avançado (6-10)',
+        _ => 'Outro'
+      }}
+    longName(String cat): |-
+      ${switch (cat) {
+        'starting' => 'Inicial',
+        'basic' => 'Básico',
+        'special' => 'Especial',
+        'advanced1' => 'Avançado (nível 1-5)',
+        'advanced2' => 'Avançado (nível 6-10)',
+        _ => 'Outro'
+      }}
+
+spells:
+  spellLevel(String level): |-
+    ${switch (level) {
+      'rote' => 'Rotina',
+      'cantrip' => 'Truque',
+      _ =>  'Nível $level',
+    }}
+
+items:
+  amount(String amt): × $amt
+  amountTooltip: Quantidade
+  settings:
+    countArmor: Contar Armadura
+    countDamage: Contar Dano
+    countWeight: Contar Peso
+
+notes:
+  category:
+    label: Categoria
+  noCategory: Geral
+  emptyState:
+    title: Sem Notas
+    subtitle: Você pode registrar seu progresso, memorandos, listas, mapas e muito mais usando o diário.
+    button: Criar Nota
+
+# `{alignment, select, chaotic {Chaótico} evil {Maligno} good {Bom} lawful {Ordeiro} neutral {Neutro} other {{alignment}}}`
+alignment:
+  name(String key): |-
+    ${switch (key) {
+      'chaotic' => 'Caótico',
+      'evil' => 'Maligno',
+      'good' => 'Bom',
+      'lawful' => 'Ordeiro',
+      'neutral' => 'Neutro',
+      _ => key,
+    }}
+  alignmentValues:
+    title: Alinhamentos
+
+bio:
+  dialog:
+    title: Biografia do Personagem
+    description:
+      label: Descrição do personagem e antecedentes
+      placeholder: Descreva o histórico, a personalidade, os objetivos, etc., do seu personagem.
+    looks:
+      label: Aparência
+      placeholder: Descreva a aparência do seu personagem. Você pode usar os presets dos botões acima.
+    alignment:
+      label: Alinhamento
+    alignmentDescription:
+      label: Descrição do Alinhamento
+      placeholder: Alinhamento é a maneira como seu personagem pensa e sua bússola moral. Isso pode se basear em um ideal ético, restrições religiosas ou eventos da vida inicial. Reflete o que seu personagem valoriza e aspira proteger ou criar.
+
+search:
+  placeholder: Digite para pesquisar
+  placeholderEntity(String ent): Digite para pesquisar $ent
+  searchIn: Pesquisar em
+
+hp:
+  dialog:
+    title: Modificar HP
+    change:
+      add(int amt): Curar\n+$amt
+      remove(int amt): Dano\n-$amt
+      neutral: Sem Alteração
+    overrideMax: Substituir HP Máximo
+  bar:
+    label: HP
+    tooltip(String act): $act para modificar seu HP
+
+xp:
+  dialog:
+    endOfSession:
+      title: Finalizar Sessão
+      button: Finalizar Sessão
+      questions:
+        title: Perguntas de Fim de Sessão
+        subtitle: 'Responda a essas perguntas em grupo. Para cada resposta "sim", marca-se XP.'
+    levelUp:
+      title: Subir de Nível
+      button: Subir de Nível
+      increaseStat: 'Aumentar um atributo em 1:'
+      choose:
+        info(String what): 'Então, selecione $what:'
+        both(String ent1, String ent2): $ent1 e $ent2
+        move: um movimento avançado
+        spell: um feitiço
+    overwrite:
+      title: Sobrescrever XP e Nível
+      button: Sobrescrever
+      info: Alterar manualmente o XP ou o nível atual fará com que o XP pendente seja descartado, a menos que isso seja desmarcado.
+      resetCheckbox: Redefinir vínculos, bandeiras e perguntas de fim de sessão após salvar
+      xp: Sobrescrever XP
+      level: Sobrescrever Nível
+  bar:
+    label: XP
+    tooltip(String act): $act para encerrar a sessão, subir de nível ou atualizar seu XP
+    plusOneTooltip(String act): $act para adicionar +1 XP
+armor:
+  title: Armadura
+  dialog:
+    title: Armadura
+    autoArmor: Usar armadura da classe e itens equipados
+
+richText:
+  preview: Pré-visualização
+  help: Ajuda de Formatação
+  bold: Negrito
+  italic: Itálico
+  headings: Cabeçalhos
+  heading(int depth): Cabeçalho $depth
+  bulletList: Lista com Marcadores
+  numberedList: Lista Numerada
+  checkList:
+    unchecked: Lista de Verificação (Não Marcada)
+    checked: Lista de Verificação (Marcada)
+  url: URL
+  imageURL: URL da Imagem
+  table: Tabela
+  header(Object n): Cabeçalho $n
+  cell(int n): Célula $n
+  markdownPreview: Pré-visualização de Markdown
+  date: Adicionar Data Atual
+  time: Adicionar Hora Atual
+
+customRolls:
+  title: Botões de Rolagem Rápida
+  left: Botão Esquerdo
+  right: Botão Direito
+  buttonLabel: Rótulo do Botão
+  specialDice:
+    title: Dados Especiais
+    button(String btn): "${switch (btn) {'damage' => 'Dano', _ => btn}}"
+  tooltip:
+    rollNormal(String dice): Rolar $dice
+    rollWithDebility(String dice): Rolar $dice\n* Rolando com debilidade
+  presets:
+    title: Predefinições
+    basicAction: Ação Básica
+    hackAndSlash: Golpear & Retalhar
+    volley: Volêi
+    discernRealities: Discernir Realidades
+
+sessionMarks:
+  title: Vínculos & Bandeiras
+  bond: Vínculo
+  bonds: Vínculos
+  flag: Bandeira
+  flags: Bandeiras
+  noData: Você não tem vínculos ou bandeiras. Você pode adicionar alguns usando o botão de edição acima e marcá-los como concluídos à medida que avança em sua aventura.
+  info: Você pode adicionar, atualizar ou remover vínculos e bandeiras usando o ícone de edição acima.
+  endOfSession:
+    q1: Aprendemos algo novo e importante sobre o mundo?
+    q2: Superamos um monstro ou inimigo notável?
+    q3: Saqueamos um tesouro memorável?
+
+createCharacter:
+  characterClass:
+    noSelection: Nenhuma classe selecionada (obrigatório)
+    description(int hp, int load, String damageDice): 'HP Base: $hp, Carga: $load, Dados de Dano: $damageDice'
+  basicInfo:
+    defaultName: Viajante Sem Nome
+    helpText: Selecione nome e imagem (obrigatório)
+    description(String cls): Nível 1 $cls
+  startingGear:
+    helpText: Selecione seu equipamento inicial determinado pela classe (opcional)
+    coins(String amt): $amt G
+    item(String amt, String name): ${amt}× $name
+    count:
+      withMax(int cnt, int max): '$cnt selecionado (limite de classe: $max)'
+      noMax(int cnt): $cnt selecionado
+  movesSpells:
+    title: Movimentos & Feitiços
+    description(int moves, int spells): $moves Movimentos, $spells Feitiços selecionados
+
+account:
+  details:
+    title: Detalhes da conta
+    displayName:
+      title: Alterar Nome de Exibição
+      label: Nome de exibição
+      placeholder: Insira seu nome de exibição público
+      success: Nome de exibição alterado com sucesso
+    image:
+      title: Alterar Foto de Perfil
+      subtitle: Alterar sua foto de perfil
+    email:
+      title: Alterar Endereço de Email
+      label: Endereço de email
+      placeholder: Insira um novo endereço de email
+      success: Email alterado com sucesso
+    password:
+      title: Alterar Senha
+      subtitle: Alterar sua senha
+      success: Senha alterada com sucesso
+      label: Nova senha
+      placeholder: Insira sua nova senha
+      visibility:
+        show: Mostrar senha
+        hide: Ocultar senha
+      confirm:
+        label: Confirmar Nova Senha
+        placeholder: Insira a mesma senha novamente
+      error: As senhas não coincidem
+  providers:
+    title: Logins conectados
+  deleteAccount:
+    title: Excluir Sua Conta
+    success: Uma solicitação de exclusão para sua conta foi enviada com sucesso
+  unlink:
+    success(String provider): Você desvinculou $provider com sucesso.
+
+actions:
+  moves:
+    basic: Movimentos Básicos
+    special: Movimentos Especiais
+  classActions:
+    title: Ações de Classe
+    markXP:
+      button: Marcar +1 XP
+      success: +1 XP marcado
+
+abilityScores:
+  info: Você pode arrastar e soltar os cartões de estatísticas para mudar a ordem em que eles aparecem nas telas deste personagem.
+  rollButton:
+    stat: Rolar +{stat}
+    randStat: Rolar estatística aleatória
+  stats:
+    bond:
+      name: Vínculo
+      description: Quando um movimento pede para você rolar+vínculo, você contará o número de vínculos que tem com o personagem em questão e adicionará isso à rolagem.
+      debility:
+        name: Solitário
+        description:
+    cha:
+      description: Mede a personalidade de um personagem, magnetismo pessoal, habilidade de liderança e aparência.
+      name: Carisma
+      debility:
+        name: Cicatrizado
+        description: Pode não ser permanente, mas por enquanto você não parece tão bem.
+    con:
+      description: Representa a saúde e resistência do seu personagem.
+      name: Constituição
+      debility:
+        name: Doente
+        description: Algo não está certo por dentro. Talvez você tenha uma doença ou uma enfermidade debilitante. Talvez você só tenha bebido muita cerveja na noite passada e agora ela esteja voltando para assombrá-lo.
+    dex:
+      description: Mede agilidade, reflexos e equilíbrio.
+      name: Destreza
+      debility:
+        name: Tremor
+        description: Você está instável nos pés e tem um tremor nas mãos.
+    str:
+      description: Mede o músculo e o poder físico.
+      name: Força
+      debility:
+        name: Fraco
+        description: Você não pode exercer muita força. Talvez seja apenas cansaço e lesão, ou talvez sua força tenha sido drenada por magia.
+    wis:
+      description: Descreve a força de vontade, senso comum, consciência e intuição de um personagem.
+      name: Sabedoria
+      debility:
+        name: Confuso
+        description: Ouvidos zumbindo. Visão embaçada. Você está mais do que um pouco fora de si.
+    intl:
+      description: Determina o quão bem seu personagem aprende e raciocina.
+      name: Inteligência
+      debility:
+        name: Atordoado
+        description: Aquela última pancada na cabeça soltou algo. O cérebro não está funcionando muito bem.
+  form:
+    modifierValueLabel(String mod): Modificador:\n$mod
+    debilityDescription:
+      label: Descrição da Debilidade
+      description: Uma descrição do efeito que causa a debilidade e/ou como isso afeta seu personagem
+    debilityName:
+      label: Nome da Debilidade
+      description: O nome para a debilidade que ocorre quando este atributo é debilitado (leva -1 até se recuperar).
+    description:
+      label: Descrição da Pontuação de Habilidade
+      description: Uma descrição do que esta pontuação de habilidade representa
+    key:
+      label: Chave da Pontuação de Habilidade
+      description: Uma chave única de 3 letras que identifica esta pontuação de habilidade nos dados e é usada como o rótulo curto para o valor do modificador (e não a pontuação real)
+    name:
+      label: Nome da Pontuação de Habilidade
+      description: O nome desta pontuação de habilidade
+    icon:
+      label: Ícone
+      button: Alterar Ícone
+
+feedback:
+  title: Enviar Feedback do App
+  send: Enviar
+  form:
+    title:
+      label: Título do feedback
+    body:
+      label: Problema, ideia ou descrição do feedback
+    email:
+      label: Insira seu email
+  success:
+    title: Feedback enviado!
+    message: Obrigado pelo seu feedback! Vamos revisá-lo o mais rápido possível.
+
+migration:
+  title: Bem-vindo ao\nDungeon Paper 2!
+  subtitle: Para começar, escolha um nome de usuário e o idioma para o livro de regras e o aplicativo. Se você já possui uma conta Dungeon Paper existente, seus dados podem levar alguns segundos para migrar.
+  username:
+    label: Nome de usuário
+    placeholder: Escolha um nome de usuário único
+    info: Seu nome de usuário é único e não pode ser alterado depois, então pense bem! Ele será usado para identificar todos os itens da sua biblioteca ao publicar.
+  language:
+    data: Idioma padrão dos dados
+
+backup:
+  title: Exportar/Importar
+  importing:
+    title: Importar
+    button: Importar
+    progress:
+      title: Importando...
+      processing(String ent): Processando $ent...
+    file:
+      browse: Navegar...
+      clearFile: Limpar arquivo selecionado
+      info: Para começar a importar, escolha o arquivo do qual deseja importar.\nVocê poderá então selecionar o que salvar e o que deixar de fora.
+    success:
+      title: Importação Bem-sucedida
+      message: Seus dados foram importados do arquivo com sucesso
+    error:
+      title: Falha na Importação
+      message: Algo deu errado.\nTente novamente ou entre em contato com o suporte se isso persistir
+  exporting:
+    title: Exportar
+    button: Exportar
+    error:
+      title: Falha na Exportação
+      message: Algo deu errado.\nTente novamente ou entre em contato com o suporte se isso persistir
+    success:
+      title: Exportação Bem-sucedida
+      message: Seus dados foram exportados para o arquivo com sucesso
+    bundles:
+      characterClass:
+        button: Exportar Pacote de Classe
+        title: Exportar Pacote de Classe
+
+changelog:
+  title: O que há de novo?
+  tags:
+    latest: Última
+    current: Atual
