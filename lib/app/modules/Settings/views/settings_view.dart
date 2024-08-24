@@ -23,95 +23,86 @@ class SettingsView extends StatelessWidget
         title: Text(tr.settings.title),
         centerTitle: true,
       ),
-      body: ListView(
-        children: [
-          _sectionTitle(
-            context,
-            tr.settings.categories.general,
-          ),
-          Consumer<SettingsController>(
-            builder: (context, controller, _) => ListTile(
-              title: Text(tr.settings.locale),
-              trailing: SizedBox(
-                width: 300,
-                child: SelectBox<Locale>(
-                  onChanged: (value) {
-                    controller.updateSettings(
-                      controller.settings.copyWith(locale: value),
-                    );
-                  },
-                  items: intl.supportedLocales
-                      .map(
-                        (l) => DropdownMenuItem<Locale>(
-                          value: l,
-                          child: Text(
-                            switch (l) {
-                              Locales.enUS => tr.settings.locales.en_US,
-                              Locales.ptBR => tr.settings.locales.pt_BR,
-                              _ => l.toString(),
-                            },
+      body: Consumer<SettingsController>(
+        builder: (context, controller, _) => ListView(
+          children: [
+            _sectionTitle(
+              context,
+              tr.settings.categories.general,
+            ),
+            if (controller.user.flags['locale_preview'] == true)
+              ListTile(
+                title: Text(tr.settings.locale),
+                trailing: SizedBox(
+                  width: 300,
+                  child: SelectBox<Locale>(
+                    onChanged: (value) {
+                      controller.updateSettings(
+                        controller.settings.copyWith(locale: value),
+                      );
+                    },
+                    items: intl.supportedLocales
+                        .map(
+                          (l) => DropdownMenuItem<Locale>(
+                            value: l,
+                            child: Text(
+                              switch (l) {
+                                Locales.enUS => tr.settings.locales.en_US,
+                                Locales.ptBR => tr.settings.locales.pt_BR,
+                                _ => l.toString(),
+                              },
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                  value: controller.settings.locale,
+                        )
+                        .toList(),
+                    value: controller.settings.locale,
+                  ),
                 ),
               ),
-            ),
-          ),
-          if (PlatformHelper.isMobile)
-            Consumer<SettingsController>(
-              builder: (context, controller, _) => SwitchListTile.adaptive(
+            if (PlatformHelper.isMobile)
+              SwitchListTile.adaptive(
                 title: Text(tr.settings.keepAwake),
                 value: controller.settings.keepScreenAwake,
                 onChanged: (value) => controller.updateSettings(
                   controller.settings.copyWith(keepScreenAwake: value),
                 ),
               ),
-            ),
-          Consumer<SettingsController>(
-            builder: (context, controller, _) => _sectionTitle(
+            _sectionTitle(
               context,
               tr.settings.defaultTheme.light,
               onChangeSeeAll: (val) =>
                   controller.setSeeAll(Brightness.light, val),
               seeAll: controller.seeAll[Brightness.light]!,
             ),
-          ),
-          _pad(
-            Consumer<SettingsController>(
-              builder: (context, controller, _) => ThemeSelector(
+            _pad(
+              ThemeSelector(
                 themes: controller.seeAll[Brightness.light]!
                     ? AppThemes.allThemes
                     : AppThemes.allLightThemes,
                 selected: controller.settings.defaultLightTheme,
                 onSelected: (theme) => controller.setLightTheme(theme),
               ),
+              horizontal: 8,
             ),
-            horizontal: 8,
-          ),
-          Consumer<SettingsController>(
-            builder: (context, controller, _) => _sectionTitle(
+            _sectionTitle(
               context,
               tr.settings.defaultTheme.dark,
               onChangeSeeAll: (val) =>
                   controller.setSeeAll(Brightness.dark, val),
               seeAll: controller.seeAll[Brightness.dark]!,
             ),
-          ),
-          _pad(
-            Consumer<SettingsController>(
-              builder: (context, controller, _) => ThemeSelector(
+            _pad(
+              ThemeSelector(
                 themes: controller.seeAll[Brightness.dark]!
                     ? AppThemes.allThemes
                     : AppThemes.allDarkThemes,
                 selected: controller.settings.defaultDarkTheme,
                 onSelected: (theme) => controller.setDarkTheme(theme),
               ),
+              horizontal: 8,
             ),
-            horizontal: 8,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
