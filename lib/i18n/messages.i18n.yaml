@@ -161,6 +161,10 @@ settings:
   categories:
     general: General
   keepAwake: Keep screen awake while using the app
+  locale: Language
+  locales:
+    en_US: English (United States)
+    pt_BR: Português (Brasil)
   defaultTheme:
     _p(String type): Default $type theme
     light: "${_p('light')}"

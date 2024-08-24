@@ -811,6 +811,12 @@ class SettingsMessagesPtBR extends SettingsMessages {
   /// "Manter a tela ativa enquanto usa o aplicativo"
   /// ```
   String get keepAwake => """Manter a tela ativa enquanto usa o aplicativo""";
+
+  /// ```dart
+  /// "Idioma"
+  /// ```
+  String get locale => """Idioma""";
+  LocalesSettingsMessagesPtBR get locales => LocalesSettingsMessagesPtBR(this);
   DefaultThemeSettingsMessagesPtBR get defaultTheme =>
       DefaultThemeSettingsMessagesPtBR(this);
 }
@@ -823,6 +829,21 @@ class CategoriesSettingsMessagesPtBR extends CategoriesSettingsMessages {
   /// "Geral"
   /// ```
   String get general => """Geral""";
+}
+
+class LocalesSettingsMessagesPtBR extends LocalesSettingsMessages {
+  final SettingsMessagesPtBR _parent;
+  const LocalesSettingsMessagesPtBR(this._parent) : super(_parent);
+
+  /// ```dart
+  /// "English (United States)"
+  /// ```
+  String get en_US => """English (United States)""";
+
+  /// ```dart
+  /// "Português (Brasil)"
+  /// ```
+  String get pt_BR => """Português (Brasil)""";
 }
 
 class DefaultThemeSettingsMessagesPtBR extends DefaultThemeSettingsMessages {
@@ -4176,6 +4197,9 @@ Map<String, String> get messagesPtBRMap => {
       """settings.categories.general""": """Geral""",
       """settings.keepAwake""":
           """Manter a tela ativa enquanto usa o aplicativo""",
+      """settings.locale""": """Idioma""",
+      """settings.locales.en_US""": """English (United States)""",
+      """settings.locales.pt_BR""": """Português (Brasil)""",
       """user.recentCharacters""": """Personagens Recentes""",
       """auth.orSeparator""": """OU""",
       """auth.privacyPolicy""": """Política de Privacidade""",

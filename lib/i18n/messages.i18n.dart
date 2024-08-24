@@ -803,6 +803,12 @@ class SettingsMessages {
   /// "Keep screen awake while using the app"
   /// ```
   String get keepAwake => """Keep screen awake while using the app""";
+
+  /// ```dart
+  /// "Language"
+  /// ```
+  String get locale => """Language""";
+  LocalesSettingsMessages get locales => LocalesSettingsMessages(this);
   DefaultThemeSettingsMessages get defaultTheme =>
       DefaultThemeSettingsMessages(this);
 }
@@ -815,6 +821,21 @@ class CategoriesSettingsMessages {
   /// "General"
   /// ```
   String get general => """General""";
+}
+
+class LocalesSettingsMessages {
+  final SettingsMessages _parent;
+  const LocalesSettingsMessages(this._parent);
+
+  /// ```dart
+  /// "English (United States)"
+  /// ```
+  String get en_US => """English (United States)""";
+
+  /// ```dart
+  /// "Português (Brasil)"
+  /// ```
+  String get pt_BR => """Português (Brasil)""";
 }
 
 class DefaultThemeSettingsMessages {
@@ -4062,6 +4083,9 @@ Map<String, String> get messagesMap => {
       """settings.importExport""": """Export/Import""",
       """settings.categories.general""": """General""",
       """settings.keepAwake""": """Keep screen awake while using the app""",
+      """settings.locale""": """Language""",
+      """settings.locales.en_US""": """English (United States)""",
+      """settings.locales.pt_BR""": """Português (Brasil)""",
       """user.recentCharacters""": """Recent Characters""",
       """auth.orSeparator""": """OR""",
       """auth.privacyPolicy""": """Privacy Policy""",

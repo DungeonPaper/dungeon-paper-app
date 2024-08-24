@@ -388,10 +388,10 @@ class RichTextField extends StatelessWidget {
   }
 
   String _getFormattedDate(DateTime date) =>
-      intl.DateFormat(IntlService.dateFormat).format(date);
+      intl.DateFormat(IntlService.instance.dateFormat).format(date);
 
   String _getFormattedTime(DateTime date) =>
-      intl.DateFormat(IntlService.timeFormat).format(date);
+      intl.DateFormat(IntlService.instance.timeFormat).format(date);
 }
 
 class _RichButton extends StatelessWidget {

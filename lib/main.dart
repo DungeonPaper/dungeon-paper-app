@@ -6,7 +6,6 @@ import 'package:dungeon_paper/app/data/services/user_provider.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/multi_platform_scroll_behavior.dart';
-import 'package:dungeon_paper/core/pref_keys.dart';
 import 'package:dungeon_paper/core/remote_config.dart';
 import 'package:dungeon_paper/core/shared_preferences.dart';
 import 'package:dungeon_paper/core/window_manager.dart';
@@ -43,11 +42,20 @@ void main() async {
   );
 }
 
+final _loadingProvider = LoadingProvider();
+final _authProvider = AuthProvider();
+final _characterProvider = CharacterProvider();
+final _userProvider = UserProvider();
+final _repositoryProvider = RepositoryProvider();
+final _libraryProvider = LibraryProvider();
+final _intlService = IntlService.instance;
+
 Future<void> _init() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await loadSharedPrefs();
+  _intlService.loadLocale();
   await initRemoteConfig();
   if (!PlatformHelper.isWeb && PlatformHelper.isDesktop) {
     await windowInit();
@@ -55,14 +63,6 @@ Future<void> _init() async {
   FlutterNativeSplash.remove();
   runApp(const DungeonPaperApp());
 }
-
-final _loadingProvider = LoadingProvider();
-final _authProvider = AuthProvider();
-final _characterProvider = CharacterProvider();
-final _userProvider = UserProvider();
-final _repositoryProvider = RepositoryProvider();
-final _libraryProvider = LibraryProvider();
-final _intlService = IntlService();
 
 class DungeonPaperApp extends StatelessWidget {
   const DungeonPaperApp({super.key});

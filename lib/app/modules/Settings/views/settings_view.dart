@@ -5,7 +5,9 @@ import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../data/services/intl_service.dart';
 import '../../../data/services/user_provider.dart';
+import '../../../widgets/atoms/select_box.dart';
 import '../controllers/settings_controller.dart';
 import 'theme_selector.dart';
 
@@ -15,6 +17,7 @@ class SettingsView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final intl = IntlService.instance;
     return Scaffold(
       appBar: AppBar(
         title: Text(tr.settings.title),
@@ -25,6 +28,36 @@ class SettingsView extends StatelessWidget
           _sectionTitle(
             context,
             tr.settings.categories.general,
+          ),
+          Consumer<SettingsController>(
+            builder: (context, controller, _) => ListTile(
+              title: Text(tr.settings.locale),
+              trailing: SizedBox(
+                width: 300,
+                child: SelectBox<Locale>(
+                  onChanged: (value) {
+                    controller.updateSettings(
+                      controller.settings.copyWith(locale: value),
+                    );
+                  },
+                  items: intl.supportedLocales
+                      .map(
+                        (l) => DropdownMenuItem<Locale>(
+                          value: l,
+                          child: Text(
+                            switch (l) {
+                              Locales.enUS => tr.settings.locales.en_US,
+                              Locales.ptBR => tr.settings.locales.pt_BR,
+                              _ => l.toString(),
+                            },
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  value: controller.settings.locale,
+                ),
+              ),
+            ),
           ),
           if (PlatformHelper.isMobile)
             Consumer<SettingsController>(

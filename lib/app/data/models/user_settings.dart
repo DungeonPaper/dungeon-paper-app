@@ -1,23 +1,27 @@
 import 'dart:convert';
 
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../themes/themes.dart';
 import '../services/character_provider.dart';
+import '../services/intl_service.dart';
 
 class UserSettings with CharacterProviderMixin {
   final bool keepScreenAwake;
   final int defaultLightTheme;
   final int defaultDarkTheme;
   final Brightness? brightnessOverride;
+  final Locale locale;
 
   UserSettings({
     this.keepScreenAwake = true,
     this.defaultLightTheme = AppThemes.parchment,
     this.defaultDarkTheme = AppThemes.dark,
     this.brightnessOverride,
+    this.locale = Locales.enUS,
   });
 
   UserSettings copyWith({
@@ -25,12 +29,14 @@ class UserSettings with CharacterProviderMixin {
     int? defaultLightTheme,
     int? defaultDarkTheme,
     Brightness? brightnessOverride,
+    Locale? locale,
   }) =>
       UserSettings(
         keepScreenAwake: keepScreenAwake ?? this.keepScreenAwake,
         defaultLightTheme: defaultLightTheme ?? this.defaultLightTheme,
         defaultDarkTheme: defaultDarkTheme ?? this.defaultDarkTheme,
         brightnessOverride: brightnessOverride ?? this.brightnessOverride,
+        locale: locale ?? this.locale,
       );
 
   factory UserSettings.fromRawJson(String str) =>
@@ -44,6 +50,9 @@ class UserSettings with CharacterProviderMixin {
             Brightness.values.cast<Brightness?>().firstWhereOrNull(
                   (element) => element!.name == json['brightnessOverride'],
                 ),
+        locale: json['locale'] != null
+            ? Locale(json['locale'].first, json['locale'].last)
+            : Locales.enUS,
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,6 +60,7 @@ class UserSettings with CharacterProviderMixin {
         'defaultLightTheme': defaultLightTheme,
         'defaultDarkTheme': defaultDarkTheme,
         'brightnessOverride': brightnessOverride?.name,
+        'locale': [locale.languageCode, locale.countryCode],
       };
 
   @override
@@ -78,10 +88,16 @@ class UserSettings with CharacterProviderMixin {
   String toString() => 'UserSettings($debugProperties)';
 
   void apply() {
+    // keep screen awake
     WakelockPlus.toggle(enable: keepScreenAwake);
-
+    // theme
     if (maybeChar != null) {
       charProvider.switchToCharacterTheme(char);
-    } else {}
+    }
+    final intl = IntlService.instance;
+    // locale
+    if (locale != intl.locale) {
+      intl.changeLocale(locale);
+    }
   }
 }

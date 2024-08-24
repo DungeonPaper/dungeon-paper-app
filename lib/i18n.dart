@@ -9,6 +9,7 @@ import 'package:dungeon_paper/app/data/models/move.dart';
 import 'package:dungeon_paper/app/data/models/note.dart';
 import 'package:dungeon_paper/app/data/models/race.dart';
 import 'package:dungeon_paper/app/data/models/spell.dart';
+import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_world_data/dice.dart';
 import 'package:dungeon_world_data/tag.dart';
 
@@ -17,7 +18,7 @@ import 'i18n/messages.i18n.dart';
 
 /// Get the current language Messages object, which contains all the
 /// translations for the current language.
-Messages get tr => IntlService.m;
+Messages get tr => IntlService.instance.m;
 
 /// Get the static name of a type, for use with `tr.entity*` methods.
 String tn(Type type) {
