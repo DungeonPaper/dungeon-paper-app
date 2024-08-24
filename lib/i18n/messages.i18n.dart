@@ -803,11 +803,7 @@ class SettingsMessages {
   /// "Keep screen awake while using the app"
   /// ```
   String get keepAwake => """Keep screen awake while using the app""";
-
-  /// ```dart
-  /// "Language"
-  /// ```
-  String get locale => """Language""";
+  LocaleSettingsMessages get locale => LocaleSettingsMessages(this);
   LocalesSettingsMessages get locales => LocalesSettingsMessages(this);
   DefaultThemeSettingsMessages get defaultTheme =>
       DefaultThemeSettingsMessages(this);
@@ -821,6 +817,21 @@ class CategoriesSettingsMessages {
   /// "General"
   /// ```
   String get general => """General""";
+}
+
+class LocaleSettingsMessages {
+  final SettingsMessages _parent;
+  const LocaleSettingsMessages(this._parent);
+
+  /// ```dart
+  /// "Language"
+  /// ```
+  String get title => """Language""";
+
+  /// ```dart
+  /// "Switching the language will reload the app"
+  /// ```
+  String get subtitle => """Switching the language will reload the app""";
 }
 
 class LocalesSettingsMessages {
@@ -4083,7 +4094,9 @@ Map<String, String> get messagesMap => {
       """settings.importExport""": """Export/Import""",
       """settings.categories.general""": """General""",
       """settings.keepAwake""": """Keep screen awake while using the app""",
-      """settings.locale""": """Language""",
+      """settings.locale.title""": """Language""",
+      """settings.locale.subtitle""":
+          """Switching the language will reload the app""",
       """settings.locales.en_US""": """English (United States)""",
       """settings.locales.pt_BR""": """Português (Brasil)""",
       """user.recentCharacters""": """Recent Characters""",

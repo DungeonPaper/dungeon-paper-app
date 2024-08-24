@@ -161,7 +161,9 @@ settings:
   categories:
     general: General
   keepAwake: Keep screen awake while using the app
-  locale: Language
+  locale:
+    title: Language
+    subtitle: Switching the language will reload the app
   locales:
     en_US: English (United States)
     pt_BR: Português (Brasil)

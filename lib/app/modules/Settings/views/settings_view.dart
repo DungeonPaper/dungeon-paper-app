@@ -31,33 +31,38 @@ class SettingsView extends StatelessWidget
               tr.settings.categories.general,
             ),
             if (controller.user.flags['locale_preview'] == true)
-              ListTile(
-                title: Text(tr.settings.locale),
-                trailing: SizedBox(
-                  width: 300,
-                  child: SelectBox<Locale>(
-                    onChanged: (value) {
-                      controller.updateSettings(
-                        controller.settings.copyWith(locale: value),
-                      );
-                    },
-                    items: intl.supportedLocales
-                        .map(
-                          (l) => DropdownMenuItem<Locale>(
-                            value: l,
-                            child: Text(
-                              switch (l) {
-                                Locales.enUS => tr.settings.locales.en_US,
-                                Locales.ptBR => tr.settings.locales.pt_BR,
-                                _ => l.toString(),
-                              },
+              _pad(
+                ListTile(
+                  title: Text(tr.settings.locale.title),
+                  subtitle: Text(tr.settings.locale.subtitle),
+                  trailing: SizedBox(
+                    width: 300,
+                    child: SelectBox<Locale>(
+                      onChanged: (value) {
+                        controller.updateSettings(
+                          controller.settings.copyWith(locale: value),
+                        );
+                      },
+                      items: intl.supportedLocales
+                          .map(
+                            (l) => DropdownMenuItem<Locale>(
+                              value: l,
+                              child: Text(
+                                switch (l) {
+                                  Locales.enUS => tr.settings.locales.en_US,
+                                  Locales.ptBR => tr.settings.locales.pt_BR,
+                                  _ => l.toString(),
+                                },
+                              ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                    value: controller.settings.locale,
+                          )
+                          .toList(),
+                      value: controller.settings.locale,
+                    ),
                   ),
                 ),
+                vertical: 8,
+                horizontal: 0,
               ),
             if (PlatformHelper.isMobile)
               SwitchListTile.adaptive(
@@ -127,9 +132,21 @@ class SettingsView extends StatelessWidget
     ));
   }
 
-  Widget _pad(Widget child, {double horizontal = 16}) {
+  Widget _pad(Widget child,
+      {double horizontal = 16,
+      double vertical = 0,
+      double? top,
+      double? bottom,
+      double? left,
+      double? right}) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: horizontal),
+      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical)
+          .copyWith(
+        top: top,
+        bottom: bottom,
+        left: left,
+        right: right,
+      ),
       child: child,
     );
   }

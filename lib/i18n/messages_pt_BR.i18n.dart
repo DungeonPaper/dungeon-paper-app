@@ -811,11 +811,7 @@ class SettingsMessagesPtBR extends SettingsMessages {
   /// "Manter a tela ativa enquanto usa o aplicativo"
   /// ```
   String get keepAwake => """Manter a tela ativa enquanto usa o aplicativo""";
-
-  /// ```dart
-  /// "Idioma"
-  /// ```
-  String get locale => """Idioma""";
+  LocaleSettingsMessagesPtBR get locale => LocaleSettingsMessagesPtBR(this);
   LocalesSettingsMessagesPtBR get locales => LocalesSettingsMessagesPtBR(this);
   DefaultThemeSettingsMessagesPtBR get defaultTheme =>
       DefaultThemeSettingsMessagesPtBR(this);
@@ -829,6 +825,21 @@ class CategoriesSettingsMessagesPtBR extends CategoriesSettingsMessages {
   /// "Geral"
   /// ```
   String get general => """Geral""";
+}
+
+class LocaleSettingsMessagesPtBR extends LocaleSettingsMessages {
+  final SettingsMessagesPtBR _parent;
+  const LocaleSettingsMessagesPtBR(this._parent) : super(_parent);
+
+  /// ```dart
+  /// "Idioma"
+  /// ```
+  String get title => """Idioma""";
+
+  /// ```dart
+  /// "Alterar o idioma irá recarregar o aplicativo"
+  /// ```
+  String get subtitle => """Alterar o idioma irá recarregar o aplicativo""";
 }
 
 class LocalesSettingsMessagesPtBR extends LocalesSettingsMessages {
@@ -4197,7 +4208,9 @@ Map<String, String> get messagesPtBRMap => {
       """settings.categories.general""": """Geral""",
       """settings.keepAwake""":
           """Manter a tela ativa enquanto usa o aplicativo""",
-      """settings.locale""": """Idioma""",
+      """settings.locale.title""": """Idioma""",
+      """settings.locale.subtitle""":
+          """Alterar o idioma irá recarregar o aplicativo""",
       """settings.locales.en_US""": """English (United States)""",
       """settings.locales.pt_BR""": """Português (Brasil)""",
       """user.recentCharacters""": """Personagens Recentes""",

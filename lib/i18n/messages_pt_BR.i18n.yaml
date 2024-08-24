@@ -160,7 +160,9 @@ settings:
   categories:
     general: Geral
   keepAwake: Manter a tela ativa enquanto usa o aplicativo
-  locale: Idioma
+  locale:
+    title: Idioma
+    subtitle: Alterar o idioma irá recarregar o aplicativo
   locales:
     en_US: English (United States)
     pt_BR: Português (Brasil)
