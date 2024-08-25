@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/app/widgets/atoms/platform_scaffold_wrapper.dart';
+import 'package:dungeon_paper/core/platform_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -105,15 +107,16 @@ class AppPages {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final route = settings.name;
     final builder = routes[route];
+    Widget builderWrapper(BuildContext context) => PlatformScaffoldWrapper(child: builder!.call(context));
     debugPrint('[ROUTER] Building route $route');
     if (builder == null) {
       throw Exception('No route defined for $route');
     }
     if (transitionsMap.containsKey(route)) {
-      return transitionsMap[route]!(builder, settings);
+      return transitionsMap[route]!(builderWrapper, settings);
     }
     return DefaultPageRoute(
-      builder: builder,
+      builder: builderWrapper,
       settings: settings,
       fullscreenDialog: AppPages.fullscreenDialogs.contains(route),
       opaque: !AppPages.transparentRoutes.contains(route),
