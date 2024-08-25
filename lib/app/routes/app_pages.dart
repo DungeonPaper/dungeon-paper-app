@@ -356,7 +356,7 @@ class AppPages {
         ),
 
     Routes.changelog: (context) => ChangeNotifierProvider(
-          child: const ChangelogView(),
+          child: ChangelogView(),
           create: (_) => ChangelogController(),
         ),
   };
