@@ -1,6 +1,7 @@
 import 'dart:math' show sqrt, max;
 import 'dart:ui' show lerpDouble;
 
+import 'package:dungeon_paper/app/widgets/atoms/platform_scaffold_wrapper.dart';
 import 'package:flutter/material.dart';
 
 class CircularRevealClipper extends CustomClipper<Path> {
@@ -68,6 +69,8 @@ class CircularRevealTransitionBuilder<T> extends PageRouteBuilder {
   final Offset offset;
   final Curve curve;
 
+  Offset get baseOffset => Offset(0, PlatformScaffoldWrapper.top);
+
   @override
   Widget buildTransitions(
     BuildContext context,
@@ -79,7 +82,7 @@ class CircularRevealTransitionBuilder<T> extends PageRouteBuilder {
       clipper: CircularRevealClipper(
         fraction: animation.value,
         centerAlignment: alignment,
-        centerOffset: offset,
+        centerOffset: offset - baseOffset,
         minRadius: 0,
         maxRadius: MediaQuery.of(context).size.longestSide * 2,
       ),

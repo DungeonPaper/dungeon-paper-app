@@ -103,15 +103,16 @@ class AppPages {
 
   static const initial = Routes.home;
 
+  static const fullscreenDialogBackgroundColor = Colors.black54;
+
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final route = settings.name;
     final builder = routes[route];
-    final fullScreenDialog = AppPages.fullscreenDialogs.contains(route);
-    Widget builderWrapper(BuildContext context) => fullScreenDialog
-        ? builder!.call(context)
-        : PlatformScaffoldWrapper(
-            child: builder!.call(context),
-          );
+    final fullscreenDialog = AppPages.fullscreenDialogs.contains(route);
+    Widget builderWrapper(BuildContext context) => PlatformScaffoldWrapper(
+          fullscreenDialog: fullscreenDialog,
+          child: builder!.call(context),
+        );
     debugPrint('[ROUTER] Building route $route');
     if (builder == null) {
       throw Exception('No route defined for $route');
@@ -122,7 +123,7 @@ class AppPages {
     return DefaultPageRoute(
       builder: builderWrapper,
       settings: settings,
-      fullscreenDialog: fullScreenDialog,
+      fullscreenDialog: fullscreenDialog,
       opaque: !AppPages.transparentRoutes.contains(route),
     );
   }

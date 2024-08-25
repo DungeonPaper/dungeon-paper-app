@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 
 import '../../data/services/user_provider.dart';
 import '../atoms/character_avatar.dart';
+import '../atoms/platform_scaffold_wrapper.dart';
 
 class UserMenuPopover extends StatelessWidget
     with CharacterProviderMixin, UserProviderMixin {
@@ -27,7 +28,7 @@ class UserMenuPopover extends StatelessWidget
     final maxH = MediaQuery.of(context).size.height - 72;
     const avatarSize = 64.0;
     const padding = 8.0;
-
+    final baseOffset = PlatformScaffoldWrapper.top;
     return ListTileTheme.merge(
       minLeadingWidth: 10,
       dense: true,
@@ -37,12 +38,12 @@ class UserMenuPopover extends StatelessWidget
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Material(
-            color: Colors.black54,
+            color: Colors.transparent,
             child: Stack(
               children: [
                 Positioned(
                   right: padding,
-                  top: padding,
+                  top: padding - baseOffset,
                   child: SafeArea(
                     child: Card(
                       clipBehavior: Clip.antiAlias,
