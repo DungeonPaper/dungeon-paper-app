@@ -897,6 +897,11 @@ class LocalesSettingsMessagesPtBR extends LocalesSettingsMessages {
   /// "Português (Brasil)"
   /// ```
   String get pt_BR => """Português (Brasil)""";
+
+  /// ```dart
+  /// "Polski"
+  /// ```
+  String get pl_PL => """Polski""";
 }
 
 class DefaultThemeSettingsMessagesPtBR extends DefaultThemeSettingsMessages {
@@ -4255,6 +4260,7 @@ Map<String, String> get messagesPtBRMap => {
           """Alterar o idioma irá recarregar o aplicativo""",
       """settings.locales.en_US""": """English (United States)""",
       """settings.locales.pt_BR""": """Português (Brasil)""",
+      """settings.locales.pl_PL""": """Polski""",
       """user.recentCharacters""": """Personagens Recentes""",
       """auth.orSeparator""": """OU""",
       """auth.privacyPolicy""": """Política de Privacidade""",

@@ -49,8 +49,9 @@ class SettingsView extends StatelessWidget
                               value: l,
                               child: Text(
                                 switch (l) {
-                                  Locales.enUS => tr.settings.locales.en_US,
-                                  Locales.ptBR => tr.settings.locales.pt_BR,
+                                  Locales.en_US => tr.settings.locales.en_US,
+                                  Locales.pt_BR => tr.settings.locales.pt_BR,
+                                  Locales.pl_PL => tr.settings.locales.pl_PL,
                                   _ => l.toString(),
                                 },
                               ),

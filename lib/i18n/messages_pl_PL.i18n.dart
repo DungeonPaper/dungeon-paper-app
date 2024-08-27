@@ -1,8 +1,9 @@
 // GENERATED FILE, do not edit!
 // ignore_for_file: annotate_overrides, non_constant_identifier_names, prefer_single_quotes, unused_element, unused_field, unnecessary_string_interpolations
 import 'package:i18n/i18n.dart' as i18n;
+import 'messages.i18n.dart';
 
-String get _languageCode => 'en';
+String get _languageCode => 'pl';
 String _plural(
   int count, {
   String? zero,
@@ -61,10 +62,10 @@ String _cardinal(
       other: other,
     );
 
-class Messages {
-  const Messages();
-  String get locale => "en";
-  String get languageCode => "en";
+class MessagesPlPL extends Messages {
+  const MessagesPlPL();
+  String get locale => "pl_PL";
+  String get languageCode => "pl";
 
   /// ```dart
   /// """
@@ -131,57 +132,60 @@ class Messages {
   /// ```
   String entityCountNum(String ent, int cnt) =>
       """$cnt ${entityCount(ent, cnt)}""";
-  AppMessages get app => AppMessages(this);
-  PlatformInteractionsMessages get platformInteractions =>
-      PlatformInteractionsMessages(this);
-  GenericMessages get generic => GenericMessages(this);
-  LoadingMessages get loading => LoadingMessages(this);
-  ErrorsMessages get errors => ErrorsMessages(this);
-  NumberFieldsMessages get numberFields => NumberFieldsMessages(this);
-  SortMessages get sort => SortMessages(this);
-  PlaybookMessages get playbook => PlaybookMessages(this);
-  MyLibraryMessages get myLibrary => MyLibraryMessages(this);
-  NavMessages get nav => NavMessages(this);
-  SyncMessages get sync => SyncMessages(this);
-  SettingsMessages get settings => SettingsMessages(this);
-  UserMessages get user => UserMessages(this);
-  AuthMessages get auth => AuthMessages(this);
-  HomeMessages get home => HomeMessages(this);
-  AboutMessages get about => AboutMessages(this);
-  CharacterMessages get character => CharacterMessages(this);
-  CharacterClassMessages get characterClass => CharacterClassMessages(this);
-  StartingGearMessages get startingGear => StartingGearMessages(this);
-  DiceMessages get dice => DiceMessages(this);
-  BasicInfoMessages get basicInfo => BasicInfoMessages(this);
-  DebilitiesMessages get debilities => DebilitiesMessages(this);
-  TagsMessages get tags => TagsMessages(this);
-  DialogsMessages get dialogs => DialogsMessages(this);
-  MovesMessages get moves => MovesMessages(this);
-  SpellsMessages get spells => SpellsMessages(this);
-  ItemsMessages get items => ItemsMessages(this);
-  NotesMessages get notes => NotesMessages(this);
-  AlignmentMessages get alignment => AlignmentMessages(this);
-  BioMessages get bio => BioMessages(this);
-  SearchMessages get search => SearchMessages(this);
-  HpMessages get hp => HpMessages(this);
-  XpMessages get xp => XpMessages(this);
-  ArmorMessages get armor => ArmorMessages(this);
-  RichTextMessages get richText => RichTextMessages(this);
-  CustomRollsMessages get customRolls => CustomRollsMessages(this);
-  SessionMarksMessages get sessionMarks => SessionMarksMessages(this);
-  CreateCharacterMessages get createCharacter => CreateCharacterMessages(this);
-  AccountMessages get account => AccountMessages(this);
-  ActionsMessages get actions => ActionsMessages(this);
-  AbilityScoresMessages get abilityScores => AbilityScoresMessages(this);
-  FeedbackMessages get feedback => FeedbackMessages(this);
-  MigrationMessages get migration => MigrationMessages(this);
-  BackupMessages get backup => BackupMessages(this);
-  ChangelogMessages get changelog => ChangelogMessages(this);
+  AppMessagesPlPL get app => AppMessagesPlPL(this);
+  PlatformInteractionsMessagesPlPL get platformInteractions =>
+      PlatformInteractionsMessagesPlPL(this);
+  GenericMessagesPlPL get generic => GenericMessagesPlPL(this);
+  LoadingMessagesPlPL get loading => LoadingMessagesPlPL(this);
+  ErrorsMessagesPlPL get errors => ErrorsMessagesPlPL(this);
+  NumberFieldsMessagesPlPL get numberFields => NumberFieldsMessagesPlPL(this);
+  SortMessagesPlPL get sort => SortMessagesPlPL(this);
+  PlaybookMessagesPlPL get playbook => PlaybookMessagesPlPL(this);
+  MyLibraryMessagesPlPL get myLibrary => MyLibraryMessagesPlPL(this);
+  NavMessagesPlPL get nav => NavMessagesPlPL(this);
+  SyncMessagesPlPL get sync => SyncMessagesPlPL(this);
+  SettingsMessagesPlPL get settings => SettingsMessagesPlPL(this);
+  UserMessagesPlPL get user => UserMessagesPlPL(this);
+  AuthMessagesPlPL get auth => AuthMessagesPlPL(this);
+  HomeMessagesPlPL get home => HomeMessagesPlPL(this);
+  AboutMessagesPlPL get about => AboutMessagesPlPL(this);
+  CharacterMessagesPlPL get character => CharacterMessagesPlPL(this);
+  CharacterClassMessagesPlPL get characterClass =>
+      CharacterClassMessagesPlPL(this);
+  StartingGearMessagesPlPL get startingGear => StartingGearMessagesPlPL(this);
+  DiceMessagesPlPL get dice => DiceMessagesPlPL(this);
+  BasicInfoMessagesPlPL get basicInfo => BasicInfoMessagesPlPL(this);
+  DebilitiesMessagesPlPL get debilities => DebilitiesMessagesPlPL(this);
+  TagsMessagesPlPL get tags => TagsMessagesPlPL(this);
+  DialogsMessagesPlPL get dialogs => DialogsMessagesPlPL(this);
+  MovesMessagesPlPL get moves => MovesMessagesPlPL(this);
+  SpellsMessagesPlPL get spells => SpellsMessagesPlPL(this);
+  ItemsMessagesPlPL get items => ItemsMessagesPlPL(this);
+  NotesMessagesPlPL get notes => NotesMessagesPlPL(this);
+  AlignmentMessagesPlPL get alignment => AlignmentMessagesPlPL(this);
+  BioMessagesPlPL get bio => BioMessagesPlPL(this);
+  SearchMessagesPlPL get search => SearchMessagesPlPL(this);
+  HpMessagesPlPL get hp => HpMessagesPlPL(this);
+  XpMessagesPlPL get xp => XpMessagesPlPL(this);
+  ArmorMessagesPlPL get armor => ArmorMessagesPlPL(this);
+  RichTextMessagesPlPL get richText => RichTextMessagesPlPL(this);
+  CustomRollsMessagesPlPL get customRolls => CustomRollsMessagesPlPL(this);
+  SessionMarksMessagesPlPL get sessionMarks => SessionMarksMessagesPlPL(this);
+  CreateCharacterMessagesPlPL get createCharacter =>
+      CreateCharacterMessagesPlPL(this);
+  AccountMessagesPlPL get account => AccountMessagesPlPL(this);
+  ActionsMessagesPlPL get actions => ActionsMessagesPlPL(this);
+  AbilityScoresMessagesPlPL get abilityScores =>
+      AbilityScoresMessagesPlPL(this);
+  FeedbackMessagesPlPL get feedback => FeedbackMessagesPlPL(this);
+  MigrationMessagesPlPL get migration => MigrationMessagesPlPL(this);
+  BackupMessagesPlPL get backup => BackupMessagesPlPL(this);
+  ChangelogMessagesPlPL get changelog => ChangelogMessagesPlPL(this);
 }
 
-class AppMessages {
-  final Messages _parent;
-  const AppMessages(this._parent);
+class AppMessagesPlPL extends AppMessages {
+  final MessagesPlPL _parent;
+  const AppMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Dungeon Paper"
@@ -189,9 +193,9 @@ class AppMessages {
   String get name => """Dungeon Paper""";
 }
 
-class PlatformInteractionsMessages {
-  final Messages _parent;
-  const PlatformInteractionsMessages(this._parent);
+class PlatformInteractionsMessagesPlPL extends PlatformInteractionsMessages {
+  final MessagesPlPL _parent;
+  const PlatformInteractionsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Tap"
@@ -214,9 +218,9 @@ class PlatformInteractionsMessages {
   String get click => """Click""";
 }
 
-class GenericMessages {
-  final Messages _parent;
-  const GenericMessages(this._parent);
+class GenericMessagesPlPL extends GenericMessages {
+  final MessagesPlPL _parent;
+  const GenericMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Save"
@@ -460,9 +464,9 @@ class GenericMessages {
   String get useDefault => """Use Default""";
 }
 
-class LoadingMessages {
-  final Messages _parent;
-  const LoadingMessages(this._parent);
+class LoadingMessagesPlPL extends LoadingMessages {
+  final MessagesPlPL _parent;
+  const LoadingMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Signing in..."
@@ -480,9 +484,9 @@ class LoadingMessages {
   String get general => """Loading...""";
 }
 
-class ErrorsMessages {
-  final Messages _parent;
-  const ErrorsMessages(this._parent);
+class ErrorsMessagesPlPL extends ErrorsMessages {
+  final MessagesPlPL _parent;
+  const ErrorsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Operation canceled"
@@ -499,8 +503,8 @@ class ErrorsMessages {
   /// "Invalid email address"
   /// ```
   String get invalidEmail => """Invalid email address""";
-  InvalidPasswordErrorsMessages get invalidPassword =>
-      InvalidPasswordErrorsMessages(this);
+  InvalidPasswordErrorsMessagesPlPL get invalidPassword =>
+      InvalidPasswordErrorsMessagesPlPL(this);
 
   /// ```dart
   /// "Must be at least $cnt ${_plural(cnt, one: 'character', many: 'characters')}"
@@ -536,9 +540,9 @@ class ErrorsMessages {
   String get onlyLetters => """Must contain letters only""";
 }
 
-class InvalidPasswordErrorsMessages {
-  final ErrorsMessages _parent;
-  const InvalidPasswordErrorsMessages(this._parent);
+class InvalidPasswordErrorsMessagesPlPL extends InvalidPasswordErrorsMessages {
+  final ErrorsMessagesPlPL _parent;
+  const InvalidPasswordErrorsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Password must contain at least one capital letter"
@@ -551,9 +555,9 @@ class InvalidPasswordErrorsMessages {
   String get number => """Password must contain at least one number""";
 }
 
-class NumberFieldsMessages {
-  final Messages _parent;
-  const NumberFieldsMessages(this._parent);
+class NumberFieldsMessagesPlPL extends NumberFieldsMessages {
+  final MessagesPlPL _parent;
+  const NumberFieldsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "+1"
@@ -566,9 +570,9 @@ class NumberFieldsMessages {
   String get decrease => """-1""";
 }
 
-class SortMessages {
-  final Messages _parent;
-  const SortMessages(this._parent);
+class SortMessagesPlPL extends SortMessages {
+  final MessagesPlPL _parent;
+  const SortMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Move up"
@@ -591,9 +595,9 @@ class SortMessages {
   String moveEntityToBottom(String ent) => """Move $ent to bottom""";
 }
 
-class PlaybookMessages {
-  final Messages _parent;
-  const PlaybookMessages(this._parent);
+class PlaybookMessagesPlPL extends PlaybookMessages {
+  final MessagesPlPL _parent;
+  const PlaybookMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Playbook"
@@ -611,9 +615,9 @@ class PlaybookMessages {
   String get myCampaigns => """My Campaigns""";
 }
 
-class MyLibraryMessages {
-  final Messages _parent;
-  const MyLibraryMessages(this._parent);
+class MyLibraryMessagesPlPL extends MyLibraryMessages {
+  final MessagesPlPL _parent;
+  const MyLibraryMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "My Library"
@@ -655,15 +659,17 @@ class MyLibraryMessages {
   /// "Already added"
   /// ```
   String get alreadyAdded => """Already added""";
-  ItemTabMyLibraryMessages get itemTab => ItemTabMyLibraryMessages(this);
-  EmptyStateMyLibraryMessages get emptyState =>
-      EmptyStateMyLibraryMessages(this);
-  FiltersMyLibraryMessages get filters => FiltersMyLibraryMessages(this);
+  ItemTabMyLibraryMessagesPlPL get itemTab =>
+      ItemTabMyLibraryMessagesPlPL(this);
+  EmptyStateMyLibraryMessagesPlPL get emptyState =>
+      EmptyStateMyLibraryMessagesPlPL(this);
+  FiltersMyLibraryMessagesPlPL get filters =>
+      FiltersMyLibraryMessagesPlPL(this);
 }
 
-class ItemTabMyLibraryMessages {
-  final MyLibraryMessages _parent;
-  const ItemTabMyLibraryMessages(this._parent);
+class ItemTabMyLibraryMessagesPlPL extends ItemTabMyLibraryMessages {
+  final MyLibraryMessagesPlPL _parent;
+  const ItemTabMyLibraryMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Playbook"
@@ -676,21 +682,22 @@ class ItemTabMyLibraryMessages {
   String get online => """Online""";
 }
 
-class EmptyStateMyLibraryMessages {
-  final MyLibraryMessages _parent;
-  const EmptyStateMyLibraryMessages(this._parent);
+class EmptyStateMyLibraryMessagesPlPL extends EmptyStateMyLibraryMessages {
+  final MyLibraryMessagesPlPL _parent;
+  const EmptyStateMyLibraryMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "No $ent found"
   /// ```
   String title(String ent) => """No $ent found""";
-  SubtitleEmptyStateMyLibraryMessages get subtitle =>
-      SubtitleEmptyStateMyLibraryMessages(this);
+  SubtitleEmptyStateMyLibraryMessagesPlPL get subtitle =>
+      SubtitleEmptyStateMyLibraryMessagesPlPL(this);
 }
 
-class SubtitleEmptyStateMyLibraryMessages {
-  final EmptyStateMyLibraryMessages _parent;
-  const SubtitleEmptyStateMyLibraryMessages(this._parent);
+class SubtitleEmptyStateMyLibraryMessagesPlPL
+    extends SubtitleEmptyStateMyLibraryMessages {
+  final EmptyStateMyLibraryMessagesPlPL _parent;
+  const SubtitleEmptyStateMyLibraryMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "No $ent found in this list."
@@ -704,9 +711,9 @@ class SubtitleEmptyStateMyLibraryMessages {
       """Try changing the search or filters to find more $ent.""";
 }
 
-class FiltersMyLibraryMessages {
-  final MyLibraryMessages _parent;
-  const FiltersMyLibraryMessages(this._parent);
+class FiltersMyLibraryMessagesPlPL extends FiltersMyLibraryMessages {
+  final MyLibraryMessagesPlPL _parent;
+  const FiltersMyLibraryMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Clear Filters"
@@ -714,9 +721,9 @@ class FiltersMyLibraryMessages {
   String get clear => """Clear Filters""";
 }
 
-class NavMessages {
-  final Messages _parent;
-  const NavMessages(this._parent);
+class NavMessagesPlPL extends NavMessages {
+  final MessagesPlPL _parent;
+  const NavMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Use"
@@ -734,21 +741,21 @@ class NavMessages {
   String get journal => """Journal""";
 }
 
-class SyncMessages {
-  final Messages _parent;
-  const SyncMessages(this._parent);
-  EntitySyncMessages get entity => EntitySyncMessages(this);
+class SyncMessagesPlPL extends SyncMessages {
+  final MessagesPlPL _parent;
+  const SyncMessagesPlPL(this._parent) : super(_parent);
+  EntitySyncMessagesPlPL get entity => EntitySyncMessagesPlPL(this);
 }
 
-class EntitySyncMessages {
-  final SyncMessages _parent;
-  const EntitySyncMessages(this._parent);
-  StatusEntitySyncMessages get status => StatusEntitySyncMessages(this);
+class EntitySyncMessagesPlPL extends EntitySyncMessages {
+  final SyncMessagesPlPL _parent;
+  const EntitySyncMessagesPlPL(this._parent) : super(_parent);
+  StatusEntitySyncMessagesPlPL get status => StatusEntitySyncMessagesPlPL(this);
 }
 
-class StatusEntitySyncMessages {
-  final EntitySyncMessages _parent;
-  const StatusEntitySyncMessages(this._parent);
+class StatusEntitySyncMessagesPlPL extends StatusEntitySyncMessages {
+  final EntitySyncMessagesPlPL _parent;
+  const StatusEntitySyncMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "This $ent is In Sync with its linked library item"
@@ -769,9 +776,9 @@ class StatusEntitySyncMessages {
       """This $ent is not linked to any library item""";
 }
 
-class SettingsMessages {
-  final Messages _parent;
-  const SettingsMessages(this._parent);
+class SettingsMessagesPlPL extends SettingsMessages {
+  final MessagesPlPL _parent;
+  const SettingsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Settings"
@@ -797,21 +804,22 @@ class SettingsMessages {
   /// "${_switchMode('Light')}"
   /// ```
   String get switchToLight => """${_switchMode('Light')}""";
-  CategoriesSettingsMessages get categories => CategoriesSettingsMessages(this);
+  CategoriesSettingsMessagesPlPL get categories =>
+      CategoriesSettingsMessagesPlPL(this);
 
   /// ```dart
   /// "Keep screen awake while using the app"
   /// ```
   String get keepAwake => """Keep screen awake while using the app""";
-  LocaleSettingsMessages get locale => LocaleSettingsMessages(this);
-  LocalesSettingsMessages get locales => LocalesSettingsMessages(this);
-  DefaultThemeSettingsMessages get defaultTheme =>
-      DefaultThemeSettingsMessages(this);
+  LocaleSettingsMessagesPlPL get locale => LocaleSettingsMessagesPlPL(this);
+  LocalesSettingsMessagesPlPL get locales => LocalesSettingsMessagesPlPL(this);
+  DefaultThemeSettingsMessagesPlPL get defaultTheme =>
+      DefaultThemeSettingsMessagesPlPL(this);
 }
 
-class CategoriesSettingsMessages {
-  final SettingsMessages _parent;
-  const CategoriesSettingsMessages(this._parent);
+class CategoriesSettingsMessagesPlPL extends CategoriesSettingsMessages {
+  final SettingsMessagesPlPL _parent;
+  const CategoriesSettingsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "General"
@@ -819,9 +827,9 @@ class CategoriesSettingsMessages {
   String get general => """General""";
 }
 
-class LocaleSettingsMessages {
-  final SettingsMessages _parent;
-  const LocaleSettingsMessages(this._parent);
+class LocaleSettingsMessagesPlPL extends LocaleSettingsMessages {
+  final SettingsMessagesPlPL _parent;
+  const LocaleSettingsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Language"
@@ -834,9 +842,9 @@ class LocaleSettingsMessages {
   String get subtitle => """Switching the language will reload the app""";
 }
 
-class LocalesSettingsMessages {
-  final SettingsMessages _parent;
-  const LocalesSettingsMessages(this._parent);
+class LocalesSettingsMessagesPlPL extends LocalesSettingsMessages {
+  final SettingsMessagesPlPL _parent;
+  const LocalesSettingsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "English (United States)"
@@ -854,9 +862,9 @@ class LocalesSettingsMessages {
   String get pl_PL => """Polski""";
 }
 
-class DefaultThemeSettingsMessages {
-  final SettingsMessages _parent;
-  const DefaultThemeSettingsMessages(this._parent);
+class DefaultThemeSettingsMessagesPlPL extends DefaultThemeSettingsMessages {
+  final SettingsMessagesPlPL _parent;
+  const DefaultThemeSettingsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Default $type theme"
@@ -874,9 +882,9 @@ class DefaultThemeSettingsMessages {
   String get dark => """${_p('dark')}""";
 }
 
-class UserMessages {
-  final Messages _parent;
-  const UserMessages(this._parent);
+class UserMessagesPlPL extends UserMessages {
+  final MessagesPlPL _parent;
+  const UserMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Recent Characters"
@@ -884,9 +892,9 @@ class UserMessages {
   String get recentCharacters => """Recent Characters""";
 }
 
-class AuthMessages {
-  final Messages _parent;
-  const AuthMessages(this._parent);
+class AuthMessagesPlPL extends AuthMessages {
+  final MessagesPlPL _parent;
+  const AuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "OR"
@@ -918,17 +926,17 @@ class AuthMessages {
   /// "Account details"
   /// ```
   String menuSubtitle(String interact) => """Account details""";
-  ProvidersAuthMessages get providers => ProvidersAuthMessages(this);
-  ConfirmUnlinkAuthMessages get confirmUnlink =>
-      ConfirmUnlinkAuthMessages(this);
-  LoginAuthMessages get login => LoginAuthMessages(this);
-  LogoutAuthMessages get logout => LogoutAuthMessages(this);
-  SignupAuthMessages get signup => SignupAuthMessages(this);
+  ProvidersAuthMessagesPlPL get providers => ProvidersAuthMessagesPlPL(this);
+  ConfirmUnlinkAuthMessagesPlPL get confirmUnlink =>
+      ConfirmUnlinkAuthMessagesPlPL(this);
+  LoginAuthMessagesPlPL get login => LoginAuthMessagesPlPL(this);
+  LogoutAuthMessagesPlPL get logout => LogoutAuthMessagesPlPL(this);
+  SignupAuthMessagesPlPL get signup => SignupAuthMessagesPlPL(this);
 }
 
-class ProvidersAuthMessages {
-  final AuthMessages _parent;
-  const ProvidersAuthMessages(this._parent);
+class ProvidersAuthMessagesPlPL extends ProvidersAuthMessages {
+  final AuthMessagesPlPL _parent;
+  const ProvidersAuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Sign in with $provider"
@@ -976,9 +984,9 @@ class ProvidersAuthMessages {
   String get link => """Link""";
 }
 
-class ConfirmUnlinkAuthMessages {
-  final AuthMessages _parent;
-  const ConfirmUnlinkAuthMessages(this._parent);
+class ConfirmUnlinkAuthMessagesPlPL extends ConfirmUnlinkAuthMessages {
+  final AuthMessagesPlPL _parent;
+  const ConfirmUnlinkAuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Unlink from $ent"
@@ -992,9 +1000,9 @@ class ConfirmUnlinkAuthMessages {
       """Are you sure you want to unlink your account from $ent?\nBy clicking "Unlink", you will no longer be able to sign in with $ent.\n\nYou will be able to re-link your account at any time by going to your account settings.""";
 }
 
-class LoginAuthMessages {
-  final AuthMessages _parent;
-  const LoginAuthMessages(this._parent);
+class LoginAuthMessagesPlPL extends LoginAuthMessages {
+  final AuthMessagesPlPL _parent;
+  const LoginAuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Sign In"
@@ -1011,12 +1019,13 @@ class LoginAuthMessages {
   /// "Sign in"
   /// ```
   String get button => """Sign in""";
-  NoAccountLoginAuthMessages get noAccount => NoAccountLoginAuthMessages(this);
+  NoAccountLoginAuthMessagesPlPL get noAccount =>
+      NoAccountLoginAuthMessagesPlPL(this);
 }
 
-class NoAccountLoginAuthMessages {
-  final LoginAuthMessages _parent;
-  const NoAccountLoginAuthMessages(this._parent);
+class NoAccountLoginAuthMessagesPlPL extends NoAccountLoginAuthMessages {
+  final LoginAuthMessagesPlPL _parent;
+  const NoAccountLoginAuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Don't have an account?"
@@ -1029,9 +1038,9 @@ class NoAccountLoginAuthMessages {
   String get button => """Sign up""";
 }
 
-class LogoutAuthMessages {
-  final AuthMessages _parent;
-  const LogoutAuthMessages(this._parent);
+class LogoutAuthMessagesPlPL extends LogoutAuthMessages {
+  final AuthMessagesPlPL _parent;
+  const LogoutAuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Sign out"
@@ -1039,9 +1048,9 @@ class LogoutAuthMessages {
   String get button => """Sign out""";
 }
 
-class SignupAuthMessages {
-  final AuthMessages _parent;
-  const SignupAuthMessages(this._parent);
+class SignupAuthMessagesPlPL extends SignupAuthMessages {
+  final AuthMessagesPlPL _parent;
+  const SignupAuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Sign Up"
@@ -1058,13 +1067,14 @@ class SignupAuthMessages {
   /// "Sign up"
   /// ```
   String get button => """Sign up""";
-  EmailSignupAuthMessages get email => EmailSignupAuthMessages(this);
-  PasswordSignupAuthMessages get password => PasswordSignupAuthMessages(this);
+  EmailSignupAuthMessagesPlPL get email => EmailSignupAuthMessagesPlPL(this);
+  PasswordSignupAuthMessagesPlPL get password =>
+      PasswordSignupAuthMessagesPlPL(this);
 }
 
-class EmailSignupAuthMessages {
-  final SignupAuthMessages _parent;
-  const EmailSignupAuthMessages(this._parent);
+class EmailSignupAuthMessagesPlPL extends EmailSignupAuthMessages {
+  final SignupAuthMessagesPlPL _parent;
+  const EmailSignupAuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Email"
@@ -1082,9 +1092,9 @@ class EmailSignupAuthMessages {
   String get error => """Please enter a valid email address""";
 }
 
-class PasswordSignupAuthMessages {
-  final SignupAuthMessages _parent;
-  const PasswordSignupAuthMessages(this._parent);
+class PasswordSignupAuthMessagesPlPL extends PasswordSignupAuthMessages {
+  final SignupAuthMessagesPlPL _parent;
+  const PasswordSignupAuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Password"
@@ -1095,13 +1105,14 @@ class PasswordSignupAuthMessages {
   /// "Enter a password"
   /// ```
   String get placeholder => """Enter a password""";
-  ConfirmPasswordSignupAuthMessages get confirm =>
-      ConfirmPasswordSignupAuthMessages(this);
+  ConfirmPasswordSignupAuthMessagesPlPL get confirm =>
+      ConfirmPasswordSignupAuthMessagesPlPL(this);
 }
 
-class ConfirmPasswordSignupAuthMessages {
-  final PasswordSignupAuthMessages _parent;
-  const ConfirmPasswordSignupAuthMessages(this._parent);
+class ConfirmPasswordSignupAuthMessagesPlPL
+    extends ConfirmPasswordSignupAuthMessages {
+  final PasswordSignupAuthMessagesPlPL _parent;
+  const ConfirmPasswordSignupAuthMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Confirm Password"
@@ -1119,18 +1130,18 @@ class ConfirmPasswordSignupAuthMessages {
   String get error => """Passwords do not match""";
 }
 
-class HomeMessages {
-  final Messages _parent;
-  const HomeMessages(this._parent);
-  CategoriesHomeMessages get categories => CategoriesHomeMessages(this);
-  SummaryHomeMessages get summary => SummaryHomeMessages(this);
-  MenuHomeMessages get menu => MenuHomeMessages(this);
-  EmptyStateHomeMessages get emptyState => EmptyStateHomeMessages(this);
+class HomeMessagesPlPL extends HomeMessages {
+  final MessagesPlPL _parent;
+  const HomeMessagesPlPL(this._parent) : super(_parent);
+  CategoriesHomeMessagesPlPL get categories => CategoriesHomeMessagesPlPL(this);
+  SummaryHomeMessagesPlPL get summary => SummaryHomeMessagesPlPL(this);
+  MenuHomeMessagesPlPL get menu => MenuHomeMessagesPlPL(this);
+  EmptyStateHomeMessagesPlPL get emptyState => EmptyStateHomeMessagesPlPL(this);
 }
 
-class CategoriesHomeMessages {
-  final HomeMessages _parent;
-  const CategoriesHomeMessages(this._parent);
+class CategoriesHomeMessagesPlPL extends CategoriesHomeMessages {
+  final HomeMessagesPlPL _parent;
+  const CategoriesHomeMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Bookmarked Notes"
@@ -1158,16 +1169,16 @@ class CategoriesHomeMessages {
   String get classActions => """Class Actions""";
 }
 
-class SummaryHomeMessages {
-  final HomeMessages _parent;
-  const SummaryHomeMessages(this._parent);
-  LoadSummaryHomeMessages get load => LoadSummaryHomeMessages(this);
-  CoinsSummaryHomeMessages get coins => CoinsSummaryHomeMessages(this);
+class SummaryHomeMessagesPlPL extends SummaryHomeMessages {
+  final HomeMessagesPlPL _parent;
+  const SummaryHomeMessagesPlPL(this._parent) : super(_parent);
+  LoadSummaryHomeMessagesPlPL get load => LoadSummaryHomeMessagesPlPL(this);
+  CoinsSummaryHomeMessagesPlPL get coins => CoinsSummaryHomeMessagesPlPL(this);
 }
 
-class LoadSummaryHomeMessages {
-  final SummaryHomeMessages _parent;
-  const LoadSummaryHomeMessages(this._parent);
+class LoadSummaryHomeMessagesPlPL extends LoadSummaryHomeMessages {
+  final SummaryHomeMessagesPlPL _parent;
+  const LoadSummaryHomeMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Load: $cur/$max"
@@ -1180,9 +1191,9 @@ class LoadSummaryHomeMessages {
   String get tooltip => """Max Load""";
 }
 
-class CoinsSummaryHomeMessages {
-  final SummaryHomeMessages _parent;
-  const CoinsSummaryHomeMessages(this._parent);
+class CoinsSummaryHomeMessagesPlPL extends CoinsSummaryHomeMessages {
+  final SummaryHomeMessagesPlPL _parent;
+  const CoinsSummaryHomeMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "$amt G"
@@ -1195,10 +1206,11 @@ class CoinsSummaryHomeMessages {
   String get tooltip => """Coins""";
 }
 
-class MenuHomeMessages {
-  final HomeMessages _parent;
-  const MenuHomeMessages(this._parent);
-  CharacterMenuHomeMessages get character => CharacterMenuHomeMessages(this);
+class MenuHomeMessagesPlPL extends MenuHomeMessages {
+  final HomeMessagesPlPL _parent;
+  const MenuHomeMessagesPlPL(this._parent) : super(_parent);
+  CharacterMenuHomeMessagesPlPL get character =>
+      CharacterMenuHomeMessagesPlPL(this);
 
   /// ```dart
   /// "Character Biography"
@@ -1211,9 +1223,9 @@ class MenuHomeMessages {
   String get debilities => """Debilities""";
 }
 
-class CharacterMenuHomeMessages {
-  final MenuHomeMessages _parent;
-  const CharacterMenuHomeMessages(this._parent);
+class CharacterMenuHomeMessagesPlPL extends CharacterMenuHomeMessages {
+  final MenuHomeMessagesPlPL _parent;
+  const CharacterMenuHomeMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Character Menu"
@@ -1241,10 +1253,11 @@ class CharacterMenuHomeMessages {
   String get theme => """Character Theme""";
 }
 
-class EmptyStateHomeMessages {
-  final HomeMessages _parent;
-  const EmptyStateHomeMessages(this._parent);
-  GuestEmptyStateHomeMessages get guest => GuestEmptyStateHomeMessages(this);
+class EmptyStateHomeMessagesPlPL extends EmptyStateHomeMessages {
+  final HomeMessagesPlPL _parent;
+  const EmptyStateHomeMessagesPlPL(this._parent) : super(_parent);
+  GuestEmptyStateHomeMessagesPlPL get guest =>
+      GuestEmptyStateHomeMessagesPlPL(this);
 
   /// ```dart
   /// "No Characters"
@@ -1257,9 +1270,9 @@ class EmptyStateHomeMessages {
   String get subtitle => """Create a Character to get started""";
 }
 
-class GuestEmptyStateHomeMessages {
-  final EmptyStateHomeMessages _parent;
-  const GuestEmptyStateHomeMessages(this._parent);
+class GuestEmptyStateHomeMessagesPlPL extends GuestEmptyStateHomeMessages {
+  final EmptyStateHomeMessagesPlPL _parent;
+  const GuestEmptyStateHomeMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Sign in to get more features"
@@ -1273,9 +1286,9 @@ class GuestEmptyStateHomeMessages {
       """Online data sync, library sharing, campaigns and more!""";
 }
 
-class AboutMessages {
-  final Messages _parent;
-  const AboutMessages(this._parent);
+class AboutMessagesPlPL extends AboutMessages {
+  final MessagesPlPL _parent;
+  const AboutMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "About"
@@ -1296,11 +1309,11 @@ class AboutMessages {
   /// "Chen Asraf"
   /// ```
   String get author => """Chen Asraf""";
-  ChangelogAboutMessages get changelog => ChangelogAboutMessages(this);
-  DiscordAboutMessages get discord => DiscordAboutMessages(this);
-  FeedbackAboutMessages get feedback => FeedbackAboutMessages(this);
-  DonateAboutMessages get donate => DonateAboutMessages(this);
-  SocialsAboutMessages get socials => SocialsAboutMessages(this);
+  ChangelogAboutMessagesPlPL get changelog => ChangelogAboutMessagesPlPL(this);
+  DiscordAboutMessagesPlPL get discord => DiscordAboutMessagesPlPL(this);
+  FeedbackAboutMessagesPlPL get feedback => FeedbackAboutMessagesPlPL(this);
+  DonateAboutMessagesPlPL get donate => DonateAboutMessagesPlPL(this);
+  SocialsAboutMessagesPlPL get socials => SocialsAboutMessagesPlPL(this);
 
   /// ```dart
   /// "Special Thanks"
@@ -1318,9 +1331,9 @@ class AboutMessages {
   String get icons => """Icon Credits""";
 }
 
-class ChangelogAboutMessages {
-  final AboutMessages _parent;
-  const ChangelogAboutMessages(this._parent);
+class ChangelogAboutMessagesPlPL extends ChangelogAboutMessages {
+  final AboutMessagesPlPL _parent;
+  const ChangelogAboutMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "What's new?"
@@ -1333,9 +1346,9 @@ class ChangelogAboutMessages {
   String get subtitle => """Change log of Dungeon Paper release versions""";
 }
 
-class DiscordAboutMessages {
-  final AboutMessages _parent;
-  const DiscordAboutMessages(this._parent);
+class DiscordAboutMessagesPlPL extends DiscordAboutMessages {
+  final AboutMessagesPlPL _parent;
+  const DiscordAboutMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Join Our Discord"
@@ -1349,9 +1362,9 @@ class DiscordAboutMessages {
       """Join the Discord community to ask questions, get help, send feedback, or just chat with other players.""";
 }
 
-class FeedbackAboutMessages {
-  final AboutMessages _parent;
-  const FeedbackAboutMessages(this._parent);
+class FeedbackAboutMessagesPlPL extends FeedbackAboutMessages {
+  final AboutMessagesPlPL _parent;
+  const FeedbackAboutMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Send Feedback"
@@ -1365,9 +1378,9 @@ class FeedbackAboutMessages {
       """We reply more promptly through Discord, but you can send us feedback, bug reports or suggestions about the app directly here as an alternative.""";
 }
 
-class DonateAboutMessages {
-  final AboutMessages _parent;
-  const DonateAboutMessages(this._parent);
+class DonateAboutMessagesPlPL extends DonateAboutMessages {
+  final AboutMessagesPlPL _parent;
+  const DonateAboutMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Make a Donation"
@@ -1381,9 +1394,9 @@ class DonateAboutMessages {
       """If you are looking for a way to support the project, you can make a donation on the official Ko-fi page of the developer. Click this to be redirected to the Ko-fi page.""";
 }
 
-class SocialsAboutMessages {
-  final AboutMessages _parent;
-  const SocialsAboutMessages(this._parent);
+class SocialsAboutMessagesPlPL extends SocialsAboutMessages {
+  final AboutMessagesPlPL _parent;
+  const SocialsAboutMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Links"
@@ -1421,28 +1434,28 @@ class SocialsAboutMessages {
   String get apple => """App Store""";
 }
 
-class CharacterMessages {
-  final Messages _parent;
-  const CharacterMessages(this._parent);
-  DataCharacterMessages get data => DataCharacterMessages(this);
-  HeaderCharacterMessages get header => HeaderCharacterMessages(this);
+class CharacterMessagesPlPL extends CharacterMessages {
+  final MessagesPlPL _parent;
+  const CharacterMessagesPlPL(this._parent) : super(_parent);
+  DataCharacterMessagesPlPL get data => DataCharacterMessagesPlPL(this);
+  HeaderCharacterMessagesPlPL get header => HeaderCharacterMessagesPlPL(this);
 
   /// ```dart
   /// "No Category"
   /// ```
   String get noCategory => """No Category""";
-  ThemeCharacterMessages get theme => ThemeCharacterMessages(this);
+  ThemeCharacterMessagesPlPL get theme => ThemeCharacterMessagesPlPL(this);
 }
 
-class DataCharacterMessages {
-  final CharacterMessages _parent;
-  const DataCharacterMessages(this._parent);
+class DataCharacterMessagesPlPL extends DataCharacterMessages {
+  final CharacterMessagesPlPL _parent;
+  const DataCharacterMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Coins"
   /// ```
   String get coins => """Coins""";
-  LoadDataCharacterMessages get load => LoadDataCharacterMessages(this);
+  LoadDataCharacterMessagesPlPL get load => LoadDataCharacterMessagesPlPL(this);
 
   /// ```dart
   /// "Level"
@@ -1461,9 +1474,9 @@ class DataCharacterMessages {
       """Use damage dice from class & equipped items""";
 }
 
-class LoadDataCharacterMessages {
-  final DataCharacterMessages _parent;
-  const LoadDataCharacterMessages(this._parent);
+class LoadDataCharacterMessagesPlPL extends LoadDataCharacterMessages {
+  final DataCharacterMessagesPlPL _parent;
+  const LoadDataCharacterMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Load"
@@ -1481,9 +1494,9 @@ class LoadDataCharacterMessages {
   String get autoMaxLoad => """Use class base load + STR mod""";
 }
 
-class HeaderCharacterMessages {
-  final CharacterMessages _parent;
-  const HeaderCharacterMessages(this._parent);
+class HeaderCharacterMessagesPlPL extends HeaderCharacterMessages {
+  final CharacterMessagesPlPL _parent;
+  const HeaderCharacterMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Level $lv"
@@ -1511,9 +1524,9 @@ class HeaderCharacterMessages {
   String get separator => """ ∙ """;
 }
 
-class ThemeCharacterMessages {
-  final CharacterMessages _parent;
-  const ThemeCharacterMessages(this._parent);
+class ThemeCharacterMessagesPlPL extends ThemeCharacterMessages {
+  final CharacterMessagesPlPL _parent;
+  const ThemeCharacterMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Character Theme"
@@ -1536,9 +1549,9 @@ class ThemeCharacterMessages {
   String get defaultDark => """${_defaultTheme('dark')}""";
 }
 
-class CharacterClassMessages {
-  final Messages _parent;
-  const CharacterClassMessages(this._parent);
+class CharacterClassMessagesPlPL extends CharacterClassMessages {
+  final MessagesPlPL _parent;
+  const CharacterClassMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Base Load"
@@ -1554,8 +1567,8 @@ class CharacterClassMessages {
   /// "Damage Dice"
   /// ```
   String get damageDice => """Damage Dice""";
-  IsSpellcasterCharacterClassMessages get isSpellcaster =>
-      IsSpellcasterCharacterClassMessages(this);
+  IsSpellcasterCharacterClassMessagesPlPL get isSpellcaster =>
+      IsSpellcasterCharacterClassMessagesPlPL(this);
 
   /// ```dart
   /// "Stats"
@@ -1566,13 +1579,14 @@ class CharacterClassMessages {
   /// "Backgrounds"
   /// ```
   String get bio => """Backgrounds""";
-  StartingGearCharacterClassMessages get startingGear =>
-      StartingGearCharacterClassMessages(this);
+  StartingGearCharacterClassMessagesPlPL get startingGear =>
+      StartingGearCharacterClassMessagesPlPL(this);
 }
 
-class IsSpellcasterCharacterClassMessages {
-  final CharacterClassMessages _parent;
-  const IsSpellcasterCharacterClassMessages(this._parent);
+class IsSpellcasterCharacterClassMessagesPlPL
+    extends IsSpellcasterCharacterClassMessages {
+  final CharacterClassMessagesPlPL _parent;
+  const IsSpellcasterCharacterClassMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Spellcasting class"
@@ -1590,9 +1604,10 @@ class IsSpellcasterCharacterClassMessages {
 creation and leveling up.""";
 }
 
-class StartingGearCharacterClassMessages {
-  final CharacterClassMessages _parent;
-  const StartingGearCharacterClassMessages(this._parent);
+class StartingGearCharacterClassMessagesPlPL
+    extends StartingGearCharacterClassMessages {
+  final CharacterClassMessagesPlPL _parent;
+  const StartingGearCharacterClassMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Starting Gear Selections"
@@ -1600,9 +1615,9 @@ class StartingGearCharacterClassMessages {
   String get label => """Starting Gear Selections""";
 }
 
-class StartingGearMessages {
-  final Messages _parent;
-  const StartingGearMessages(this._parent);
+class StartingGearMessagesPlPL extends StartingGearMessages {
+  final MessagesPlPL _parent;
+  const StartingGearMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Edit Starting Gear"
@@ -1623,15 +1638,17 @@ class StartingGearMessages {
   /// "${amt}× $name"
   /// ```
   String item(String amt, String name) => """${amt}× $name""";
-  ChoiceStartingGearMessages get choice => ChoiceStartingGearMessages(this);
-  SelectionStartingGearMessages get selection =>
-      SelectionStartingGearMessages(this);
-  OptionStartingGearMessages get option => OptionStartingGearMessages(this);
+  ChoiceStartingGearMessagesPlPL get choice =>
+      ChoiceStartingGearMessagesPlPL(this);
+  SelectionStartingGearMessagesPlPL get selection =>
+      SelectionStartingGearMessagesPlPL(this);
+  OptionStartingGearMessagesPlPL get option =>
+      OptionStartingGearMessagesPlPL(this);
 }
 
-class ChoiceStartingGearMessages {
-  final StartingGearMessages _parent;
-  const ChoiceStartingGearMessages(this._parent);
+class ChoiceStartingGearMessagesPlPL extends ChoiceStartingGearMessages {
+  final StartingGearMessagesPlPL _parent;
+  const ChoiceStartingGearMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Choice $index"
@@ -1643,10 +1660,10 @@ class ChoiceStartingGearMessages {
   /// ```
   String get helpText =>
       """A choice is a list of selections the player can make. It provides a possible set of items & coins that the player can select from.""";
-  DescriptionChoiceStartingGearMessages get description =>
-      DescriptionChoiceStartingGearMessages(this);
-  MaxSelectionsChoiceStartingGearMessages get maxSelections =>
-      MaxSelectionsChoiceStartingGearMessages(this);
+  DescriptionChoiceStartingGearMessagesPlPL get description =>
+      DescriptionChoiceStartingGearMessagesPlPL(this);
+  MaxSelectionsChoiceStartingGearMessagesPlPL get maxSelections =>
+      MaxSelectionsChoiceStartingGearMessagesPlPL(this);
 
   /// ```dart
   /// "Move up"
@@ -1659,9 +1676,11 @@ class ChoiceStartingGearMessages {
   String get moveDown => """Move down""";
 }
 
-class DescriptionChoiceStartingGearMessages {
-  final ChoiceStartingGearMessages _parent;
-  const DescriptionChoiceStartingGearMessages(this._parent);
+class DescriptionChoiceStartingGearMessagesPlPL
+    extends DescriptionChoiceStartingGearMessages {
+  final ChoiceStartingGearMessagesPlPL _parent;
+  const DescriptionChoiceStartingGearMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Prompt"
@@ -1674,9 +1693,11 @@ class DescriptionChoiceStartingGearMessages {
   String get hintText => """e.g. Choose your weapon""";
 }
 
-class MaxSelectionsChoiceStartingGearMessages {
-  final ChoiceStartingGearMessages _parent;
-  const MaxSelectionsChoiceStartingGearMessages(this._parent);
+class MaxSelectionsChoiceStartingGearMessagesPlPL
+    extends MaxSelectionsChoiceStartingGearMessages {
+  final ChoiceStartingGearMessagesPlPL _parent;
+  const MaxSelectionsChoiceStartingGearMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Suggested max allowance"
@@ -1690,9 +1711,9 @@ class MaxSelectionsChoiceStartingGearMessages {
       """This will suggest a maximum amount to select, and will display a count, but will not limit the selection. Use 0 or leave blank for no limit.""";
 }
 
-class SelectionStartingGearMessages {
-  final StartingGearMessages _parent;
-  const SelectionStartingGearMessages(this._parent);
+class SelectionStartingGearMessagesPlPL extends SelectionStartingGearMessages {
+  final StartingGearMessagesPlPL _parent;
+  const SelectionStartingGearMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Gear Set"
@@ -1709,15 +1730,17 @@ class SelectionStartingGearMessages {
   /// "Add Gear Set"
   /// ```
   String get add => """Add Gear Set""";
-  DescriptionSelectionStartingGearMessages get description =>
-      DescriptionSelectionStartingGearMessages(this);
-  CoinsSelectionStartingGearMessages get coins =>
-      CoinsSelectionStartingGearMessages(this);
+  DescriptionSelectionStartingGearMessagesPlPL get description =>
+      DescriptionSelectionStartingGearMessagesPlPL(this);
+  CoinsSelectionStartingGearMessagesPlPL get coins =>
+      CoinsSelectionStartingGearMessagesPlPL(this);
 }
 
-class DescriptionSelectionStartingGearMessages {
-  final SelectionStartingGearMessages _parent;
-  const DescriptionSelectionStartingGearMessages(this._parent);
+class DescriptionSelectionStartingGearMessagesPlPL
+    extends DescriptionSelectionStartingGearMessages {
+  final SelectionStartingGearMessagesPlPL _parent;
+  const DescriptionSelectionStartingGearMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Selection description"
@@ -1730,9 +1753,10 @@ class DescriptionSelectionStartingGearMessages {
   String get hintText => """e.g. Your father's old sword, and 10 coins""";
 }
 
-class CoinsSelectionStartingGearMessages {
-  final SelectionStartingGearMessages _parent;
-  const CoinsSelectionStartingGearMessages(this._parent);
+class CoinsSelectionStartingGearMessagesPlPL
+    extends CoinsSelectionStartingGearMessages {
+  final SelectionStartingGearMessagesPlPL _parent;
+  const CoinsSelectionStartingGearMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Coins"
@@ -1745,9 +1769,9 @@ class CoinsSelectionStartingGearMessages {
   String get hintText => """0""";
 }
 
-class OptionStartingGearMessages {
-  final StartingGearMessages _parent;
-  const OptionStartingGearMessages(this._parent);
+class OptionStartingGearMessagesPlPL extends OptionStartingGearMessages {
+  final StartingGearMessagesPlPL _parent;
+  const OptionStartingGearMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Gear Set Items"
@@ -1764,13 +1788,14 @@ class OptionStartingGearMessages {
   /// "Add Items"
   /// ```
   String get add => """Add Items""";
-  AmountOptionStartingGearMessages get amount =>
-      AmountOptionStartingGearMessages(this);
+  AmountOptionStartingGearMessagesPlPL get amount =>
+      AmountOptionStartingGearMessagesPlPL(this);
 }
 
-class AmountOptionStartingGearMessages {
-  final OptionStartingGearMessages _parent;
-  const AmountOptionStartingGearMessages(this._parent);
+class AmountOptionStartingGearMessagesPlPL
+    extends AmountOptionStartingGearMessages {
+  final OptionStartingGearMessagesPlPL _parent;
+  const AmountOptionStartingGearMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Amount"
@@ -1783,21 +1808,21 @@ class AmountOptionStartingGearMessages {
   String get hintText => """1""";
 }
 
-class DiceMessages {
-  final Messages _parent;
-  const DiceMessages(this._parent);
+class DiceMessagesPlPL extends DiceMessages {
+  final MessagesPlPL _parent;
+  const DiceMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Suggested: $dice"
   /// ```
   String suggestion(String dice) => """Suggested: $dice""";
-  FormDiceMessages get form => FormDiceMessages(this);
-  RollDiceMessages get roll => RollDiceMessages(this);
+  FormDiceMessagesPlPL get form => FormDiceMessagesPlPL(this);
+  RollDiceMessagesPlPL get roll => RollDiceMessagesPlPL(this);
 }
 
-class FormDiceMessages {
-  final DiceMessages _parent;
-  const FormDiceMessages(this._parent);
+class FormDiceMessagesPlPL extends FormDiceMessages {
+  final DiceMessagesPlPL _parent;
+  const FormDiceMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Amount"
@@ -1813,10 +1838,11 @@ class FormDiceMessages {
   /// "d"
   /// ```
   String get diceSeparator => """d""";
-  ModifierTypeFormDiceMessages get modifierType =>
-      ModifierTypeFormDiceMessages(this);
-  ValueFormDiceMessages get value => ValueFormDiceMessages(this);
-  ModifierFormDiceMessages get modifier => ModifierFormDiceMessages(this);
+  ModifierTypeFormDiceMessagesPlPL get modifierType =>
+      ModifierTypeFormDiceMessagesPlPL(this);
+  ValueFormDiceMessagesPlPL get value => ValueFormDiceMessagesPlPL(this);
+  ModifierFormDiceMessagesPlPL get modifier =>
+      ModifierFormDiceMessagesPlPL(this);
 
   /// ```dart
   /// "$name ($key)"
@@ -1824,9 +1850,9 @@ class FormDiceMessages {
   String statValue(String name, String key) => """$name ($key)""";
 }
 
-class ModifierTypeFormDiceMessages {
-  final FormDiceMessages _parent;
-  const ModifierTypeFormDiceMessages(this._parent);
+class ModifierTypeFormDiceMessagesPlPL extends ModifierTypeFormDiceMessages {
+  final FormDiceMessagesPlPL _parent;
+  const ModifierTypeFormDiceMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Fixed Value"
@@ -1839,9 +1865,9 @@ class ModifierTypeFormDiceMessages {
   String get modifier => """Stat Mod.""";
 }
 
-class ValueFormDiceMessages {
-  final FormDiceMessages _parent;
-  const ValueFormDiceMessages(this._parent);
+class ValueFormDiceMessagesPlPL extends ValueFormDiceMessages {
+  final FormDiceMessagesPlPL _parent;
+  const ValueFormDiceMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Number, e.g. 2 or -1"
@@ -1854,9 +1880,9 @@ class ValueFormDiceMessages {
   String get label => """Modifier value""";
 }
 
-class ModifierFormDiceMessages {
-  final FormDiceMessages _parent;
-  const ModifierFormDiceMessages(this._parent);
+class ModifierFormDiceMessagesPlPL extends ModifierFormDiceMessages {
+  final FormDiceMessagesPlPL _parent;
+  const ModifierFormDiceMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Select stat"
@@ -1869,10 +1895,10 @@ class ModifierFormDiceMessages {
   String get label => """Stat""";
 }
 
-class RollDiceMessages {
-  final DiceMessages _parent;
-  const RollDiceMessages(this._parent);
-  TitleRollDiceMessages get title => TitleRollDiceMessages(this);
+class RollDiceMessagesPlPL extends RollDiceMessages {
+  final DiceMessagesPlPL _parent;
+  const RollDiceMessagesPlPL(this._parent) : super(_parent);
+  TitleRollDiceMessagesPlPL get title => TitleRollDiceMessagesPlPL(this);
 
   /// ```dart
   /// "Roll"
@@ -1891,9 +1917,9 @@ class RollDiceMessages {
       """Dice: $dice | Modifier: $mod""";
 }
 
-class TitleRollDiceMessages {
-  final RollDiceMessages _parent;
-  const TitleRollDiceMessages(this._parent);
+class TitleRollDiceMessagesPlPL extends TitleRollDiceMessages {
+  final RollDiceMessagesPlPL _parent;
+  const TitleRollDiceMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Rolled $total"
@@ -1907,27 +1933,28 @@ class TitleRollDiceMessages {
       """Rolling $amt ${_plural(amt, one: 'die', many: 'dice')}""";
 }
 
-class BasicInfoMessages {
-  final Messages _parent;
-  const BasicInfoMessages(this._parent);
+class BasicInfoMessagesPlPL extends BasicInfoMessages {
+  final MessagesPlPL _parent;
+  const BasicInfoMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Basic Information"
   /// ```
   String get title => """Basic Information""";
-  FormBasicInfoMessages get form => FormBasicInfoMessages(this);
+  FormBasicInfoMessagesPlPL get form => FormBasicInfoMessagesPlPL(this);
 }
 
-class FormBasicInfoMessages {
-  final BasicInfoMessages _parent;
-  const FormBasicInfoMessages(this._parent);
-  NameFormBasicInfoMessages get name => NameFormBasicInfoMessages(this);
-  PhotoFormBasicInfoMessages get photo => PhotoFormBasicInfoMessages(this);
+class FormBasicInfoMessagesPlPL extends FormBasicInfoMessages {
+  final BasicInfoMessagesPlPL _parent;
+  const FormBasicInfoMessagesPlPL(this._parent) : super(_parent);
+  NameFormBasicInfoMessagesPlPL get name => NameFormBasicInfoMessagesPlPL(this);
+  PhotoFormBasicInfoMessagesPlPL get photo =>
+      PhotoFormBasicInfoMessagesPlPL(this);
 }
 
-class NameFormBasicInfoMessages {
-  final FormBasicInfoMessages _parent;
-  const NameFormBasicInfoMessages(this._parent);
+class NameFormBasicInfoMessagesPlPL extends NameFormBasicInfoMessages {
+  final FormBasicInfoMessagesPlPL _parent;
+  const NameFormBasicInfoMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Character Name"
@@ -1938,13 +1965,14 @@ class NameFormBasicInfoMessages {
   /// "Enter your character's name"
   /// ```
   String get placeholder => """Enter your character's name""";
-  RandomNameFormBasicInfoMessages get random =>
-      RandomNameFormBasicInfoMessages(this);
+  RandomNameFormBasicInfoMessagesPlPL get random =>
+      RandomNameFormBasicInfoMessagesPlPL(this);
 }
 
-class RandomNameFormBasicInfoMessages {
-  final NameFormBasicInfoMessages _parent;
-  const RandomNameFormBasicInfoMessages(this._parent);
+class RandomNameFormBasicInfoMessagesPlPL
+    extends RandomNameFormBasicInfoMessages {
+  final NameFormBasicInfoMessagesPlPL _parent;
+  const RandomNameFormBasicInfoMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "$act to generate a random name"
@@ -1952,9 +1980,9 @@ class RandomNameFormBasicInfoMessages {
   String tooltip(String act) => """$act to generate a random name""";
 }
 
-class PhotoFormBasicInfoMessages {
-  final FormBasicInfoMessages _parent;
-  const PhotoFormBasicInfoMessages(this._parent);
+class PhotoFormBasicInfoMessagesPlPL extends PhotoFormBasicInfoMessages {
+  final FormBasicInfoMessagesPlPL _parent;
+  const PhotoFormBasicInfoMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Change Photo..."
@@ -1970,8 +1998,8 @@ class PhotoFormBasicInfoMessages {
   /// "Choose Photo..."
   /// ```
   String get choose => """Choose Photo...""";
-  GuestPhotoFormBasicInfoMessages get guest =>
-      GuestPhotoFormBasicInfoMessages(this);
+  GuestPhotoFormBasicInfoMessagesPlPL get guest =>
+      GuestPhotoFormBasicInfoMessagesPlPL(this);
 
   /// ```dart
   /// "UPLOADING..."
@@ -1982,12 +2010,14 @@ class PhotoFormBasicInfoMessages {
   /// "OR"
   /// ```
   String get orSeparator => """OR""";
-  UrlPhotoFormBasicInfoMessages get url => UrlPhotoFormBasicInfoMessages(this);
+  UrlPhotoFormBasicInfoMessagesPlPL get url =>
+      UrlPhotoFormBasicInfoMessagesPlPL(this);
 }
 
-class GuestPhotoFormBasicInfoMessages {
-  final PhotoFormBasicInfoMessages _parent;
-  const GuestPhotoFormBasicInfoMessages(this._parent);
+class GuestPhotoFormBasicInfoMessagesPlPL
+    extends GuestPhotoFormBasicInfoMessages {
+  final PhotoFormBasicInfoMessagesPlPL _parent;
+  const GuestPhotoFormBasicInfoMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "You need to be signed in to upload images. "
@@ -2005,9 +2035,9 @@ class GuestPhotoFormBasicInfoMessages {
   String get suffix => """, or upload using your own URL below.""";
 }
 
-class UrlPhotoFormBasicInfoMessages {
-  final PhotoFormBasicInfoMessages _parent;
-  const UrlPhotoFormBasicInfoMessages(this._parent);
+class UrlPhotoFormBasicInfoMessagesPlPL extends UrlPhotoFormBasicInfoMessages {
+  final PhotoFormBasicInfoMessagesPlPL _parent;
+  const UrlPhotoFormBasicInfoMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Image URL"
@@ -2020,20 +2050,20 @@ class UrlPhotoFormBasicInfoMessages {
   String get placeholder => """Paste an image URL""";
 }
 
-class DebilitiesMessages {
-  final Messages _parent;
-  const DebilitiesMessages(this._parent);
+class DebilitiesMessagesPlPL extends DebilitiesMessages {
+  final MessagesPlPL _parent;
+  const DebilitiesMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "$name ($key)"
   /// ```
   String label(String name, String key) => """$name ($key)""";
-  DialogDebilitiesMessages get dialog => DialogDebilitiesMessages(this);
+  DialogDebilitiesMessagesPlPL get dialog => DialogDebilitiesMessagesPlPL(this);
 }
 
-class DialogDebilitiesMessages {
-  final DebilitiesMessages _parent;
-  const DialogDebilitiesMessages(this._parent);
+class DialogDebilitiesMessagesPlPL extends DialogDebilitiesMessages {
+  final DebilitiesMessagesPlPL _parent;
+  const DialogDebilitiesMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Debilities"
@@ -2047,20 +2077,20 @@ class DialogDebilitiesMessages {
       """Debilities are temporary, negative conditions or states in which your character is in. When a stat is debilitated, it causes its modifier to be reduced by 1 until recovered.""";
 }
 
-class TagsMessages {
-  final Messages _parent;
-  const TagsMessages(this._parent);
+class TagsMessagesPlPL extends TagsMessages {
+  final MessagesPlPL _parent;
+  const TagsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Copy from: $name"
   /// ```
   String copyFrom(String name) => """Copy from: $name""";
-  DialogTagsMessages get dialog => DialogTagsMessages(this);
+  DialogTagsMessagesPlPL get dialog => DialogTagsMessagesPlPL(this);
 }
 
-class DialogTagsMessages {
-  final TagsMessages _parent;
-  const DialogTagsMessages(this._parent);
+class DialogTagsMessagesPlPL extends DialogTagsMessages {
+  final TagsMessagesPlPL _parent;
+  const DialogTagsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Tag Information"
@@ -2068,27 +2098,28 @@ class DialogTagsMessages {
   String get title => """Tag Information""";
 }
 
-class DialogsMessages {
-  final Messages _parent;
-  const DialogsMessages(this._parent);
-  ConfirmationsDialogsMessages get confirmations =>
-      ConfirmationsDialogsMessages(this);
+class DialogsMessagesPlPL extends DialogsMessages {
+  final MessagesPlPL _parent;
+  const DialogsMessagesPlPL(this._parent) : super(_parent);
+  ConfirmationsDialogsMessagesPlPL get confirmations =>
+      ConfirmationsDialogsMessagesPlPL(this);
 }
 
-class ConfirmationsDialogsMessages {
-  final DialogsMessages _parent;
-  const ConfirmationsDialogsMessages(this._parent);
-  DeleteConfirmationsDialogsMessages get delete =>
-      DeleteConfirmationsDialogsMessages(this);
-  ExitConfirmationsDialogsMessages get exit =>
-      ExitConfirmationsDialogsMessages(this);
-  DeleteAccountConfirmationsDialogsMessages get deleteAccount =>
-      DeleteAccountConfirmationsDialogsMessages(this);
+class ConfirmationsDialogsMessagesPlPL extends ConfirmationsDialogsMessages {
+  final DialogsMessagesPlPL _parent;
+  const ConfirmationsDialogsMessagesPlPL(this._parent) : super(_parent);
+  DeleteConfirmationsDialogsMessagesPlPL get delete =>
+      DeleteConfirmationsDialogsMessagesPlPL(this);
+  ExitConfirmationsDialogsMessagesPlPL get exit =>
+      ExitConfirmationsDialogsMessagesPlPL(this);
+  DeleteAccountConfirmationsDialogsMessagesPlPL get deleteAccount =>
+      DeleteAccountConfirmationsDialogsMessagesPlPL(this);
 }
 
-class DeleteConfirmationsDialogsMessages {
-  final ConfirmationsDialogsMessages _parent;
-  const DeleteConfirmationsDialogsMessages(this._parent);
+class DeleteConfirmationsDialogsMessagesPlPL
+    extends DeleteConfirmationsDialogsMessages {
+  final ConfirmationsDialogsMessagesPlPL _parent;
+  const DeleteConfirmationsDialogsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Delete $ent?"
@@ -2102,9 +2133,10 @@ class DeleteConfirmationsDialogsMessages {
       """Are you sure you want to remove the $ent "$name" from the list?""";
 }
 
-class ExitConfirmationsDialogsMessages {
-  final ConfirmationsDialogsMessages _parent;
-  const ExitConfirmationsDialogsMessages(this._parent);
+class ExitConfirmationsDialogsMessagesPlPL
+    extends ExitConfirmationsDialogsMessages {
+  final ConfirmationsDialogsMessagesPlPL _parent;
+  const ExitConfirmationsDialogsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Are you sure?"
@@ -2128,18 +2160,22 @@ class ExitConfirmationsDialogsMessages {
   String get cancel => """Continue editing""";
 }
 
-class DeleteAccountConfirmationsDialogsMessages {
-  final ConfirmationsDialogsMessages _parent;
-  const DeleteAccountConfirmationsDialogsMessages(this._parent);
-  Step1DeleteAccountConfirmationsDialogsMessages get step1 =>
-      Step1DeleteAccountConfirmationsDialogsMessages(this);
-  Step2DeleteAccountConfirmationsDialogsMessages get step2 =>
-      Step2DeleteAccountConfirmationsDialogsMessages(this);
+class DeleteAccountConfirmationsDialogsMessagesPlPL
+    extends DeleteAccountConfirmationsDialogsMessages {
+  final ConfirmationsDialogsMessagesPlPL _parent;
+  const DeleteAccountConfirmationsDialogsMessagesPlPL(this._parent)
+      : super(_parent);
+  Step1DeleteAccountConfirmationsDialogsMessagesPlPL get step1 =>
+      Step1DeleteAccountConfirmationsDialogsMessagesPlPL(this);
+  Step2DeleteAccountConfirmationsDialogsMessagesPlPL get step2 =>
+      Step2DeleteAccountConfirmationsDialogsMessagesPlPL(this);
 }
 
-class Step1DeleteAccountConfirmationsDialogsMessages {
-  final DeleteAccountConfirmationsDialogsMessages _parent;
-  const Step1DeleteAccountConfirmationsDialogsMessages(this._parent);
+class Step1DeleteAccountConfirmationsDialogsMessagesPlPL
+    extends Step1DeleteAccountConfirmationsDialogsMessages {
+  final DeleteAccountConfirmationsDialogsMessagesPlPL _parent;
+  const Step1DeleteAccountConfirmationsDialogsMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Delete Your Account?"
@@ -2153,9 +2189,11 @@ class Step1DeleteAccountConfirmationsDialogsMessages {
       """Are you sure you want to delete your account?\n\nThis action cannot be undone.""";
 }
 
-class Step2DeleteAccountConfirmationsDialogsMessages {
-  final DeleteAccountConfirmationsDialogsMessages _parent;
-  const Step2DeleteAccountConfirmationsDialogsMessages(this._parent);
+class Step2DeleteAccountConfirmationsDialogsMessagesPlPL
+    extends Step2DeleteAccountConfirmationsDialogsMessages {
+  final DeleteAccountConfirmationsDialogsMessagesPlPL _parent;
+  const Step2DeleteAccountConfirmationsDialogsMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Are you really sure?"
@@ -2169,15 +2207,15 @@ class Step2DeleteAccountConfirmationsDialogsMessages {
       """We do not save any data for deleted accounts. All your data will be permanently deleted.\n\nAre you sure you want to delete your account?\n\nPlease confirm this one last time.""";
 }
 
-class MovesMessages {
-  final Messages _parent;
-  const MovesMessages(this._parent);
-  CategoryMovesMessages get category => CategoryMovesMessages(this);
+class MovesMessagesPlPL extends MovesMessages {
+  final MessagesPlPL _parent;
+  const MovesMessagesPlPL(this._parent) : super(_parent);
+  CategoryMovesMessagesPlPL get category => CategoryMovesMessagesPlPL(this);
 }
 
-class CategoryMovesMessages {
-  final MovesMessages _parent;
-  const CategoryMovesMessages(this._parent);
+class CategoryMovesMessagesPlPL extends CategoryMovesMessages {
+  final MovesMessagesPlPL _parent;
+  const CategoryMovesMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// """
@@ -2243,9 +2281,9 @@ class CategoryMovesMessages {
       }}""";
 }
 
-class SpellsMessages {
-  final Messages _parent;
-  const SpellsMessages(this._parent);
+class SpellsMessagesPlPL extends SpellsMessages {
+  final MessagesPlPL _parent;
+  const SpellsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// """
@@ -2263,9 +2301,9 @@ class SpellsMessages {
       }}""";
 }
 
-class ItemsMessages {
-  final Messages _parent;
-  const ItemsMessages(this._parent);
+class ItemsMessagesPlPL extends ItemsMessages {
+  final MessagesPlPL _parent;
+  const ItemsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "× $amt"
@@ -2276,12 +2314,12 @@ class ItemsMessages {
   /// "Amount"
   /// ```
   String get amountTooltip => """Amount""";
-  SettingsItemsMessages get settings => SettingsItemsMessages(this);
+  SettingsItemsMessagesPlPL get settings => SettingsItemsMessagesPlPL(this);
 }
 
-class SettingsItemsMessages {
-  final ItemsMessages _parent;
-  const SettingsItemsMessages(this._parent);
+class SettingsItemsMessagesPlPL extends SettingsItemsMessages {
+  final ItemsMessagesPlPL _parent;
+  const SettingsItemsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Count Armor"
@@ -2299,21 +2337,22 @@ class SettingsItemsMessages {
   String get countWeight => """Count Weight""";
 }
 
-class NotesMessages {
-  final Messages _parent;
-  const NotesMessages(this._parent);
-  CategoryNotesMessages get category => CategoryNotesMessages(this);
+class NotesMessagesPlPL extends NotesMessages {
+  final MessagesPlPL _parent;
+  const NotesMessagesPlPL(this._parent) : super(_parent);
+  CategoryNotesMessagesPlPL get category => CategoryNotesMessagesPlPL(this);
 
   /// ```dart
   /// "General"
   /// ```
   String get noCategory => """General""";
-  EmptyStateNotesMessages get emptyState => EmptyStateNotesMessages(this);
+  EmptyStateNotesMessagesPlPL get emptyState =>
+      EmptyStateNotesMessagesPlPL(this);
 }
 
-class CategoryNotesMessages {
-  final NotesMessages _parent;
-  const CategoryNotesMessages(this._parent);
+class CategoryNotesMessagesPlPL extends CategoryNotesMessages {
+  final NotesMessagesPlPL _parent;
+  const CategoryNotesMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Category"
@@ -2321,9 +2360,9 @@ class CategoryNotesMessages {
   String get label => """Category""";
 }
 
-class EmptyStateNotesMessages {
-  final NotesMessages _parent;
-  const EmptyStateNotesMessages(this._parent);
+class EmptyStateNotesMessagesPlPL extends EmptyStateNotesMessages {
+  final NotesMessagesPlPL _parent;
+  const EmptyStateNotesMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "No Notes"
@@ -2342,9 +2381,9 @@ class EmptyStateNotesMessages {
   String get button => """Create Note""";
 }
 
-class AlignmentMessages {
-  final Messages _parent;
-  const AlignmentMessages(this._parent);
+class AlignmentMessagesPlPL extends AlignmentMessages {
+  final MessagesPlPL _parent;
+  const AlignmentMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// """
@@ -2366,13 +2405,14 @@ class AlignmentMessages {
         'neutral' => 'Neutral',
         _ => key,
       }}""";
-  AlignmentValuesAlignmentMessages get alignmentValues =>
-      AlignmentValuesAlignmentMessages(this);
+  AlignmentValuesAlignmentMessagesPlPL get alignmentValues =>
+      AlignmentValuesAlignmentMessagesPlPL(this);
 }
 
-class AlignmentValuesAlignmentMessages {
-  final AlignmentMessages _parent;
-  const AlignmentValuesAlignmentMessages(this._parent);
+class AlignmentValuesAlignmentMessagesPlPL
+    extends AlignmentValuesAlignmentMessages {
+  final AlignmentMessagesPlPL _parent;
+  const AlignmentValuesAlignmentMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Alignments"
@@ -2380,31 +2420,32 @@ class AlignmentValuesAlignmentMessages {
   String get title => """Alignments""";
 }
 
-class BioMessages {
-  final Messages _parent;
-  const BioMessages(this._parent);
-  DialogBioMessages get dialog => DialogBioMessages(this);
+class BioMessagesPlPL extends BioMessages {
+  final MessagesPlPL _parent;
+  const BioMessagesPlPL(this._parent) : super(_parent);
+  DialogBioMessagesPlPL get dialog => DialogBioMessagesPlPL(this);
 }
 
-class DialogBioMessages {
-  final BioMessages _parent;
-  const DialogBioMessages(this._parent);
+class DialogBioMessagesPlPL extends DialogBioMessages {
+  final BioMessagesPlPL _parent;
+  const DialogBioMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Character Biography"
   /// ```
   String get title => """Character Biography""";
-  DescriptionDialogBioMessages get description =>
-      DescriptionDialogBioMessages(this);
-  LooksDialogBioMessages get looks => LooksDialogBioMessages(this);
-  AlignmentDialogBioMessages get alignment => AlignmentDialogBioMessages(this);
-  AlignmentDescriptionDialogBioMessages get alignmentDescription =>
-      AlignmentDescriptionDialogBioMessages(this);
+  DescriptionDialogBioMessagesPlPL get description =>
+      DescriptionDialogBioMessagesPlPL(this);
+  LooksDialogBioMessagesPlPL get looks => LooksDialogBioMessagesPlPL(this);
+  AlignmentDialogBioMessagesPlPL get alignment =>
+      AlignmentDialogBioMessagesPlPL(this);
+  AlignmentDescriptionDialogBioMessagesPlPL get alignmentDescription =>
+      AlignmentDescriptionDialogBioMessagesPlPL(this);
 }
 
-class DescriptionDialogBioMessages {
-  final DialogBioMessages _parent;
-  const DescriptionDialogBioMessages(this._parent);
+class DescriptionDialogBioMessagesPlPL extends DescriptionDialogBioMessages {
+  final DialogBioMessagesPlPL _parent;
+  const DescriptionDialogBioMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Character & background description"
@@ -2418,9 +2459,9 @@ class DescriptionDialogBioMessages {
       """Describe your character's background, personality, goals, etc.""";
 }
 
-class LooksDialogBioMessages {
-  final DialogBioMessages _parent;
-  const LooksDialogBioMessages(this._parent);
+class LooksDialogBioMessagesPlPL extends LooksDialogBioMessages {
+  final DialogBioMessagesPlPL _parent;
+  const LooksDialogBioMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Appearance"
@@ -2434,9 +2475,9 @@ class LooksDialogBioMessages {
       """Describe your character's appearance. You may use the presets from the buttons above.""";
 }
 
-class AlignmentDialogBioMessages {
-  final DialogBioMessages _parent;
-  const AlignmentDialogBioMessages(this._parent);
+class AlignmentDialogBioMessagesPlPL extends AlignmentDialogBioMessages {
+  final DialogBioMessagesPlPL _parent;
+  const AlignmentDialogBioMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Alignment"
@@ -2444,9 +2485,11 @@ class AlignmentDialogBioMessages {
   String get label => """Alignment""";
 }
 
-class AlignmentDescriptionDialogBioMessages {
-  final DialogBioMessages _parent;
-  const AlignmentDescriptionDialogBioMessages(this._parent);
+class AlignmentDescriptionDialogBioMessagesPlPL
+    extends AlignmentDescriptionDialogBioMessages {
+  final DialogBioMessagesPlPL _parent;
+  const AlignmentDescriptionDialogBioMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Alignment Description"
@@ -2460,9 +2503,9 @@ class AlignmentDescriptionDialogBioMessages {
       """Alignment is your character's way of thinking and moral compass. This can center on an ethical ideal, religious strictures or early life events. It reflects what your character values and aspires to protect or create.""";
 }
 
-class SearchMessages {
-  final Messages _parent;
-  const SearchMessages(this._parent);
+class SearchMessagesPlPL extends SearchMessages {
+  final MessagesPlPL _parent;
+  const SearchMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Type to search"
@@ -2480,22 +2523,22 @@ class SearchMessages {
   String get searchIn => """Search in""";
 }
 
-class HpMessages {
-  final Messages _parent;
-  const HpMessages(this._parent);
-  DialogHpMessages get dialog => DialogHpMessages(this);
-  BarHpMessages get bar => BarHpMessages(this);
+class HpMessagesPlPL extends HpMessages {
+  final MessagesPlPL _parent;
+  const HpMessagesPlPL(this._parent) : super(_parent);
+  DialogHpMessagesPlPL get dialog => DialogHpMessagesPlPL(this);
+  BarHpMessagesPlPL get bar => BarHpMessagesPlPL(this);
 }
 
-class DialogHpMessages {
-  final HpMessages _parent;
-  const DialogHpMessages(this._parent);
+class DialogHpMessagesPlPL extends DialogHpMessages {
+  final HpMessagesPlPL _parent;
+  const DialogHpMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Modify HP"
   /// ```
   String get title => """Modify HP""";
-  ChangeDialogHpMessages get change => ChangeDialogHpMessages(this);
+  ChangeDialogHpMessagesPlPL get change => ChangeDialogHpMessagesPlPL(this);
 
   /// ```dart
   /// "Override Max HP"
@@ -2503,9 +2546,9 @@ class DialogHpMessages {
   String get overrideMax => """Override Max HP""";
 }
 
-class ChangeDialogHpMessages {
-  final DialogHpMessages _parent;
-  const ChangeDialogHpMessages(this._parent);
+class ChangeDialogHpMessagesPlPL extends ChangeDialogHpMessages {
+  final DialogHpMessagesPlPL _parent;
+  const ChangeDialogHpMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Heal\n+$amt"
@@ -2523,9 +2566,9 @@ class ChangeDialogHpMessages {
   String get neutral => """No Change""";
 }
 
-class BarHpMessages {
-  final HpMessages _parent;
-  const BarHpMessages(this._parent);
+class BarHpMessagesPlPL extends BarHpMessages {
+  final HpMessagesPlPL _parent;
+  const BarHpMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "HP"
@@ -2538,25 +2581,26 @@ class BarHpMessages {
   String tooltip(String act) => """$act to modify your HP""";
 }
 
-class XpMessages {
-  final Messages _parent;
-  const XpMessages(this._parent);
-  DialogXpMessages get dialog => DialogXpMessages(this);
-  BarXpMessages get bar => BarXpMessages(this);
+class XpMessagesPlPL extends XpMessages {
+  final MessagesPlPL _parent;
+  const XpMessagesPlPL(this._parent) : super(_parent);
+  DialogXpMessagesPlPL get dialog => DialogXpMessagesPlPL(this);
+  BarXpMessagesPlPL get bar => BarXpMessagesPlPL(this);
 }
 
-class DialogXpMessages {
-  final XpMessages _parent;
-  const DialogXpMessages(this._parent);
-  EndOfSessionDialogXpMessages get endOfSession =>
-      EndOfSessionDialogXpMessages(this);
-  LevelUpDialogXpMessages get levelUp => LevelUpDialogXpMessages(this);
-  OverwriteDialogXpMessages get overwrite => OverwriteDialogXpMessages(this);
+class DialogXpMessagesPlPL extends DialogXpMessages {
+  final XpMessagesPlPL _parent;
+  const DialogXpMessagesPlPL(this._parent) : super(_parent);
+  EndOfSessionDialogXpMessagesPlPL get endOfSession =>
+      EndOfSessionDialogXpMessagesPlPL(this);
+  LevelUpDialogXpMessagesPlPL get levelUp => LevelUpDialogXpMessagesPlPL(this);
+  OverwriteDialogXpMessagesPlPL get overwrite =>
+      OverwriteDialogXpMessagesPlPL(this);
 }
 
-class EndOfSessionDialogXpMessages {
-  final DialogXpMessages _parent;
-  const EndOfSessionDialogXpMessages(this._parent);
+class EndOfSessionDialogXpMessagesPlPL extends EndOfSessionDialogXpMessages {
+  final DialogXpMessagesPlPL _parent;
+  const EndOfSessionDialogXpMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "End Session"
@@ -2567,13 +2611,15 @@ class EndOfSessionDialogXpMessages {
   /// "End Session"
   /// ```
   String get button => """End Session""";
-  QuestionsEndOfSessionDialogXpMessages get questions =>
-      QuestionsEndOfSessionDialogXpMessages(this);
+  QuestionsEndOfSessionDialogXpMessagesPlPL get questions =>
+      QuestionsEndOfSessionDialogXpMessagesPlPL(this);
 }
 
-class QuestionsEndOfSessionDialogXpMessages {
-  final EndOfSessionDialogXpMessages _parent;
-  const QuestionsEndOfSessionDialogXpMessages(this._parent);
+class QuestionsEndOfSessionDialogXpMessagesPlPL
+    extends QuestionsEndOfSessionDialogXpMessages {
+  final EndOfSessionDialogXpMessagesPlPL _parent;
+  const QuestionsEndOfSessionDialogXpMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "End of Session Questions"
@@ -2587,9 +2633,9 @@ class QuestionsEndOfSessionDialogXpMessages {
       """Answer these questions as a group. For each "yes" answer, XP is marked.""";
 }
 
-class LevelUpDialogXpMessages {
-  final DialogXpMessages _parent;
-  const LevelUpDialogXpMessages(this._parent);
+class LevelUpDialogXpMessagesPlPL extends LevelUpDialogXpMessages {
+  final DialogXpMessagesPlPL _parent;
+  const LevelUpDialogXpMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Level Up"
@@ -2605,13 +2651,13 @@ class LevelUpDialogXpMessages {
   /// "Increase a stat by 1:"
   /// ```
   String get increaseStat => """Increase a stat by 1:""";
-  ChooseLevelUpDialogXpMessages get choose =>
-      ChooseLevelUpDialogXpMessages(this);
+  ChooseLevelUpDialogXpMessagesPlPL get choose =>
+      ChooseLevelUpDialogXpMessagesPlPL(this);
 }
 
-class ChooseLevelUpDialogXpMessages {
-  final LevelUpDialogXpMessages _parent;
-  const ChooseLevelUpDialogXpMessages(this._parent);
+class ChooseLevelUpDialogXpMessagesPlPL extends ChooseLevelUpDialogXpMessages {
+  final LevelUpDialogXpMessagesPlPL _parent;
+  const ChooseLevelUpDialogXpMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Then, select $what:"
@@ -2634,9 +2680,9 @@ class ChooseLevelUpDialogXpMessages {
   String get spell => """a spell""";
 }
 
-class OverwriteDialogXpMessages {
-  final DialogXpMessages _parent;
-  const OverwriteDialogXpMessages(this._parent);
+class OverwriteDialogXpMessagesPlPL extends OverwriteDialogXpMessages {
+  final DialogXpMessagesPlPL _parent;
+  const OverwriteDialogXpMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Overwrite XP and Level"
@@ -2671,9 +2717,9 @@ class OverwriteDialogXpMessages {
   String get level => """Overwrite Level""";
 }
 
-class BarXpMessages {
-  final XpMessages _parent;
-  const BarXpMessages(this._parent);
+class BarXpMessagesPlPL extends BarXpMessages {
+  final XpMessagesPlPL _parent;
+  const BarXpMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "XP"
@@ -2692,20 +2738,20 @@ class BarXpMessages {
   String plusOneTooltip(String act) => """$act to add +1 XP""";
 }
 
-class ArmorMessages {
-  final Messages _parent;
-  const ArmorMessages(this._parent);
+class ArmorMessagesPlPL extends ArmorMessages {
+  final MessagesPlPL _parent;
+  const ArmorMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Armor"
   /// ```
   String get title => """Armor""";
-  DialogArmorMessages get dialog => DialogArmorMessages(this);
+  DialogArmorMessagesPlPL get dialog => DialogArmorMessagesPlPL(this);
 }
 
-class DialogArmorMessages {
-  final ArmorMessages _parent;
-  const DialogArmorMessages(this._parent);
+class DialogArmorMessagesPlPL extends DialogArmorMessages {
+  final ArmorMessagesPlPL _parent;
+  const DialogArmorMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Armor"
@@ -2718,9 +2764,9 @@ class DialogArmorMessages {
   String get autoArmor => """Use armor from class & equipped items""";
 }
 
-class RichTextMessages {
-  final Messages _parent;
-  const RichTextMessages(this._parent);
+class RichTextMessagesPlPL extends RichTextMessages {
+  final MessagesPlPL _parent;
+  const RichTextMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Preview"
@@ -2761,7 +2807,8 @@ class RichTextMessages {
   /// "Numbered List"
   /// ```
   String get numberedList => """Numbered List""";
-  CheckListRichTextMessages get checkList => CheckListRichTextMessages(this);
+  CheckListRichTextMessagesPlPL get checkList =>
+      CheckListRichTextMessagesPlPL(this);
 
   /// ```dart
   /// "URL"
@@ -2804,9 +2851,9 @@ class RichTextMessages {
   String get time => """Add Current Time""";
 }
 
-class CheckListRichTextMessages {
-  final RichTextMessages _parent;
-  const CheckListRichTextMessages(this._parent);
+class CheckListRichTextMessagesPlPL extends CheckListRichTextMessages {
+  final RichTextMessagesPlPL _parent;
+  const CheckListRichTextMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Checklist (Unchecked)"
@@ -2819,9 +2866,9 @@ class CheckListRichTextMessages {
   String get checked => """Checklist (Checked)""";
 }
 
-class CustomRollsMessages {
-  final Messages _parent;
-  const CustomRollsMessages(this._parent);
+class CustomRollsMessagesPlPL extends CustomRollsMessages {
+  final MessagesPlPL _parent;
+  const CustomRollsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Quick Roll Buttons"
@@ -2842,15 +2889,18 @@ class CustomRollsMessages {
   /// "Button Label"
   /// ```
   String get buttonLabel => """Button Label""";
-  SpecialDiceCustomRollsMessages get specialDice =>
-      SpecialDiceCustomRollsMessages(this);
-  TooltipCustomRollsMessages get tooltip => TooltipCustomRollsMessages(this);
-  PresetsCustomRollsMessages get presets => PresetsCustomRollsMessages(this);
+  SpecialDiceCustomRollsMessagesPlPL get specialDice =>
+      SpecialDiceCustomRollsMessagesPlPL(this);
+  TooltipCustomRollsMessagesPlPL get tooltip =>
+      TooltipCustomRollsMessagesPlPL(this);
+  PresetsCustomRollsMessagesPlPL get presets =>
+      PresetsCustomRollsMessagesPlPL(this);
 }
 
-class SpecialDiceCustomRollsMessages {
-  final CustomRollsMessages _parent;
-  const SpecialDiceCustomRollsMessages(this._parent);
+class SpecialDiceCustomRollsMessagesPlPL
+    extends SpecialDiceCustomRollsMessages {
+  final CustomRollsMessagesPlPL _parent;
+  const SpecialDiceCustomRollsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Special Dice"
@@ -2864,9 +2914,9 @@ class SpecialDiceCustomRollsMessages {
       """${switch (btn) { 'damage' => 'Damage', _ => btn }}""";
 }
 
-class TooltipCustomRollsMessages {
-  final CustomRollsMessages _parent;
-  const TooltipCustomRollsMessages(this._parent);
+class TooltipCustomRollsMessagesPlPL extends TooltipCustomRollsMessages {
+  final CustomRollsMessagesPlPL _parent;
+  const TooltipCustomRollsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Roll $dice"
@@ -2880,9 +2930,9 @@ class TooltipCustomRollsMessages {
       """Roll $dice\n* Rolling with debility""";
 }
 
-class PresetsCustomRollsMessages {
-  final CustomRollsMessages _parent;
-  const PresetsCustomRollsMessages(this._parent);
+class PresetsCustomRollsMessagesPlPL extends PresetsCustomRollsMessages {
+  final CustomRollsMessagesPlPL _parent;
+  const PresetsCustomRollsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Presets"
@@ -2910,9 +2960,9 @@ class PresetsCustomRollsMessages {
   String get discernRealities => """Discern Realities""";
 }
 
-class SessionMarksMessages {
-  final Messages _parent;
-  const SessionMarksMessages(this._parent);
+class SessionMarksMessagesPlPL extends SessionMarksMessages {
+  final MessagesPlPL _parent;
+  const SessionMarksMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Bonds & Flags"
@@ -2950,13 +3000,14 @@ class SessionMarksMessages {
   /// ```
   String get info =>
       """You can add, update or remove bonds & flags using the edit icon above.""";
-  EndOfSessionSessionMarksMessages get endOfSession =>
-      EndOfSessionSessionMarksMessages(this);
+  EndOfSessionSessionMarksMessagesPlPL get endOfSession =>
+      EndOfSessionSessionMarksMessagesPlPL(this);
 }
 
-class EndOfSessionSessionMarksMessages {
-  final SessionMarksMessages _parent;
-  const EndOfSessionSessionMarksMessages(this._parent);
+class EndOfSessionSessionMarksMessagesPlPL
+    extends EndOfSessionSessionMarksMessages {
+  final SessionMarksMessagesPlPL _parent;
+  const EndOfSessionSessionMarksMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Did we learn something new and important about the world?"
@@ -2975,22 +3026,24 @@ class EndOfSessionSessionMarksMessages {
   String get q3 => """Did we loot a memorable treasure?""";
 }
 
-class CreateCharacterMessages {
-  final Messages _parent;
-  const CreateCharacterMessages(this._parent);
-  CharacterClassCreateCharacterMessages get characterClass =>
-      CharacterClassCreateCharacterMessages(this);
-  BasicInfoCreateCharacterMessages get basicInfo =>
-      BasicInfoCreateCharacterMessages(this);
-  StartingGearCreateCharacterMessages get startingGear =>
-      StartingGearCreateCharacterMessages(this);
-  MovesSpellsCreateCharacterMessages get movesSpells =>
-      MovesSpellsCreateCharacterMessages(this);
+class CreateCharacterMessagesPlPL extends CreateCharacterMessages {
+  final MessagesPlPL _parent;
+  const CreateCharacterMessagesPlPL(this._parent) : super(_parent);
+  CharacterClassCreateCharacterMessagesPlPL get characterClass =>
+      CharacterClassCreateCharacterMessagesPlPL(this);
+  BasicInfoCreateCharacterMessagesPlPL get basicInfo =>
+      BasicInfoCreateCharacterMessagesPlPL(this);
+  StartingGearCreateCharacterMessagesPlPL get startingGear =>
+      StartingGearCreateCharacterMessagesPlPL(this);
+  MovesSpellsCreateCharacterMessagesPlPL get movesSpells =>
+      MovesSpellsCreateCharacterMessagesPlPL(this);
 }
 
-class CharacterClassCreateCharacterMessages {
-  final CreateCharacterMessages _parent;
-  const CharacterClassCreateCharacterMessages(this._parent);
+class CharacterClassCreateCharacterMessagesPlPL
+    extends CharacterClassCreateCharacterMessages {
+  final CreateCharacterMessagesPlPL _parent;
+  const CharacterClassCreateCharacterMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "No class selected (required)"
@@ -3004,9 +3057,10 @@ class CharacterClassCreateCharacterMessages {
       """Base HP: $hp, Load: $load, Damage Dice: $damageDice""";
 }
 
-class BasicInfoCreateCharacterMessages {
-  final CreateCharacterMessages _parent;
-  const BasicInfoCreateCharacterMessages(this._parent);
+class BasicInfoCreateCharacterMessagesPlPL
+    extends BasicInfoCreateCharacterMessages {
+  final CreateCharacterMessagesPlPL _parent;
+  const BasicInfoCreateCharacterMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Unnamed Traveler"
@@ -3024,9 +3078,10 @@ class BasicInfoCreateCharacterMessages {
   String description(String cls) => """Level 1 $cls""";
 }
 
-class StartingGearCreateCharacterMessages {
-  final CreateCharacterMessages _parent;
-  const StartingGearCreateCharacterMessages(this._parent);
+class StartingGearCreateCharacterMessagesPlPL
+    extends StartingGearCreateCharacterMessages {
+  final CreateCharacterMessagesPlPL _parent;
+  const StartingGearCreateCharacterMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Select your starting gear determined by class (optional)"
@@ -3043,13 +3098,15 @@ class StartingGearCreateCharacterMessages {
   /// "${amt}× $name"
   /// ```
   String item(String amt, String name) => """${amt}× $name""";
-  CountStartingGearCreateCharacterMessages get count =>
-      CountStartingGearCreateCharacterMessages(this);
+  CountStartingGearCreateCharacterMessagesPlPL get count =>
+      CountStartingGearCreateCharacterMessagesPlPL(this);
 }
 
-class CountStartingGearCreateCharacterMessages {
-  final StartingGearCreateCharacterMessages _parent;
-  const CountStartingGearCreateCharacterMessages(this._parent);
+class CountStartingGearCreateCharacterMessagesPlPL
+    extends CountStartingGearCreateCharacterMessages {
+  final StartingGearCreateCharacterMessagesPlPL _parent;
+  const CountStartingGearCreateCharacterMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "$cnt selected (class allowance: $max)"
@@ -3063,9 +3120,10 @@ class CountStartingGearCreateCharacterMessages {
   String noMax(int cnt) => """$cnt selected""";
 }
 
-class MovesSpellsCreateCharacterMessages {
-  final CreateCharacterMessages _parent;
-  const MovesSpellsCreateCharacterMessages(this._parent);
+class MovesSpellsCreateCharacterMessagesPlPL
+    extends MovesSpellsCreateCharacterMessages {
+  final CreateCharacterMessagesPlPL _parent;
+  const MovesSpellsCreateCharacterMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Moves & Spells"
@@ -3079,35 +3137,39 @@ class MovesSpellsCreateCharacterMessages {
       """$moves Moves, $spells Spells selected""";
 }
 
-class AccountMessages {
-  final Messages _parent;
-  const AccountMessages(this._parent);
-  DetailsAccountMessages get details => DetailsAccountMessages(this);
-  ProvidersAccountMessages get providers => ProvidersAccountMessages(this);
-  DeleteAccountAccountMessages get deleteAccount =>
-      DeleteAccountAccountMessages(this);
-  UnlinkAccountMessages get unlink => UnlinkAccountMessages(this);
+class AccountMessagesPlPL extends AccountMessages {
+  final MessagesPlPL _parent;
+  const AccountMessagesPlPL(this._parent) : super(_parent);
+  DetailsAccountMessagesPlPL get details => DetailsAccountMessagesPlPL(this);
+  ProvidersAccountMessagesPlPL get providers =>
+      ProvidersAccountMessagesPlPL(this);
+  DeleteAccountAccountMessagesPlPL get deleteAccount =>
+      DeleteAccountAccountMessagesPlPL(this);
+  UnlinkAccountMessagesPlPL get unlink => UnlinkAccountMessagesPlPL(this);
 }
 
-class DetailsAccountMessages {
-  final AccountMessages _parent;
-  const DetailsAccountMessages(this._parent);
+class DetailsAccountMessagesPlPL extends DetailsAccountMessages {
+  final AccountMessagesPlPL _parent;
+  const DetailsAccountMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Account details"
   /// ```
   String get title => """Account details""";
-  DisplayNameDetailsAccountMessages get displayName =>
-      DisplayNameDetailsAccountMessages(this);
-  ImageDetailsAccountMessages get image => ImageDetailsAccountMessages(this);
-  EmailDetailsAccountMessages get email => EmailDetailsAccountMessages(this);
-  PasswordDetailsAccountMessages get password =>
-      PasswordDetailsAccountMessages(this);
+  DisplayNameDetailsAccountMessagesPlPL get displayName =>
+      DisplayNameDetailsAccountMessagesPlPL(this);
+  ImageDetailsAccountMessagesPlPL get image =>
+      ImageDetailsAccountMessagesPlPL(this);
+  EmailDetailsAccountMessagesPlPL get email =>
+      EmailDetailsAccountMessagesPlPL(this);
+  PasswordDetailsAccountMessagesPlPL get password =>
+      PasswordDetailsAccountMessagesPlPL(this);
 }
 
-class DisplayNameDetailsAccountMessages {
-  final DetailsAccountMessages _parent;
-  const DisplayNameDetailsAccountMessages(this._parent);
+class DisplayNameDetailsAccountMessagesPlPL
+    extends DisplayNameDetailsAccountMessages {
+  final DetailsAccountMessagesPlPL _parent;
+  const DisplayNameDetailsAccountMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Change Display Name"
@@ -3130,9 +3192,9 @@ class DisplayNameDetailsAccountMessages {
   String get success => """Display name changed successfully""";
 }
 
-class ImageDetailsAccountMessages {
-  final DetailsAccountMessages _parent;
-  const ImageDetailsAccountMessages(this._parent);
+class ImageDetailsAccountMessagesPlPL extends ImageDetailsAccountMessages {
+  final DetailsAccountMessagesPlPL _parent;
+  const ImageDetailsAccountMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Change Profile Picture"
@@ -3145,9 +3207,9 @@ class ImageDetailsAccountMessages {
   String get subtitle => """Change your profile picture""";
 }
 
-class EmailDetailsAccountMessages {
-  final DetailsAccountMessages _parent;
-  const EmailDetailsAccountMessages(this._parent);
+class EmailDetailsAccountMessagesPlPL extends EmailDetailsAccountMessages {
+  final DetailsAccountMessagesPlPL _parent;
+  const EmailDetailsAccountMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Change Email Address"
@@ -3170,9 +3232,10 @@ class EmailDetailsAccountMessages {
   String get success => """Email changed successfully""";
 }
 
-class PasswordDetailsAccountMessages {
-  final DetailsAccountMessages _parent;
-  const PasswordDetailsAccountMessages(this._parent);
+class PasswordDetailsAccountMessagesPlPL
+    extends PasswordDetailsAccountMessages {
+  final DetailsAccountMessagesPlPL _parent;
+  const PasswordDetailsAccountMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Change Password"
@@ -3198,10 +3261,10 @@ class PasswordDetailsAccountMessages {
   /// "Enter your new password"
   /// ```
   String get placeholder => """Enter your new password""";
-  VisibilityPasswordDetailsAccountMessages get visibility =>
-      VisibilityPasswordDetailsAccountMessages(this);
-  ConfirmPasswordDetailsAccountMessages get confirm =>
-      ConfirmPasswordDetailsAccountMessages(this);
+  VisibilityPasswordDetailsAccountMessagesPlPL get visibility =>
+      VisibilityPasswordDetailsAccountMessagesPlPL(this);
+  ConfirmPasswordDetailsAccountMessagesPlPL get confirm =>
+      ConfirmPasswordDetailsAccountMessagesPlPL(this);
 
   /// ```dart
   /// "Passwords do not match"
@@ -3209,9 +3272,11 @@ class PasswordDetailsAccountMessages {
   String get error => """Passwords do not match""";
 }
 
-class VisibilityPasswordDetailsAccountMessages {
-  final PasswordDetailsAccountMessages _parent;
-  const VisibilityPasswordDetailsAccountMessages(this._parent);
+class VisibilityPasswordDetailsAccountMessagesPlPL
+    extends VisibilityPasswordDetailsAccountMessages {
+  final PasswordDetailsAccountMessagesPlPL _parent;
+  const VisibilityPasswordDetailsAccountMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Show password"
@@ -3224,9 +3289,11 @@ class VisibilityPasswordDetailsAccountMessages {
   String get hide => """Hide password""";
 }
 
-class ConfirmPasswordDetailsAccountMessages {
-  final PasswordDetailsAccountMessages _parent;
-  const ConfirmPasswordDetailsAccountMessages(this._parent);
+class ConfirmPasswordDetailsAccountMessagesPlPL
+    extends ConfirmPasswordDetailsAccountMessages {
+  final PasswordDetailsAccountMessagesPlPL _parent;
+  const ConfirmPasswordDetailsAccountMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Confirm New Password"
@@ -3239,9 +3306,9 @@ class ConfirmPasswordDetailsAccountMessages {
   String get placeholder => """Enter the same password again""";
 }
 
-class ProvidersAccountMessages {
-  final AccountMessages _parent;
-  const ProvidersAccountMessages(this._parent);
+class ProvidersAccountMessagesPlPL extends ProvidersAccountMessages {
+  final AccountMessagesPlPL _parent;
+  const ProvidersAccountMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Connected logins"
@@ -3249,9 +3316,9 @@ class ProvidersAccountMessages {
   String get title => """Connected logins""";
 }
 
-class DeleteAccountAccountMessages {
-  final AccountMessages _parent;
-  const DeleteAccountAccountMessages(this._parent);
+class DeleteAccountAccountMessagesPlPL extends DeleteAccountAccountMessages {
+  final AccountMessagesPlPL _parent;
+  const DeleteAccountAccountMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Delete Your Account"
@@ -3265,9 +3332,9 @@ class DeleteAccountAccountMessages {
       """A deletion request for your account was sent successfully""";
 }
 
-class UnlinkAccountMessages {
-  final AccountMessages _parent;
-  const UnlinkAccountMessages(this._parent);
+class UnlinkAccountMessagesPlPL extends UnlinkAccountMessages {
+  final AccountMessagesPlPL _parent;
+  const UnlinkAccountMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "You successfully unlinked $provider."
@@ -3275,17 +3342,17 @@ class UnlinkAccountMessages {
   String success(String provider) => """You successfully unlinked $provider.""";
 }
 
-class ActionsMessages {
-  final Messages _parent;
-  const ActionsMessages(this._parent);
-  MovesActionsMessages get moves => MovesActionsMessages(this);
-  ClassActionsActionsMessages get classActions =>
-      ClassActionsActionsMessages(this);
+class ActionsMessagesPlPL extends ActionsMessages {
+  final MessagesPlPL _parent;
+  const ActionsMessagesPlPL(this._parent) : super(_parent);
+  MovesActionsMessagesPlPL get moves => MovesActionsMessagesPlPL(this);
+  ClassActionsActionsMessagesPlPL get classActions =>
+      ClassActionsActionsMessagesPlPL(this);
 }
 
-class MovesActionsMessages {
-  final ActionsMessages _parent;
-  const MovesActionsMessages(this._parent);
+class MovesActionsMessagesPlPL extends MovesActionsMessages {
+  final ActionsMessagesPlPL _parent;
+  const MovesActionsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Basic Moves"
@@ -3298,21 +3365,22 @@ class MovesActionsMessages {
   String get special => """Special Moves""";
 }
 
-class ClassActionsActionsMessages {
-  final ActionsMessages _parent;
-  const ClassActionsActionsMessages(this._parent);
+class ClassActionsActionsMessagesPlPL extends ClassActionsActionsMessages {
+  final ActionsMessagesPlPL _parent;
+  const ClassActionsActionsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Class Actions"
   /// ```
   String get title => """Class Actions""";
-  MarkXPClassActionsActionsMessages get markXP =>
-      MarkXPClassActionsActionsMessages(this);
+  MarkXPClassActionsActionsMessagesPlPL get markXP =>
+      MarkXPClassActionsActionsMessagesPlPL(this);
 }
 
-class MarkXPClassActionsActionsMessages {
-  final ClassActionsActionsMessages _parent;
-  const MarkXPClassActionsActionsMessages(this._parent);
+class MarkXPClassActionsActionsMessagesPlPL
+    extends MarkXPClassActionsActionsMessages {
+  final ClassActionsActionsMessagesPlPL _parent;
+  const MarkXPClassActionsActionsMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Mark +1 XP"
@@ -3325,24 +3393,26 @@ class MarkXPClassActionsActionsMessages {
   String get success => """+1 XP marked""";
 }
 
-class AbilityScoresMessages {
-  final Messages _parent;
-  const AbilityScoresMessages(this._parent);
+class AbilityScoresMessagesPlPL extends AbilityScoresMessages {
+  final MessagesPlPL _parent;
+  const AbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "You can drag & drop the stat cards to change the order in which they appear throughout this character's screens."
   /// ```
   String get info =>
       """You can drag & drop the stat cards to change the order in which they appear throughout this character's screens.""";
-  RollButtonAbilityScoresMessages get rollButton =>
-      RollButtonAbilityScoresMessages(this);
-  StatsAbilityScoresMessages get stats => StatsAbilityScoresMessages(this);
-  FormAbilityScoresMessages get form => FormAbilityScoresMessages(this);
+  RollButtonAbilityScoresMessagesPlPL get rollButton =>
+      RollButtonAbilityScoresMessagesPlPL(this);
+  StatsAbilityScoresMessagesPlPL get stats =>
+      StatsAbilityScoresMessagesPlPL(this);
+  FormAbilityScoresMessagesPlPL get form => FormAbilityScoresMessagesPlPL(this);
 }
 
-class RollButtonAbilityScoresMessages {
-  final AbilityScoresMessages _parent;
-  const RollButtonAbilityScoresMessages(this._parent);
+class RollButtonAbilityScoresMessagesPlPL
+    extends RollButtonAbilityScoresMessages {
+  final AbilityScoresMessagesPlPL _parent;
+  const RollButtonAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Roll +{stat}"
@@ -3355,23 +3425,29 @@ class RollButtonAbilityScoresMessages {
   String get randStat => """Roll random stat""";
 }
 
-class StatsAbilityScoresMessages {
-  final AbilityScoresMessages _parent;
-  const StatsAbilityScoresMessages(this._parent);
-  BondStatsAbilityScoresMessages get bond =>
-      BondStatsAbilityScoresMessages(this);
-  ChaStatsAbilityScoresMessages get cha => ChaStatsAbilityScoresMessages(this);
-  ConStatsAbilityScoresMessages get con => ConStatsAbilityScoresMessages(this);
-  DexStatsAbilityScoresMessages get dex => DexStatsAbilityScoresMessages(this);
-  StrStatsAbilityScoresMessages get str => StrStatsAbilityScoresMessages(this);
-  WisStatsAbilityScoresMessages get wis => WisStatsAbilityScoresMessages(this);
-  IntlStatsAbilityScoresMessages get intl =>
-      IntlStatsAbilityScoresMessages(this);
+class StatsAbilityScoresMessagesPlPL extends StatsAbilityScoresMessages {
+  final AbilityScoresMessagesPlPL _parent;
+  const StatsAbilityScoresMessagesPlPL(this._parent) : super(_parent);
+  BondStatsAbilityScoresMessagesPlPL get bond =>
+      BondStatsAbilityScoresMessagesPlPL(this);
+  ChaStatsAbilityScoresMessagesPlPL get cha =>
+      ChaStatsAbilityScoresMessagesPlPL(this);
+  ConStatsAbilityScoresMessagesPlPL get con =>
+      ConStatsAbilityScoresMessagesPlPL(this);
+  DexStatsAbilityScoresMessagesPlPL get dex =>
+      DexStatsAbilityScoresMessagesPlPL(this);
+  StrStatsAbilityScoresMessagesPlPL get str =>
+      StrStatsAbilityScoresMessagesPlPL(this);
+  WisStatsAbilityScoresMessagesPlPL get wis =>
+      WisStatsAbilityScoresMessagesPlPL(this);
+  IntlStatsAbilityScoresMessagesPlPL get intl =>
+      IntlStatsAbilityScoresMessagesPlPL(this);
 }
 
-class BondStatsAbilityScoresMessages {
-  final StatsAbilityScoresMessages _parent;
-  const BondStatsAbilityScoresMessages(this._parent);
+class BondStatsAbilityScoresMessagesPlPL
+    extends BondStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessagesPlPL _parent;
+  const BondStatsAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Bond"
@@ -3383,13 +3459,15 @@ class BondStatsAbilityScoresMessages {
   /// ```
   String get description =>
       """When a move has you roll+bond you'll count the number of bonds you have with the character in question and add that to the roll.""";
-  DebilityBondStatsAbilityScoresMessages get debility =>
-      DebilityBondStatsAbilityScoresMessages(this);
+  DebilityBondStatsAbilityScoresMessagesPlPL get debility =>
+      DebilityBondStatsAbilityScoresMessagesPlPL(this);
 }
 
-class DebilityBondStatsAbilityScoresMessages {
-  final BondStatsAbilityScoresMessages _parent;
-  const DebilityBondStatsAbilityScoresMessages(this._parent);
+class DebilityBondStatsAbilityScoresMessagesPlPL
+    extends DebilityBondStatsAbilityScoresMessages {
+  final BondStatsAbilityScoresMessagesPlPL _parent;
+  const DebilityBondStatsAbilityScoresMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Lonely"
@@ -3399,9 +3477,9 @@ class DebilityBondStatsAbilityScoresMessages {
   String get description => """null""";
 }
 
-class ChaStatsAbilityScoresMessages {
-  final StatsAbilityScoresMessages _parent;
-  const ChaStatsAbilityScoresMessages(this._parent);
+class ChaStatsAbilityScoresMessagesPlPL extends ChaStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessagesPlPL _parent;
+  const ChaStatsAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Measures a character's personality, personal magnetism, ability to lead, and appearance."
@@ -3413,13 +3491,15 @@ class ChaStatsAbilityScoresMessages {
   /// "Charisma"
   /// ```
   String get name => """Charisma""";
-  DebilityChaStatsAbilityScoresMessages get debility =>
-      DebilityChaStatsAbilityScoresMessages(this);
+  DebilityChaStatsAbilityScoresMessagesPlPL get debility =>
+      DebilityChaStatsAbilityScoresMessagesPlPL(this);
 }
 
-class DebilityChaStatsAbilityScoresMessages {
-  final ChaStatsAbilityScoresMessages _parent;
-  const DebilityChaStatsAbilityScoresMessages(this._parent);
+class DebilityChaStatsAbilityScoresMessagesPlPL
+    extends DebilityChaStatsAbilityScoresMessages {
+  final ChaStatsAbilityScoresMessagesPlPL _parent;
+  const DebilityChaStatsAbilityScoresMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Scarred"
@@ -3433,9 +3513,9 @@ class DebilityChaStatsAbilityScoresMessages {
       """It may not be permanent, but for now you don't look so good.""";
 }
 
-class ConStatsAbilityScoresMessages {
-  final StatsAbilityScoresMessages _parent;
-  const ConStatsAbilityScoresMessages(this._parent);
+class ConStatsAbilityScoresMessagesPlPL extends ConStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessagesPlPL _parent;
+  const ConStatsAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Represents your character's health and stamina."
@@ -3447,13 +3527,15 @@ class ConStatsAbilityScoresMessages {
   /// "Constitution"
   /// ```
   String get name => """Constitution""";
-  DebilityConStatsAbilityScoresMessages get debility =>
-      DebilityConStatsAbilityScoresMessages(this);
+  DebilityConStatsAbilityScoresMessagesPlPL get debility =>
+      DebilityConStatsAbilityScoresMessagesPlPL(this);
 }
 
-class DebilityConStatsAbilityScoresMessages {
-  final ConStatsAbilityScoresMessages _parent;
-  const DebilityConStatsAbilityScoresMessages(this._parent);
+class DebilityConStatsAbilityScoresMessagesPlPL
+    extends DebilityConStatsAbilityScoresMessages {
+  final ConStatsAbilityScoresMessagesPlPL _parent;
+  const DebilityConStatsAbilityScoresMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Sick"
@@ -3467,9 +3549,9 @@ class DebilityConStatsAbilityScoresMessages {
       """Something just isn't right inside. Maybe you've got a disease or a wasting illness. Maybe you just drank too much ale last night and it's coming back to haunt you.""";
 }
 
-class DexStatsAbilityScoresMessages {
-  final StatsAbilityScoresMessages _parent;
-  const DexStatsAbilityScoresMessages(this._parent);
+class DexStatsAbilityScoresMessagesPlPL extends DexStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessagesPlPL _parent;
+  const DexStatsAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Measures agility, reflexes and balance."
@@ -3480,13 +3562,15 @@ class DexStatsAbilityScoresMessages {
   /// "Dexterity"
   /// ```
   String get name => """Dexterity""";
-  DebilityDexStatsAbilityScoresMessages get debility =>
-      DebilityDexStatsAbilityScoresMessages(this);
+  DebilityDexStatsAbilityScoresMessagesPlPL get debility =>
+      DebilityDexStatsAbilityScoresMessagesPlPL(this);
 }
 
-class DebilityDexStatsAbilityScoresMessages {
-  final DexStatsAbilityScoresMessages _parent;
-  const DebilityDexStatsAbilityScoresMessages(this._parent);
+class DebilityDexStatsAbilityScoresMessagesPlPL
+    extends DebilityDexStatsAbilityScoresMessages {
+  final DexStatsAbilityScoresMessagesPlPL _parent;
+  const DebilityDexStatsAbilityScoresMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Shaky"
@@ -3500,9 +3584,9 @@ class DebilityDexStatsAbilityScoresMessages {
       """You're unsteady on your feet and you've got a shake in your hands.""";
 }
 
-class StrStatsAbilityScoresMessages {
-  final StatsAbilityScoresMessages _parent;
-  const StrStatsAbilityScoresMessages(this._parent);
+class StrStatsAbilityScoresMessagesPlPL extends StrStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessagesPlPL _parent;
+  const StrStatsAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Measures muscle and physical power."
@@ -3513,13 +3597,15 @@ class StrStatsAbilityScoresMessages {
   /// "Strength"
   /// ```
   String get name => """Strength""";
-  DebilityStrStatsAbilityScoresMessages get debility =>
-      DebilityStrStatsAbilityScoresMessages(this);
+  DebilityStrStatsAbilityScoresMessagesPlPL get debility =>
+      DebilityStrStatsAbilityScoresMessagesPlPL(this);
 }
 
-class DebilityStrStatsAbilityScoresMessages {
-  final StrStatsAbilityScoresMessages _parent;
-  const DebilityStrStatsAbilityScoresMessages(this._parent);
+class DebilityStrStatsAbilityScoresMessagesPlPL
+    extends DebilityStrStatsAbilityScoresMessages {
+  final StrStatsAbilityScoresMessagesPlPL _parent;
+  const DebilityStrStatsAbilityScoresMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Weak"
@@ -3533,9 +3619,9 @@ class DebilityStrStatsAbilityScoresMessages {
       """You can't exert much force. Maybe it's just fatigue and injury, or maybe your strength was drained by magic.""";
 }
 
-class WisStatsAbilityScoresMessages {
-  final StatsAbilityScoresMessages _parent;
-  const WisStatsAbilityScoresMessages(this._parent);
+class WisStatsAbilityScoresMessagesPlPL extends WisStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessagesPlPL _parent;
+  const WisStatsAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Describes a character's willpower, common sense, awareness, and intuition."
@@ -3547,13 +3633,15 @@ class WisStatsAbilityScoresMessages {
   /// "Wisdom"
   /// ```
   String get name => """Wisdom""";
-  DebilityWisStatsAbilityScoresMessages get debility =>
-      DebilityWisStatsAbilityScoresMessages(this);
+  DebilityWisStatsAbilityScoresMessagesPlPL get debility =>
+      DebilityWisStatsAbilityScoresMessagesPlPL(this);
 }
 
-class DebilityWisStatsAbilityScoresMessages {
-  final WisStatsAbilityScoresMessages _parent;
-  const DebilityWisStatsAbilityScoresMessages(this._parent);
+class DebilityWisStatsAbilityScoresMessagesPlPL
+    extends DebilityWisStatsAbilityScoresMessages {
+  final WisStatsAbilityScoresMessagesPlPL _parent;
+  const DebilityWisStatsAbilityScoresMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Confused"
@@ -3567,9 +3655,10 @@ class DebilityWisStatsAbilityScoresMessages {
       """Ears ringing. Vision blurred. You're more than a little out of it.""";
 }
 
-class IntlStatsAbilityScoresMessages {
-  final StatsAbilityScoresMessages _parent;
-  const IntlStatsAbilityScoresMessages(this._parent);
+class IntlStatsAbilityScoresMessagesPlPL
+    extends IntlStatsAbilityScoresMessages {
+  final StatsAbilityScoresMessagesPlPL _parent;
+  const IntlStatsAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Determines how well your character learns and reasons."
@@ -3581,13 +3670,15 @@ class IntlStatsAbilityScoresMessages {
   /// "Intelligence"
   /// ```
   String get name => """Intelligence""";
-  DebilityIntlStatsAbilityScoresMessages get debility =>
-      DebilityIntlStatsAbilityScoresMessages(this);
+  DebilityIntlStatsAbilityScoresMessagesPlPL get debility =>
+      DebilityIntlStatsAbilityScoresMessagesPlPL(this);
 }
 
-class DebilityIntlStatsAbilityScoresMessages {
-  final IntlStatsAbilityScoresMessages _parent;
-  const DebilityIntlStatsAbilityScoresMessages(this._parent);
+class DebilityIntlStatsAbilityScoresMessagesPlPL
+    extends DebilityIntlStatsAbilityScoresMessages {
+  final IntlStatsAbilityScoresMessagesPlPL _parent;
+  const DebilityIntlStatsAbilityScoresMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Stunned"
@@ -3601,28 +3692,33 @@ class DebilityIntlStatsAbilityScoresMessages {
       """That last knock to the head shook something loose. Brain not work so good.""";
 }
 
-class FormAbilityScoresMessages {
-  final AbilityScoresMessages _parent;
-  const FormAbilityScoresMessages(this._parent);
+class FormAbilityScoresMessagesPlPL extends FormAbilityScoresMessages {
+  final AbilityScoresMessagesPlPL _parent;
+  const FormAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Modifier:\n$mod"
   /// ```
   String modifierValueLabel(String mod) => """Modifier:\n$mod""";
-  DebilityDescriptionFormAbilityScoresMessages get debilityDescription =>
-      DebilityDescriptionFormAbilityScoresMessages(this);
-  DebilityNameFormAbilityScoresMessages get debilityName =>
-      DebilityNameFormAbilityScoresMessages(this);
-  DescriptionFormAbilityScoresMessages get description =>
-      DescriptionFormAbilityScoresMessages(this);
-  KeyFormAbilityScoresMessages get key => KeyFormAbilityScoresMessages(this);
-  NameFormAbilityScoresMessages get name => NameFormAbilityScoresMessages(this);
-  IconFormAbilityScoresMessages get icon => IconFormAbilityScoresMessages(this);
+  DebilityDescriptionFormAbilityScoresMessagesPlPL get debilityDescription =>
+      DebilityDescriptionFormAbilityScoresMessagesPlPL(this);
+  DebilityNameFormAbilityScoresMessagesPlPL get debilityName =>
+      DebilityNameFormAbilityScoresMessagesPlPL(this);
+  DescriptionFormAbilityScoresMessagesPlPL get description =>
+      DescriptionFormAbilityScoresMessagesPlPL(this);
+  KeyFormAbilityScoresMessagesPlPL get key =>
+      KeyFormAbilityScoresMessagesPlPL(this);
+  NameFormAbilityScoresMessagesPlPL get name =>
+      NameFormAbilityScoresMessagesPlPL(this);
+  IconFormAbilityScoresMessagesPlPL get icon =>
+      IconFormAbilityScoresMessagesPlPL(this);
 }
 
-class DebilityDescriptionFormAbilityScoresMessages {
-  final FormAbilityScoresMessages _parent;
-  const DebilityDescriptionFormAbilityScoresMessages(this._parent);
+class DebilityDescriptionFormAbilityScoresMessagesPlPL
+    extends DebilityDescriptionFormAbilityScoresMessages {
+  final FormAbilityScoresMessagesPlPL _parent;
+  const DebilityDescriptionFormAbilityScoresMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Debility Description"
@@ -3636,9 +3732,11 @@ class DebilityDescriptionFormAbilityScoresMessages {
       """A description of the effect causing the debility and/or how it affects your character""";
 }
 
-class DebilityNameFormAbilityScoresMessages {
-  final FormAbilityScoresMessages _parent;
-  const DebilityNameFormAbilityScoresMessages(this._parent);
+class DebilityNameFormAbilityScoresMessagesPlPL
+    extends DebilityNameFormAbilityScoresMessages {
+  final FormAbilityScoresMessagesPlPL _parent;
+  const DebilityNameFormAbilityScoresMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Debility Name"
@@ -3652,9 +3750,10 @@ class DebilityNameFormAbilityScoresMessages {
       """The name for the debility that occurs when this stat is debilitated (takes -1 until recovered).""";
 }
 
-class DescriptionFormAbilityScoresMessages {
-  final FormAbilityScoresMessages _parent;
-  const DescriptionFormAbilityScoresMessages(this._parent);
+class DescriptionFormAbilityScoresMessagesPlPL
+    extends DescriptionFormAbilityScoresMessages {
+  final FormAbilityScoresMessagesPlPL _parent;
+  const DescriptionFormAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Ability Score Description"
@@ -3668,9 +3767,9 @@ class DescriptionFormAbilityScoresMessages {
       """A description of what this ability score represents""";
 }
 
-class KeyFormAbilityScoresMessages {
-  final FormAbilityScoresMessages _parent;
-  const KeyFormAbilityScoresMessages(this._parent);
+class KeyFormAbilityScoresMessagesPlPL extends KeyFormAbilityScoresMessages {
+  final FormAbilityScoresMessagesPlPL _parent;
+  const KeyFormAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Ability Score Key"
@@ -3684,9 +3783,9 @@ class KeyFormAbilityScoresMessages {
       """A 3-letter unique key that identifies this ability score in dice and is used as the short label for the modifier value (and not the actual score)""";
 }
 
-class NameFormAbilityScoresMessages {
-  final FormAbilityScoresMessages _parent;
-  const NameFormAbilityScoresMessages(this._parent);
+class NameFormAbilityScoresMessagesPlPL extends NameFormAbilityScoresMessages {
+  final FormAbilityScoresMessagesPlPL _parent;
+  const NameFormAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Ability Score Name"
@@ -3699,9 +3798,9 @@ class NameFormAbilityScoresMessages {
   String get description => """The name of this ability score""";
 }
 
-class IconFormAbilityScoresMessages {
-  final FormAbilityScoresMessages _parent;
-  const IconFormAbilityScoresMessages(this._parent);
+class IconFormAbilityScoresMessagesPlPL extends IconFormAbilityScoresMessages {
+  final FormAbilityScoresMessagesPlPL _parent;
+  const IconFormAbilityScoresMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Icon"
@@ -3714,9 +3813,9 @@ class IconFormAbilityScoresMessages {
   String get button => """Change Icon""";
 }
 
-class FeedbackMessages {
-  final Messages _parent;
-  const FeedbackMessages(this._parent);
+class FeedbackMessagesPlPL extends FeedbackMessages {
+  final MessagesPlPL _parent;
+  const FeedbackMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Send App Feedback"
@@ -3727,21 +3826,23 @@ class FeedbackMessages {
   /// "Send"
   /// ```
   String get send => """Send""";
-  FormFeedbackMessages get form => FormFeedbackMessages(this);
-  SuccessFeedbackMessages get success => SuccessFeedbackMessages(this);
+  FormFeedbackMessagesPlPL get form => FormFeedbackMessagesPlPL(this);
+  SuccessFeedbackMessagesPlPL get success => SuccessFeedbackMessagesPlPL(this);
 }
 
-class FormFeedbackMessages {
-  final FeedbackMessages _parent;
-  const FormFeedbackMessages(this._parent);
-  TitleFormFeedbackMessages get title => TitleFormFeedbackMessages(this);
-  BodyFormFeedbackMessages get body => BodyFormFeedbackMessages(this);
-  EmailFormFeedbackMessages get email => EmailFormFeedbackMessages(this);
+class FormFeedbackMessagesPlPL extends FormFeedbackMessages {
+  final FeedbackMessagesPlPL _parent;
+  const FormFeedbackMessagesPlPL(this._parent) : super(_parent);
+  TitleFormFeedbackMessagesPlPL get title =>
+      TitleFormFeedbackMessagesPlPL(this);
+  BodyFormFeedbackMessagesPlPL get body => BodyFormFeedbackMessagesPlPL(this);
+  EmailFormFeedbackMessagesPlPL get email =>
+      EmailFormFeedbackMessagesPlPL(this);
 }
 
-class TitleFormFeedbackMessages {
-  final FormFeedbackMessages _parent;
-  const TitleFormFeedbackMessages(this._parent);
+class TitleFormFeedbackMessagesPlPL extends TitleFormFeedbackMessages {
+  final FormFeedbackMessagesPlPL _parent;
+  const TitleFormFeedbackMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Feedback title"
@@ -3749,9 +3850,9 @@ class TitleFormFeedbackMessages {
   String get label => """Feedback title""";
 }
 
-class BodyFormFeedbackMessages {
-  final FormFeedbackMessages _parent;
-  const BodyFormFeedbackMessages(this._parent);
+class BodyFormFeedbackMessagesPlPL extends BodyFormFeedbackMessages {
+  final FormFeedbackMessagesPlPL _parent;
+  const BodyFormFeedbackMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Problem, idea or feedback description"
@@ -3759,9 +3860,9 @@ class BodyFormFeedbackMessages {
   String get label => """Problem, idea or feedback description""";
 }
 
-class EmailFormFeedbackMessages {
-  final FormFeedbackMessages _parent;
-  const EmailFormFeedbackMessages(this._parent);
+class EmailFormFeedbackMessagesPlPL extends EmailFormFeedbackMessages {
+  final FormFeedbackMessagesPlPL _parent;
+  const EmailFormFeedbackMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Enter your email"
@@ -3769,9 +3870,9 @@ class EmailFormFeedbackMessages {
   String get label => """Enter your email""";
 }
 
-class SuccessFeedbackMessages {
-  final FeedbackMessages _parent;
-  const SuccessFeedbackMessages(this._parent);
+class SuccessFeedbackMessagesPlPL extends SuccessFeedbackMessages {
+  final FeedbackMessagesPlPL _parent;
+  const SuccessFeedbackMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Feedback sent!"
@@ -3785,9 +3886,9 @@ class SuccessFeedbackMessages {
       """Thank you for your feedback! We will review your feedback as soon as we can.""";
 }
 
-class MigrationMessages {
-  final Messages _parent;
-  const MigrationMessages(this._parent);
+class MigrationMessagesPlPL extends MigrationMessages {
+  final MessagesPlPL _parent;
+  const MigrationMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Welcome to\nDungeon Paper 2!"
@@ -3799,13 +3900,15 @@ class MigrationMessages {
   /// ```
   String get subtitle =>
       """To get started, pick a username and the language for the rulebook & app. If you already have an existing Dungeon Paper account your data might take a few seconds to migrate.""";
-  UsernameMigrationMessages get username => UsernameMigrationMessages(this);
-  LanguageMigrationMessages get language => LanguageMigrationMessages(this);
+  UsernameMigrationMessagesPlPL get username =>
+      UsernameMigrationMessagesPlPL(this);
+  LanguageMigrationMessagesPlPL get language =>
+      LanguageMigrationMessagesPlPL(this);
 }
 
-class UsernameMigrationMessages {
-  final MigrationMessages _parent;
-  const UsernameMigrationMessages(this._parent);
+class UsernameMigrationMessagesPlPL extends UsernameMigrationMessages {
+  final MigrationMessagesPlPL _parent;
+  const UsernameMigrationMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Username"
@@ -3824,9 +3927,9 @@ class UsernameMigrationMessages {
       """Your username is unique and can not be changed later, so think carefully! It will be used to identify all your library items when publishing.""";
 }
 
-class LanguageMigrationMessages {
-  final MigrationMessages _parent;
-  const LanguageMigrationMessages(this._parent);
+class LanguageMigrationMessagesPlPL extends LanguageMigrationMessages {
+  final MigrationMessagesPlPL _parent;
+  const LanguageMigrationMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Default data language"
@@ -3834,21 +3937,23 @@ class LanguageMigrationMessages {
   String get data => """Default data language""";
 }
 
-class BackupMessages {
-  final Messages _parent;
-  const BackupMessages(this._parent);
+class BackupMessagesPlPL extends BackupMessages {
+  final MessagesPlPL _parent;
+  const BackupMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Export/Import"
   /// ```
   String get title => """Export/Import""";
-  ImportingBackupMessages get importing => ImportingBackupMessages(this);
-  ExportingBackupMessages get exporting => ExportingBackupMessages(this);
+  ImportingBackupMessagesPlPL get importing =>
+      ImportingBackupMessagesPlPL(this);
+  ExportingBackupMessagesPlPL get exporting =>
+      ExportingBackupMessagesPlPL(this);
 }
 
-class ImportingBackupMessages {
-  final BackupMessages _parent;
-  const ImportingBackupMessages(this._parent);
+class ImportingBackupMessagesPlPL extends ImportingBackupMessages {
+  final BackupMessagesPlPL _parent;
+  const ImportingBackupMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Import"
@@ -3859,17 +3964,20 @@ class ImportingBackupMessages {
   /// "Import"
   /// ```
   String get button => """Import""";
-  ProgressImportingBackupMessages get progress =>
-      ProgressImportingBackupMessages(this);
-  FileImportingBackupMessages get file => FileImportingBackupMessages(this);
-  SuccessImportingBackupMessages get success =>
-      SuccessImportingBackupMessages(this);
-  ErrorImportingBackupMessages get error => ErrorImportingBackupMessages(this);
+  ProgressImportingBackupMessagesPlPL get progress =>
+      ProgressImportingBackupMessagesPlPL(this);
+  FileImportingBackupMessagesPlPL get file =>
+      FileImportingBackupMessagesPlPL(this);
+  SuccessImportingBackupMessagesPlPL get success =>
+      SuccessImportingBackupMessagesPlPL(this);
+  ErrorImportingBackupMessagesPlPL get error =>
+      ErrorImportingBackupMessagesPlPL(this);
 }
 
-class ProgressImportingBackupMessages {
-  final ImportingBackupMessages _parent;
-  const ProgressImportingBackupMessages(this._parent);
+class ProgressImportingBackupMessagesPlPL
+    extends ProgressImportingBackupMessages {
+  final ImportingBackupMessagesPlPL _parent;
+  const ProgressImportingBackupMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Importing..."
@@ -3882,9 +3990,9 @@ class ProgressImportingBackupMessages {
   String processing(String ent) => """Processing $ent...""";
 }
 
-class FileImportingBackupMessages {
-  final ImportingBackupMessages _parent;
-  const FileImportingBackupMessages(this._parent);
+class FileImportingBackupMessagesPlPL extends FileImportingBackupMessages {
+  final ImportingBackupMessagesPlPL _parent;
+  const FileImportingBackupMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Browse..."
@@ -3903,9 +4011,10 @@ class FileImportingBackupMessages {
       """To start importing, pick the file you want to import from.\nYou will then be able to select what to save and what to leave out.""";
 }
 
-class SuccessImportingBackupMessages {
-  final ImportingBackupMessages _parent;
-  const SuccessImportingBackupMessages(this._parent);
+class SuccessImportingBackupMessagesPlPL
+    extends SuccessImportingBackupMessages {
+  final ImportingBackupMessagesPlPL _parent;
+  const SuccessImportingBackupMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Import Successful"
@@ -3918,9 +4027,9 @@ class SuccessImportingBackupMessages {
   String get message => """Your data was imported from file successfully""";
 }
 
-class ErrorImportingBackupMessages {
-  final ImportingBackupMessages _parent;
-  const ErrorImportingBackupMessages(this._parent);
+class ErrorImportingBackupMessagesPlPL extends ErrorImportingBackupMessages {
+  final ImportingBackupMessagesPlPL _parent;
+  const ErrorImportingBackupMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Import Failed"
@@ -3934,9 +4043,9 @@ class ErrorImportingBackupMessages {
       """Something went wrong.\nTry again or contact support if this persists""";
 }
 
-class ExportingBackupMessages {
-  final BackupMessages _parent;
-  const ExportingBackupMessages(this._parent);
+class ExportingBackupMessagesPlPL extends ExportingBackupMessages {
+  final BackupMessagesPlPL _parent;
+  const ExportingBackupMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Export"
@@ -3947,16 +4056,17 @@ class ExportingBackupMessages {
   /// "Export"
   /// ```
   String get button => """Export""";
-  ErrorExportingBackupMessages get error => ErrorExportingBackupMessages(this);
-  SuccessExportingBackupMessages get success =>
-      SuccessExportingBackupMessages(this);
-  BundlesExportingBackupMessages get bundles =>
-      BundlesExportingBackupMessages(this);
+  ErrorExportingBackupMessagesPlPL get error =>
+      ErrorExportingBackupMessagesPlPL(this);
+  SuccessExportingBackupMessagesPlPL get success =>
+      SuccessExportingBackupMessagesPlPL(this);
+  BundlesExportingBackupMessagesPlPL get bundles =>
+      BundlesExportingBackupMessagesPlPL(this);
 }
 
-class ErrorExportingBackupMessages {
-  final ExportingBackupMessages _parent;
-  const ErrorExportingBackupMessages(this._parent);
+class ErrorExportingBackupMessagesPlPL extends ErrorExportingBackupMessages {
+  final ExportingBackupMessagesPlPL _parent;
+  const ErrorExportingBackupMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Export Failed"
@@ -3970,9 +4080,10 @@ class ErrorExportingBackupMessages {
       """Something went wrong.\nTry again or contact support if this persists""";
 }
 
-class SuccessExportingBackupMessages {
-  final ExportingBackupMessages _parent;
-  const SuccessExportingBackupMessages(this._parent);
+class SuccessExportingBackupMessagesPlPL
+    extends SuccessExportingBackupMessages {
+  final ExportingBackupMessagesPlPL _parent;
+  const SuccessExportingBackupMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Export Successful"
@@ -3985,16 +4096,19 @@ class SuccessExportingBackupMessages {
   String get message => """Your data was exported to file successfully""";
 }
 
-class BundlesExportingBackupMessages {
-  final ExportingBackupMessages _parent;
-  const BundlesExportingBackupMessages(this._parent);
-  CharacterClassBundlesExportingBackupMessages get characterClass =>
-      CharacterClassBundlesExportingBackupMessages(this);
+class BundlesExportingBackupMessagesPlPL
+    extends BundlesExportingBackupMessages {
+  final ExportingBackupMessagesPlPL _parent;
+  const BundlesExportingBackupMessagesPlPL(this._parent) : super(_parent);
+  CharacterClassBundlesExportingBackupMessagesPlPL get characterClass =>
+      CharacterClassBundlesExportingBackupMessagesPlPL(this);
 }
 
-class CharacterClassBundlesExportingBackupMessages {
-  final BundlesExportingBackupMessages _parent;
-  const CharacterClassBundlesExportingBackupMessages(this._parent);
+class CharacterClassBundlesExportingBackupMessagesPlPL
+    extends CharacterClassBundlesExportingBackupMessages {
+  final BundlesExportingBackupMessagesPlPL _parent;
+  const CharacterClassBundlesExportingBackupMessagesPlPL(this._parent)
+      : super(_parent);
 
   /// ```dart
   /// "Export Class Bundle"
@@ -4007,20 +4121,20 @@ class CharacterClassBundlesExportingBackupMessages {
   String get title => """Export Class Bundle""";
 }
 
-class ChangelogMessages {
-  final Messages _parent;
-  const ChangelogMessages(this._parent);
+class ChangelogMessagesPlPL extends ChangelogMessages {
+  final MessagesPlPL _parent;
+  const ChangelogMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "What's New?"
   /// ```
   String get title => """What's New?""";
-  TagsChangelogMessages get tags => TagsChangelogMessages(this);
+  TagsChangelogMessagesPlPL get tags => TagsChangelogMessagesPlPL(this);
 }
 
-class TagsChangelogMessages {
-  final ChangelogMessages _parent;
-  const TagsChangelogMessages(this._parent);
+class TagsChangelogMessagesPlPL extends TagsChangelogMessages {
+  final ChangelogMessagesPlPL _parent;
+  const TagsChangelogMessagesPlPL(this._parent) : super(_parent);
 
   /// ```dart
   /// "Latest"
@@ -4033,7 +4147,7 @@ class TagsChangelogMessages {
   String get current => """Current""";
 }
 
-Map<String, String> get messagesMap => {
+Map<String, String> get messagesPlPLMap => {
       """app.name""": """Dungeon Paper""",
       """platformInteractions.tap""": """Tap""",
       """platformInteractions.drag""": """Drag""",

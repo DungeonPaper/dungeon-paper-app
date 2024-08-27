@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dungeon_paper/core/global_keys.dart';
 import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -21,7 +20,7 @@ class UserSettings with CharacterProviderMixin {
     this.defaultLightTheme = AppThemes.parchment,
     this.defaultDarkTheme = AppThemes.dark,
     this.brightnessOverride,
-    this.locale = Locales.enUS,
+    this.locale = Locales.en_US,
   });
 
   UserSettings copyWith({
@@ -52,7 +51,7 @@ class UserSettings with CharacterProviderMixin {
                 ),
         locale: json['locale'] != null
             ? Locale(json['locale'].first, json['locale'].last)
-            : Locales.enUS,
+            : Locales.en_US,
       );
 
   Map<String, dynamic> toJson() => {

@@ -187,6 +187,7 @@ settings:
   locales:
     en_US: English (United States)
     pt_BR: Português (Brasil)
+    pl_PL: Polski
   defaultTheme:
     _p(String type): Tema padrão $type
     light: "${_p('claro')}"

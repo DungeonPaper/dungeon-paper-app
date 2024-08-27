@@ -8,16 +8,18 @@ import 'package:system_date_time_format/system_date_time_format.dart';
 
 import '../../../i18n/messages.i18n.dart';
 import '../../../i18n/messages_pt_BR.i18n.dart';
+import '../../../i18n/messages_pl_PL.i18n.dart';
 
 class Locales {
-  static const enUS = Locale('en', 'US');
-  static const ptBR = Locale('pt', 'BR');
+  static const en_US = Locale('en', 'US');
+  static const pt_BR = Locale('pt', 'BR');
+  static const pl_PL = Locale('ptl', 'PL');
 }
 
 class IntlService extends ChangeNotifier {
   static IntlService instance = IntlService();
   static final Map<Locale, Messages> _m = {};
-  Locale _locale = Locales.enUS;
+  Locale _locale = Locales.en_US;
   Locale get locale => _locale;
   Locale get currentLocale => _locale;
 
@@ -75,8 +77,9 @@ class IntlService extends ChangeNotifier {
   }
 
   static final messageBuilders = {
-    Locales.enUS: () => const Messages(),
-    Locales.ptBR: () => const MessagesPtBR(),
+    Locales.en_US: () => const Messages(),
+    Locales.pt_BR: () => const MessagesPtBR(),
+    Locales.pt_BR: () => const MessagesPlPL(),
   };
 
   static Messages _loadMessages(Locale locale) {
