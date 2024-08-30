@@ -25,6 +25,7 @@ import '../../../core/utils/secrets_base.dart';
 
 class UserProvider extends ChangeNotifier with RepositoryProviderMixin {
   var _current = User.guest();
+  static final UserProvider instance = UserProvider();
 
   User get current => _current;
   StreamSubscription? _userDataSub;

@@ -155,9 +155,10 @@ class AuthProvider extends ChangeNotifier
     debugPrint('fb user changed: $user');
     _fbUser = user;
 
-    final context = appGlobalKey.currentContext!;
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final userProvider = UserProvider.instance;
+
     if (user != null) {
+      final context = appGlobalKey.currentContext!;
       final loadingProvider = Provider.of<LoadingProvider>(
         context,
         listen: false,

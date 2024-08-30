@@ -35,8 +35,8 @@ class PlatformHelper {
   static final isMacOS = !kIsWeb && Platform.isMacOS;
   static final isWindows = !kIsWeb && Platform.isWindows;
   static final isLinux = !kIsWeb && Platform.isLinux;
-  static final isDesktop = Platform.isMacOS || Platform.isWindows || Platform.isLinux;
-  static final isMobile = !isDesktop;
+  static final isDesktop = !isMobile && (Platform.isMacOS || Platform.isWindows || Platform.isLinux);
+  static const isMobile = kIsWeb;
 
   static final canUseAppleSignIn = isApple;
   static final canUseGoogleSignIn = isAndroid;

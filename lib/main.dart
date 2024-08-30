@@ -45,7 +45,7 @@ void main() async {
 final _loadingProvider = LoadingProvider();
 final _authProvider = AuthProvider();
 final _characterProvider = CharacterProvider();
-final _userProvider = UserProvider();
+final _userProvider = UserProvider.instance;
 final _repositoryProvider = RepositoryProvider();
 final _libraryProvider = LibraryProvider();
 final _intlService = IntlService.instance;
