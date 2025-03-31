@@ -36,6 +36,8 @@ class AbilityScoreFormController extends ChangeNotifier {
         args.abilityScore != null ? FormContext.edit : FormContext.create;
     if (args.abilityScore != null) {
       entity = args.abilityScore!;
+    } else {
+      entity = AbilityScore.empty();
     }
     onSave = args.onSave;
     _key = TextEditingController(text: entity.key);

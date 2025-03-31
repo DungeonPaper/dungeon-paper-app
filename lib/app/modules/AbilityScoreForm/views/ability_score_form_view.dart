@@ -92,20 +92,20 @@ class AbilityScoreFormView extends StatelessWidget {
                 validator: controller.requiredValidator,
               ),
               separator,
-              Text(tr.abilityScores.form.icon.label),
-              separator,
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Icon(controller.icon ??
-                    AbilityScore.iconFor(controller.key.text)),
-              ),
-              separator,
-              ElevatedButton(
-                onPressed: () => controller.pickIcon(context),
-                child: Text(
-                  tr.abilityScores.form.icon.button,
-                ),
-              ),
+              // Text(tr.abilityScores.form.icon.label),
+              // separator,
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: Icon(controller.icon ??
+              //       AbilityScore.iconFor(controller.key.text)),
+              // ),
+              // separator,
+              // ElevatedButton(
+              //   onPressed: () => controller.pickIcon(context),
+              //   child: Text(
+              //     tr.abilityScores.form.icon.button,
+              //   ),
+              // ),
             ],
           ),
         ),

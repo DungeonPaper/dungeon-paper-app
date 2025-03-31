@@ -8,6 +8,7 @@ class AdvancedChip extends StatelessWidget
         CheckmarkableChipAttributes,
         DisabledChipAttributes,
         TappableChipAttributes {
+
   const AdvancedChip({
     super.key,
     required this.label,
