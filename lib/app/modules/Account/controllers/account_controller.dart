@@ -29,6 +29,7 @@ class AccountController extends ChangeNotifier
   }
 
   void updatePassword(BuildContext context, String password) async {
+    debugPrint('Updating password');
     await authProvider.fbUser!.updatePassword(password);
     notifyListeners();
     CustomSnackBar.show(

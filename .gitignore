@@ -62,3 +62,5 @@ firebase.json
 
 # MacOS related
 macos/build/dmg
+android/.idea
+android/app/.cxx
