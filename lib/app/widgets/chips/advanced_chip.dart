@@ -166,4 +166,7 @@ class AdvancedChip extends StatelessWidget
 
   @override
   ChipAnimationStyle? get chipAnimationStyle => null;
+
+  @override
+  MouseCursor? get mouseCursor => null;
 }
