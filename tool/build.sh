@@ -58,7 +58,7 @@ get_release() {
     exit 1
   fi
 
-  releases_json=$(jq -r ".[] | select(.tag_name == \"v$ver\")" <<< "$releases_json")
+  releases_json=$(jq -r ".[] | select(.tag_name == \"v$ver\")" <<<"$releases_json")
   printf "%s\n" "$releases_json"
 }
 
@@ -103,7 +103,7 @@ update_release_notes() {
     ensure_token
     echo "Updating release $ver"
     release_notes=$(generate_release_notes | jq -R -s)
-    release_id=$(jq -r ".id" <<< "$releases_json")
+    release_id=$(jq -r ".id" <<<"$releases_json")
     release_json=$(curl -s -L -X PATCH "https://api.github.com/repos/$repo/releases/$release_id" \
       -H "Authorization: Bearer $GITHUB_TOKEN" \
       -d "{\"body\":$(printf "%s\n" "$release_notes")}")
@@ -134,15 +134,15 @@ upload_asset_to_release() {
   create_or_get_release
   release_json=$(get_release)
 
-  upload_url=$(jq -r ".upload_url" <<< "$releases_json")
+  upload_url=$(jq -r ".upload_url" <<<"$releases_json")
   upload_url=${upload_url/\{?name,label\}//}
   upload_url=${upload_url%/}
 
-  asset_exists=$(jq -r ".assets | .[] | select(.name == \"$asset_name\")" <<< "$releases_json")
+  asset_exists=$(jq -r ".assets | .[] | select(.name == \"$asset_name\")" <<<"$releases_json")
 
   if [[ -n $asset_exists ]]; then
     echo "Asset $asset_name already exists in release $ver"
-    asset_id=$(jq -r ".id" <<< "$releases_json")
+    asset_id=$(jq -r ".id" <<<"$releases_json")
     if ask "Delete existing asset $asset_name?"; then
       ensure_token
       echo "Deleting existing asset $asset_name"
@@ -176,8 +176,8 @@ generate_release_notes() {
   changelog_file="../dungeon-paper-website/public/CHANGELOG.md"
   cl=$(cat "$changelog_file")
   notes="## What's Changed"
-  notes="$notes\n$(awk "/^## $ver/{flag=1;next}/^## /{flag=0}flag" <<< "$cl")"
-  prev_ver=$(awk '/^##/{print $2;exit}' <<< "$cl")
+  notes="$notes\n$(awk "/^## $ver/{flag=1;next}/^## /{flag=0}flag" <<<"$cl")"
+  prev_ver=$(awk '/^##/{print $2;exit}' <<<"$cl")
   diff_url="https://github.com/DungeonPaper/dungeon-paper-app/compare/v${ver}...v${prev_ver}"
   notes="$notes\n\n**Full Changelog:** $diff_url"
   echo "$notes"
@@ -208,7 +208,7 @@ android_collect_symbols() {
   dir="$(pwd)/release/android"
   filename="symbols-$basen.zip"
   mkdir release
-  pushd build/app/intermediates/merged_native_libs/release/out/lib || exit
+  pushd build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib || exit
   zip -r "$dir/$filename" ./*/*
   popd || exit
   [[ ! -f "$(which open)" ]] || open release/android
@@ -241,8 +241,8 @@ macos_pack() {
   hdiutil create -srcfolder "$source" -volname "$title" -fs HFS+ \
     -fsargs "-c c=64,a=16,e=16" -format UDRW -size "${size}k" "$tmp"
   echo "Attaching $tmp"
-  device=$(hdiutil attach -readwrite -noverify -noautoopen "$tmp" | \
-     grep -E '^/dev/' | sed 1q | awk '{print $1}')
+  device=$(hdiutil attach -readwrite -noverify -noautoopen "$tmp" |
+    grep -E '^/dev/' | sed 1q | awk '{print $1}')
   sleep 0.5
 
   echo "Making layout modifications"
@@ -303,102 +303,128 @@ run_cond() {
 # main
 if [[ $# -gt 0 ]]; then
   case $1 in
-    "android")
+  "android")
+    shift
+    while [[ $# -gt 0 ]]; do
+      case $1 in
+      --build) build=1 ;;
+      --apk)
+        build=1
+        apk=1
+        ;;
+      --aab)
+        build=1
+        aab=1
+        ;;
+      --push) push=1 ;;
+      --install) install=1 ;;
+      --release)
+        release=1
+        build=1
+        aab=1
+        ;;
+      --symbols) symbols=1 ;;
+      --gh-release) gh_release=1 ;;
+      *) echo "Unknown command or option: android $1. Available flags: --build, --apk, --aap, --push, --install, --release, --gh-release" ;;
+      esac
       shift
-      while [[ $# -gt 0 ]]; do
-        case $1 in
-          --build) build=1 ;;
-          --apk) build=1; apk=1 ;;
-          --aab) build=1; aab=1 ;;
-          --push) push=1 ;;
-          --install) install=1 ;;
-          --release) release=1; build=1; aab=1 ;;
-          --symbols) symbols=1 ;;
-          --gh-release) gh_release=1 ;;
-          *) echo "Unknown command or option: android $1. Available flags: --build, --apk, --aap, --push, --install, --release, --gh-release" ;;
-        esac
-        shift
-      done
-      if run_cond "$build"; then
-        run_cond "$apk" 'flutter build apk'
-        run_cond "$aab" 'flutter build appbundle'
-      fi
-      if run_cond "$release"; then
-        android_release
-      elif run_cond "$symbols"; then
-        android_collect_symbols
-      fi
-      run_cond "$push" android_push_to_device
-      run_cond "$install" android_install
-      run_cond "$gh_release" upload_asset_to_release 'build/app/outputs/flutter-apk/app-release.apk' "$basen.apk"
-      run_cond "$gh_release" upload_asset_to_release 'build/app/outputs/bundle/release/app-release.aab' "$basen.aab"
-      ;;
-    ios)
+    done
+    if run_cond "$build"; then
+      run_cond "$apk" 'flutter build apk'
+      run_cond "$aab" 'flutter build appbundle'
+    fi
+    if run_cond "$release"; then
+      android_release
+    elif run_cond "$symbols"; then
+      android_collect_symbols
+    fi
+    run_cond "$push" android_push_to_device
+    run_cond "$install" android_install
+    run_cond "$gh_release" upload_asset_to_release 'build/app/outputs/flutter-apk/app-release.apk' "$basen.apk"
+    run_cond "$gh_release" upload_asset_to_release 'build/app/outputs/bundle/release/app-release.aab' "$basen.aab"
+    ;;
+  ios)
+    shift
+    while [[ $# -gt 0 ]]; do
+      case $1 in
+      --build) build=1 ;;
+      --app)
+        build=1
+        app=1
+        ;;
+      --ipa)
+        build=1
+        ipa=1
+        ;;
+      --release)
+        release=1
+        build=1
+        ipa=1
+        ;;
+      --repo-update) repo_update=1 ;;
+      --gh-release) gh_release=1 ;;
+      *) echo "Unknown command or option: ios $1. Available flags: --build, --app, --ipa, --release, --repo-update, --gh-release" ;;
+      esac
       shift
-      while [[ $# -gt 0 ]]; do
-        case $1 in
-          --build) build=1 ;;
-          --app) build=1; app=1 ;;
-          --ipa) build=1; ipa=1 ;;
-          --release) release=1; build=1; ipa=1 ;;
-          --repo-update) repo_update=1 ;;
-          --gh-release) gh_release=1 ;;
-          *) echo "Unknown command or option: ios $1. Available flags: --build, --app, --ipa, --release, --repo-update, --gh-release" ;;
-        esac
-        shift
-      done
-      if run_cond "$repo_update"; then
-        pushd ios || exit
-        pod repo update && pod install
-        popd || exit
-      fi
-      if run_cond "$build"; then
-        run_cond "$app" 'flutter build app'
-        run_cond "$ipa" 'flutter build ipa'
-      fi
-      run_cond "$gh_release" upload_asset_to_release "build/ios/ipa/$title.ipa" "$basen.ipa"
-      ;;
-    macos)
+    done
+    if run_cond "$repo_update"; then
+      pushd ios || exit
+      pod repo update && pod install
+      popd || exit
+    fi
+    if run_cond "$build"; then
+      run_cond "$app" 'flutter build app'
+      run_cond "$ipa" 'flutter build ipa'
+    fi
+    if run_cond "$release"; then
+      ios_release
+    fi
+    run_cond "$gh_release" upload_asset_to_release "build/ios/ipa/$title.ipa" "$basen.ipa"
+    ;;
+  macos)
+    shift
+    while [[ $# -gt 0 ]]; do
+      case $1 in
+      --build) build=1 ;;
+      --pack) pack=1 ;;
+      --repo-update) repo_update=1 ;;
+      --gh-release) gh_release=1 ;;
+      *) echo "Unknown command or option: ios $1. Available flags: --build, --pack, --repo-update, --gh-release" ;;
+      esac
       shift
-      while [[ $# -gt 0 ]]; do
-        case $1 in
-          --build) build=1 ;;
-          --pack) pack=1 ;;
-          --repo-update) repo_update=1 ;;
-          --gh-release) gh_release=1 ;;
-          *) echo "Unknown command or option: ios $1. Available flags: --build, --pack, --repo-update, --gh-release" ;;
-        esac
-        shift
-      done
-      if run_cond "$repo_update"; then
-        pushd macos || exit
-        pod repo update && pod install
-        popd || exit
-      fi
-      run_cond "$build" 'flutter build macos'
-      run_cond "$pack" macos_pack
-      run_cond "$gh_release" upload_asset_to_release "release/macos/$basen.dmg" "$basen.dmg"
-      ;;
-    web)
+    done
+    if run_cond "$repo_update"; then
+      pushd macos || exit
+      pod repo update && pod install
+      popd || exit
+    fi
+    run_cond "$build" 'flutter build macos'
+    run_cond "$pack" macos_pack
+    run_cond "$gh_release" upload_asset_to_release "release/macos/$basen.dmg" "$basen.dmg"
+    ;;
+  web)
+    shift
+    while [[ $# -gt 0 ]]; do
+      case $1 in
+      --build) build=1 ;;
+      --publish) publish=1 ;;
+      --release)
+        build=1
+        publish=1
+        ;;
+      *) echo "Unknown command or option: ios $1. Available flags: --build, --publish, --release, --gh-release" ;;
+      esac
       shift
-      while [[ $# -gt 0 ]]; do
-        case $1 in
-          --build) build=1 ;;
-          --publish) publish=1 ;;
-          --release) build=1; publish=1; ;;
-          *) echo "Unknown command or option: ios $1. Available flags: --build, --publish, --release, --gh-release" ;;
-        esac
-        shift
-      done
-      run_cond "$build" 'flutter build web'
-      run_cond "$publish" 'firebase deploy --only hosting'
-      ;;
-    release-notes)
-      generate_release_notes
-      ;;
-    *)
-      echo "Unknown command: $1"
-      ;;
+    done
+    run_cond "$build" 'flutter build web'
+    run_cond "$publish" 'firebase deploy --only hosting'
+    ;;
+  release-notes)
+    generate_release_notes
+    ;;
+  *)
+    echo "Unknown command: $1"
+    ;;
   esac
 else
   echo "Usage: build.sh <android|ios|macos|web> [flags]"

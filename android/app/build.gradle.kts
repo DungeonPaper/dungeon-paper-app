@@ -35,7 +35,7 @@ android {
 
   defaultConfig {
     applicationId = "app.dungeonpaper"
-    minSdk = 31
+    minSdk = 23
     targetSdk = 34
     versionCode = flutterVersionCode.toInt()
     versionName = flutterVersionName
