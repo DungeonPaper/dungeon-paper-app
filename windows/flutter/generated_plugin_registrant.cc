@@ -10,7 +10,7 @@
 #include <firebase_auth/firebase_auth_plugin_c_api.h>
 #include <firebase_core/firebase_core_plugin_c_api.h>
 #include <firebase_storage/firebase_storage_plugin_c_api.h>
-#include <screen_retriever/screen_retriever_plugin.h>
+#include <screen_retriever_windows/screen_retriever_windows_plugin_c_api.h>
 #include <sentry_flutter/sentry_flutter_plugin.h>
 #include <system_date_time_format/system_date_time_format_plugin_c_api.h>
 #include <url_launcher_windows/url_launcher_windows.h>
@@ -25,8 +25,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("FirebaseCorePluginCApi"));
   FirebaseStoragePluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FirebaseStoragePluginCApi"));
-  ScreenRetrieverPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("ScreenRetrieverPlugin"));
+  ScreenRetrieverWindowsPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("ScreenRetrieverWindowsPluginCApi"));
   SentryFlutterPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("SentryFlutterPlugin"));
   SystemDateTimeFormatPluginCApiRegisterWithRegistrar(

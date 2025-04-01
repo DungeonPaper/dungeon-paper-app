@@ -7,7 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_auth
   firebase_core
   firebase_storage
-  screen_retriever
+  screen_retriever_windows
   sentry_flutter
   system_date_time_format
   url_launcher_windows
