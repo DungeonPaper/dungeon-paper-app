@@ -36,13 +36,16 @@ class RoundIconButton extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final bgColor = Color.alphaBlend(
-        backgroundColor ?? Colors.transparent, colorScheme.primary);
+      backgroundColor ?? Colors.transparent,
+      colorScheme.secondary,
+    );
     final fgColor = Color.alphaBlend(
       foregroundColor ?? Colors.transparent,
       (ThemeData.estimateBrightnessForColor(bgColor) == Brightness.light
           ? Colors.black
           : Colors.white),
     );
+    debugPrint('fgColor: $fgColor, bgColor: $bgColor');
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
@@ -53,7 +56,7 @@ class RoundIconButton extends StatelessWidget {
       onPressed: onPressed,
       child: IconTheme.merge(
         child: icon,
-        data: IconThemeData(size: size / 2),
+        data: IconThemeData(size: size / 2, color: fgColor),
       ),
     );
   }
