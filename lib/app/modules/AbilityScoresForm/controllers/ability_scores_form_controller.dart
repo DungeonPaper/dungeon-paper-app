@@ -20,9 +20,9 @@ class AbilityScoresFormController extends ChangeNotifier {
     }
     textControllers.clear();
     for (final stat in abilityScores.stats) {
-      textControllers[stat.key] =
-          TextEditingController(text: stat.value.toString())
-            ..addListener(validate);
+      textControllers[stat.key] = TextEditingController(
+        text: stat.value.toString(),
+      )..addListener(validate);
     }
     onChanged = args.onChanged;
   }
@@ -31,35 +31,41 @@ class AbilityScoresFormController extends ChangeNotifier {
     dirty = true;
     abilityScores = abilityScores.copyWithStatValues({
       for (final stat in abilityScores.stats)
-        stat.key: int.tryParse(textControllers[stat.key]!.text) ?? stat.value
+        stat.key: int.tryParse(textControllers[stat.key]!.text) ?? stat.value,
     });
     notifyListeners();
   }
 
   void updateStat(AbilityScore stat) {
-    abilityScores =
-        abilityScores.copyWith(stats: updateByKey(abilityScores.stats, [stat]));
-    textControllers[stat.key] ??=
-        TextEditingController(text: stat.value.toString())
-          ..addListener(validate);
+    abilityScores = abilityScores.copyWith(
+      stats: updateByKey(abilityScores.stats, [stat]),
+    );
+    textControllers[stat.key] ??= TextEditingController(
+      text: stat.value.toString(),
+    )..addListener(validate);
     textControllers[stat.key]!.text = stat.value.toString();
+    notifyListeners();
   }
 
   void removeStat(AbilityScore stat) {
-    abilityScores =
-        abilityScores.copyWith(stats: removeByKey(abilityScores.stats, [stat]));
+    abilityScores = abilityScores.copyWith(
+      stats: removeByKey(abilityScores.stats, [stat]),
+    );
     textControllers.remove(stat.key);
+    notifyListeners();
   }
 
   void addStat(AbilityScore abilityScore) {
     if (textControllers.containsKey(abilityScore.key)) {
       return;
     }
-    abilityScores =
-        abilityScores.copyWith(stats: [...abilityScores.stats, abilityScore]);
-    textControllers[abilityScore.key] =
-        TextEditingController(text: abilityScore.value.toString())
-          ..addListener(validate);
+    abilityScores = abilityScores.copyWith(
+      stats: [...abilityScores.stats, abilityScore],
+    );
+    textControllers[abilityScore.key] = TextEditingController(
+      text: abilityScore.value.toString(),
+    )..addListener(validate);
+    notifyListeners();
   }
 
   void onReorder(int oldIndex, int newIndex) {

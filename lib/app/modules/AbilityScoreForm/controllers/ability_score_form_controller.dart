@@ -47,6 +47,11 @@ class AbilityScoreFormController extends ChangeNotifier {
     _debilityDescription =
         TextEditingController(text: entity.debilityDescription);
     _icon = entity.customIcon;
+    _key.addListener(notifyListeners);
+    _name.addListener(notifyListeners);
+    _description.addListener(notifyListeners);
+    _debilityName.addListener(notifyListeners);
+    _debilityDescription.addListener(notifyListeners);
   }
 
   @override
