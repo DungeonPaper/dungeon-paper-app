@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 enum RacePosition { start, end }
 
+enum FavoritesView { cards, list }
+
 @immutable
 class CharacterSettings {
   const CharacterSettings({
@@ -17,6 +19,7 @@ class CharacterSettings {
     this.racePosition = RacePosition.start,
     this.lightTheme,
     this.darkTheme,
+    this.favoritesView = FavoritesView.cards,
   });
 
   final NoteCategoryList noteCategories;
@@ -29,6 +32,7 @@ class CharacterSettings {
   final RacePosition racePosition;
   final int? lightTheme;
   final int? darkTheme;
+  final FavoritesView favoritesView;
 
   CharacterSettings copyWith({
     int? sortOrder,
@@ -40,18 +44,19 @@ class CharacterSettings {
     RacePosition? racePosition,
     int? lightTheme,
     int? darkTheme,
-  }) =>
-      CharacterSettings(
-        sortOrder: sortOrder ?? this.sortOrder,
-        category: category ?? this.category,
-        rollButtons: rollButtons ?? this.rollButtons,
-        actionCategories: actionCategories ?? this.actionCategories,
-        noteCategories: noteCategories ?? this.noteCategories,
-        racePosition: racePosition ?? this.racePosition,
-        quickCategories: quickCategories ?? this.quickCategories,
-        lightTheme: lightTheme ?? this.lightTheme,
-        darkTheme: darkTheme ?? this.darkTheme,
-      );
+    FavoritesView? favoritesView,
+  }) => CharacterSettings(
+    sortOrder: sortOrder ?? this.sortOrder,
+    category: category ?? this.category,
+    rollButtons: rollButtons ?? this.rollButtons,
+    actionCategories: actionCategories ?? this.actionCategories,
+    noteCategories: noteCategories ?? this.noteCategories,
+    racePosition: racePosition ?? this.racePosition,
+    quickCategories: quickCategories ?? this.quickCategories,
+    lightTheme: lightTheme ?? this.lightTheme,
+    darkTheme: darkTheme ?? this.darkTheme,
+    favoritesView: favoritesView ?? this.favoritesView,
+  );
 
   factory CharacterSettings.fromRawJson(String str) =>
       CharacterSettings.fromJson(json.decode(str));
@@ -60,57 +65,56 @@ class CharacterSettings {
 
   factory CharacterSettings.fromJson(Map<String, dynamic> json) =>
       CharacterSettings(
-        noteCategories: json['noteCategories'] != null
-            ? NoteCategoryList.fromJson(json['noteCategories'])
-            : const NoteCategoryList(sortOrder: {}),
-        actionCategories: json['actionCategories'] != null
-            ? ActionCategoryList.fromJson(json['actionCategories'])
-            : const ActionCategoryList(
-                sortOrder: {},
-                hidden: {},
-              ),
-        quickCategories: json['actionCategories'] != null
-            ? ActionCategoryList.fromJson(json['actionCategories'])
-            : const ActionCategoryList(
-                sortOrder: {},
-                hidden: {},
-              ),
+        noteCategories:
+            json['noteCategories'] != null
+                ? NoteCategoryList.fromJson(json['noteCategories'])
+                : const NoteCategoryList(sortOrder: {}),
+        actionCategories:
+            json['actionCategories'] != null
+                ? ActionCategoryList.fromJson(json['actionCategories'])
+                : const ActionCategoryList(sortOrder: {}, hidden: {}),
+        quickCategories:
+            json['actionCategories'] != null
+                ? ActionCategoryList.fromJson(json['actionCategories'])
+                : const ActionCategoryList(sortOrder: {}, hidden: {}),
         sortOrder: json['sortOrder'],
         category: json['category'],
-        rollButtons: List<RollButton?>.from((json['rollButtons'] ?? [])
-            .map((x) => x != null ? RollButton.fromJson(x) : null)),
+        rollButtons: List<RollButton?>.from(
+          (json['rollButtons'] ?? []).map(
+            (x) => x != null ? RollButton.fromJson(x) : null,
+          ),
+        ),
         racePosition: RacePosition.values.firstWhere(
           (element) => element.name == json['racePosition'],
           orElse: () => RacePosition.start,
         ),
         lightTheme: json['lightTheme'],
         darkTheme: json['darkTheme'],
+        favoritesView: FavoritesView.values.firstWhere(
+          (element) => element.name == json['favoritesView'],
+          orElse: () => FavoritesView.cards,
+        ),
       );
 
   factory CharacterSettings.empty() => const CharacterSettings(
-        rollButtons: [],
-        noteCategories: NoteCategoryList(sortOrder: {}),
-        actionCategories: ActionCategoryList(
-          sortOrder: {},
-          hidden: {},
-        ),
-        quickCategories: ActionCategoryList(
-          sortOrder: {},
-          hidden: {},
-        ),
-      );
+    rollButtons: [],
+    noteCategories: NoteCategoryList(sortOrder: {}),
+    actionCategories: ActionCategoryList(sortOrder: {}, hidden: {}),
+    quickCategories: ActionCategoryList(sortOrder: {}, hidden: {}),
+  );
 
   Map<String, dynamic> toJson() => {
-        'sortOrder': sortOrder,
-        'category': category,
-        'rollButtons': List<dynamic>.from(rollButtons.map((x) => x?.toJson())),
-        'noteCategories': noteCategories.toJson(),
-        'actionCategories': actionCategories.toJson(),
-        'quickCategories': quickCategories.toJson(),
-        'racePosition': racePosition.name,
-        'lightTheme': lightTheme,
-        'darkTheme': darkTheme,
-      };
+    'sortOrder': sortOrder,
+    'category': category,
+    'rollButtons': List<dynamic>.from(rollButtons.map((x) => x?.toJson())),
+    'noteCategories': noteCategories.toJson(),
+    'actionCategories': actionCategories.toJson(),
+    'quickCategories': quickCategories.toJson(),
+    'racePosition': racePosition.name,
+    'lightTheme': lightTheme,
+    'darkTheme': darkTheme,
+    'favoritesView': favoritesView.name,
+  };
 
   CharacterSettings copyWithThemes({int? lightTheme, int? darkTheme}) =>
       CharacterSettings(
@@ -123,10 +127,11 @@ class CharacterSettings {
         noteCategories: noteCategories,
         racePosition: racePosition,
         quickCategories: quickCategories,
+        favoritesView: favoritesView,
       );
 
   String get debugProperties =>
-      'sortOrder: $sortOrder, category: $category, rollButtons: $rollButtons, noteCategories: $noteCategories, actionCategories: $actionCategories, quickCategories: $quickCategories, racePosition: $racePosition, lightTheme: $lightTheme, darkTheme: $darkTheme';
+      'sortOrder: $sortOrder, category: $category, rollButtons: $rollButtons, noteCategories: $noteCategories, actionCategories: $actionCategories, quickCategories: $quickCategories, racePosition: $racePosition, lightTheme: $lightTheme, darkTheme: $darkTheme, favoritesView: $favoritesView';
 
   @override
   String toString() => 'CharacterSettings($debugProperties)';
@@ -144,20 +149,22 @@ class CharacterSettings {
           quickCategories == other.quickCategories &&
           racePosition == other.racePosition &&
           lightTheme == other.lightTheme &&
-          darkTheme == other.darkTheme;
+          darkTheme == other.darkTheme &&
+          favoritesView == other.favoritesView;
 
   @override
   int get hashCode => Object.hashAll([
-        sortOrder,
-        category,
-        rollButtons,
-        noteCategories,
-        actionCategories,
-        quickCategories,
-        racePosition,
-        lightTheme,
-        darkTheme,
-      ]);
+    sortOrder,
+    category,
+    rollButtons,
+    noteCategories,
+    actionCategories,
+    quickCategories,
+    racePosition,
+    lightTheme,
+    darkTheme,
+    favoritesView,
+  ]);
 }
 
 @immutable
@@ -175,11 +182,11 @@ class OrderedCategoryList<T> {
   final bool canHide;
 
   Map<String, dynamic> toJson() => {
-        // 'categories': List<dynamic>.from(categories),
-        'hidden': List<dynamic>.from(hidden),
-        'sortOrder': List<dynamic>.from(sortOrder),
-        'canHide': canHide,
-      };
+    // 'categories': List<dynamic>.from(categories),
+    'hidden': List<dynamic>.from(hidden),
+    'sortOrder': List<dynamic>.from(sortOrder),
+    'canHide': canHide,
+  };
 
   factory OrderedCategoryList.fromRawJson(String str) =>
       OrderedCategoryList.fromJson(json.decode(str));
@@ -196,23 +203,18 @@ class OrderedCategoryList<T> {
     Set<String>? hidden,
     Set<String>? sortOrder,
     bool? canHide,
-  }) =>
-      OrderedCategoryList(
-        hidden: hidden ?? this.hidden,
-        sortOrder: sortOrder ?? this.sortOrder,
-        canHide: canHide ?? this.canHide,
-      );
+  }) => OrderedCategoryList(
+    hidden: hidden ?? this.hidden,
+    sortOrder: sortOrder ?? this.sortOrder,
+    canHide: canHide ?? this.canHide,
+  );
 
-  Set<T> getSorted([Set<T> all = const {}]) => <T>{
+  Set<T> getSorted([Set<T> all = const {}]) =>
+      <T>{
         ...sortOrder,
         ...all,
         // .toList()..sort(stringSorter(order: SortOrder.asc))
-      }
-          .where(
-            (cat) => !hidden.contains(cat),
-          )
-          .toSet()
-          .cast<T>();
+      }.where((cat) => !hidden.contains(cat)).toSet().cast<T>();
 
   @override
   bool operator ==(Object other) =>
@@ -224,11 +226,7 @@ class OrderedCategoryList<T> {
           canHide == other.canHide;
 
   @override
-  int get hashCode => Object.hashAll([
-        hidden,
-        sortOrder,
-        canHide,
-      ]);
+  int get hashCode => Object.hashAll([hidden, sortOrder, canHide]);
 
   String get debugProperties =>
       'hidden: $hidden, sortOrder: $sortOrder, canHide: $canHide';
@@ -248,17 +246,12 @@ class NoteCategoryList extends OrderedCategoryList<String> {
       NoteCategoryList.fromJson(json.decode(str));
 
   factory NoteCategoryList.fromJson(Map<String, dynamic> json) =>
-      NoteCategoryList(
-        sortOrder: Set<String>.from(json['sortOrder']),
-      );
+      NoteCategoryList(sortOrder: Set<String>.from(json['sortOrder']));
 
   NoteCategoryList copyWithInherited({
     // Set<String>? categories,
     Set<String>? sortOrder,
-  }) =>
-      NoteCategoryList(
-        sortOrder: sortOrder ?? this.sortOrder,
-      );
+  }) => NoteCategoryList(sortOrder: sortOrder ?? this.sortOrder);
 
   @override
   String get debugProperties => 'sortOrder: $sortOrder';
@@ -288,11 +281,10 @@ class ActionCategoryList extends OrderedCategoryList<String> {
     // Set<String>? categories,
     Set<String>? sortOrder,
     Set<String>? hidden,
-  }) =>
-      ActionCategoryList(
-        sortOrder: sortOrder ?? this.sortOrder,
-        hidden: hidden ?? this.hidden,
-      );
+  }) => ActionCategoryList(
+    sortOrder: sortOrder ?? this.sortOrder,
+    hidden: hidden ?? this.hidden,
+  );
 
   @override
   Map<String, dynamic> toJson() {

@@ -10,6 +10,7 @@ import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/atoms/menu_button.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bio_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/character_bonds_flags_dialog.dart';
+import 'package:dungeon_paper/app/widgets/dialogs/character_favorites_view_select_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/custom_roll_buttons_dialog.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/debilities_dialog.dart';
 import 'package:dungeon_paper/core/dw_icons.dart';
@@ -43,8 +44,9 @@ class HomeCharacterExtras extends StatelessWidget with CharacterProviderMixin {
             MenuEntry(
               value: 'class',
               icon: Icon(CharacterClass.genericIcon),
-              label:
-                  Text(tr.generic.changeEntity(tr.entity(tn(CharacterClass)))),
+              label: Text(
+                tr.generic.changeEntity(tr.entity(tn(CharacterClass))),
+              ),
               onSelect: () => _openCharClass(context),
             ),
             MenuEntry(
@@ -53,6 +55,35 @@ class HomeCharacterExtras extends StatelessWidget with CharacterProviderMixin {
               label: Text(tr.generic.changeEntity(tr.entity(tn(Race)))),
               onSelect: () => _openRace(context),
             ),
+          ],
+        ),
+        IconButton(
+          icon: const Icon(Icons.text_snippet),
+          tooltip: tr.home.menu.bio,
+          onPressed: () => _openBio(context),
+        ),
+        CharacterProvider.consumer(
+          (context, controller, _) => IconButton(
+            onPressed: () => _openBondsFlags(context),
+            icon: Transform.scale(
+              scaleX: -1,
+              child: const Icon(Icons.handshake),
+            ),
+            tooltip: SessionMark.categoryTitle(
+              bonds: controller.maybeCurrent?.bonds ?? [],
+              flags: controller.maybeCurrent?.flags ?? [],
+            ),
+          ),
+        ),
+        IconButton(
+          onPressed: () => _openDebilities(context),
+          icon: const Icon(Icons.personal_injury),
+          tooltip: tr.home.menu.debilities,
+        ),
+        MenuButton<String>(
+          icon: const Icon(Icons.settings),
+          tooltip: tr.home.menu.character.settings,
+          items: [
             MenuEntry(
               value: 'roll_buttons',
               icon: const Icon(DwIcons.dice_d6),
@@ -65,34 +96,20 @@ class HomeCharacterExtras extends StatelessWidget with CharacterProviderMixin {
               label: Text(tr.home.menu.character.theme),
               onSelect: () => _openThemeSelect(context),
             ),
+            MenuEntry(
+              value: 'favorites_view',
+              icon: const Icon(Icons.grid_view),
+              label: Text(tr.home.menu.character.favoritesView),
+              onSelect: () => _openFavoritesViewSelect(context),
+            ),
           ],
         ),
-        IconButton(
-          icon: const Icon(Icons.text_snippet),
-          tooltip: tr.home.menu.bio,
-          onPressed: () => _openBio(context),
-        ),
-        CharacterProvider.consumer(
-          (context, controller, _) => IconButton(
-            onPressed: () => _openBondsFlags(context),
-            icon:
-                Transform.scale(scaleX: -1, child: const Icon(Icons.handshake)),
-            tooltip: SessionMark.categoryTitle(
-              bonds: controller.maybeCurrent?.bonds ?? [],
-              flags: controller.maybeCurrent?.flags ?? [],
-            ),
-          ),
-        ),
-        IconButton(
-          onPressed: () => _openDebilities(context),
-          icon: const Icon(Icons.personal_injury),
-          tooltip: tr.home.menu.debilities,
-        ),
-        IconButton(
-          onPressed: null,
-          icon: const Icon(Icons.groups),
-          tooltip: tr.entityPlural(tn(Campaign)),
-        ),
+
+        // IconButton(
+        //   onPressed: null,
+        //   icon: const Icon(Icons.groups),
+        //   tooltip: tr.entityPlural(tn(Campaign)),
+        // ),
       ],
     );
   }
@@ -102,8 +119,10 @@ class HomeCharacterExtras extends StatelessWidget with CharacterProviderMixin {
       Routes.abilityScores,
       arguments: AbilityScoresFormArguments(
         abilityScores: charProvider.current.abilityScores,
-        onChanged: (abilityScores) => charProvider.updateCharacter(
-            charProvider.current.copyWith(abilityScores: abilityScores)),
+        onChanged:
+            (abilityScores) => charProvider.updateCharacter(
+              charProvider.current.copyWith(abilityScores: abilityScores),
+            ),
       ),
     );
   }
@@ -112,9 +131,13 @@ class HomeCharacterExtras extends StatelessWidget with CharacterProviderMixin {
     Navigator.of(context).pushNamed(
       Routes.basicInfo,
       arguments: BasicInfoFormArguments(
-        onChanged: (name, avatar) => charProvider.updateCharacter(
-          charProvider.current.copyWith(displayName: name, avatarUrl: avatar),
-        ),
+        onChanged:
+            (name, avatar) => charProvider.updateCharacter(
+              charProvider.current.copyWith(
+                displayName: name,
+                avatarUrl: avatar,
+              ),
+            ),
         name: charProvider.current.displayName,
         avatarUrl: charProvider.current.avatarUrl,
       ),
@@ -130,12 +153,14 @@ class HomeCharacterExtras extends StatelessWidget with CharacterProviderMixin {
       context,
       character: charProvider.current,
       preSelection: charProvider.current.race,
-      onSelected: (race) => charProvider.updateCharacter(
-        charProvider.current.copyWithInherited(
-          race: race.copyWithInherited(
-              favorite: charProvider.current.race.favorite),
-        ),
-      ),
+      onSelected:
+          (race) => charProvider.updateCharacter(
+            charProvider.current.copyWithInherited(
+              race: race.copyWithInherited(
+                favorite: charProvider.current.race.favorite,
+              ),
+            ),
+          ),
     );
   }
 
@@ -143,37 +168,50 @@ class HomeCharacterExtras extends StatelessWidget with CharacterProviderMixin {
     ModelPages.openCharacterClassesList(
       context,
       character: charProvider.current,
-      onSelected: (cls) => charProvider.updateCharacter(
-        // TODO add a reset dialog to confirm + ask what to reset: moves, spells, alignment, rac
-        charProvider.current.copyWithInherited(
-          characterClass: cls,
-        ),
-      ),
+      onSelected:
+          (cls) => charProvider.updateCharacter(
+            // TODO add a reset dialog to confirm + ask what to reset: moves, spells, alignment, rac
+            charProvider.current.copyWithInherited(characterClass: cls),
+          ),
     );
   }
 
   void _openBondsFlags(BuildContext context) {
     showDialog(
-        context: context, builder: (_) => const CharacterBondsFlagsDialog());
+      context: context,
+      builder: (_) => const CharacterBondsFlagsDialog(),
+    );
   }
 
   void _openDebilities(BuildContext context) {
     showDialog(
-        context: context, builder: (_) => const CharacterDebilitiesDialog());
+      context: context,
+      builder: (_) => const CharacterDebilitiesDialog(),
+    );
   }
 
   void _openRollButtons(BuildContext context) {
     showDialog(
       context: context,
-      builder: (_) => CustomRollButtonsDialog(
-        character: charProvider.current,
-        onChanged: (rollButtons) => charProvider.updateCharacter(
-          charProvider.current.copyWith(
-            settings: charProvider.current.settings
-                .copyWith(rollButtons: rollButtons),
+      builder:
+          (_) => CustomRollButtonsDialog(
+            character: charProvider.current,
+            onChanged:
+                (rollButtons) => charProvider.updateCharacter(
+                  charProvider.current.copyWith(
+                    settings: charProvider.current.settings.copyWith(
+                      rollButtons: rollButtons,
+                    ),
+                  ),
+                ),
           ),
-        ),
-      ),
+    );
+  }
+
+  void _openFavoritesViewSelect(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => const CharacterFavoritesViewSelectDialog(),
     );
   }
 

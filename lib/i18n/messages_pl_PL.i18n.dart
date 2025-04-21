@@ -1251,6 +1251,16 @@ class CharacterMenuHomeMessagesPlPL extends CharacterMenuHomeMessages {
   /// "Character Theme"
   /// ```
   String get theme => """Character Theme""";
+
+  /// ```dart
+  /// "View Settings"
+  /// ```
+  String get settings => """View Settings""";
+
+  /// ```dart
+  /// "Change Favorites View"
+  /// ```
+  String get favoritesView => """Change Favorites View""";
 }
 
 class EmptyStateHomeMessagesPlPL extends EmptyStateHomeMessages {
@@ -1445,6 +1455,8 @@ class CharacterMessagesPlPL extends CharacterMessages {
   /// ```
   String get noCategory => """No Category""";
   ThemeCharacterMessagesPlPL get theme => ThemeCharacterMessagesPlPL(this);
+  FavoritesViewCharacterMessagesPlPL get favoritesView =>
+      FavoritesViewCharacterMessagesPlPL(this);
 }
 
 class DataCharacterMessagesPlPL extends DataCharacterMessages {
@@ -1547,6 +1559,22 @@ class ThemeCharacterMessagesPlPL extends ThemeCharacterMessages {
   /// "${_defaultTheme('dark')}"
   /// ```
   String get defaultDark => """${_defaultTheme('dark')}""";
+}
+
+class FavoritesViewCharacterMessagesPlPL
+    extends FavoritesViewCharacterMessages {
+  final CharacterMessagesPlPL _parent;
+  const FavoritesViewCharacterMessagesPlPL(this._parent) : super(_parent);
+
+  /// ```dart
+  /// "Cards View"
+  /// ```
+  String get cards => """Cards View""";
+
+  /// ```dart
+  /// "List View"
+  /// ```
+  String get list => """List View""";
 }
 
 class CharacterClassMessagesPlPL extends CharacterClassMessages {
@@ -4259,6 +4287,8 @@ Map<String, String> get messagesPlPLMap => {
       """home.menu.character.abilityScores""": """Ability Scores""",
       """home.menu.character.customRolls""": """Quick-Roll Buttons""",
       """home.menu.character.theme""": """Character Theme""",
+      """home.menu.character.settings""": """View Settings""",
+      """home.menu.character.favoritesView""": """Change Favorites View""",
       """home.menu.bio""": """Character Biography""",
       """home.menu.debilities""": """Debilities""",
       """home.emptyState.guest.title""": """Sign in to get more features""",
@@ -4302,6 +4332,8 @@ Map<String, String> get messagesPlPLMap => {
       """character.header.separator""": """ ∙ """,
       """character.noCategory""": """No Category""",
       """character.theme.title""": """Character Theme""",
+      """character.favoritesView.cards""": """Cards View""",
+      """character.favoritesView.list""": """List View""",
       """characterClass.baseLoad""": """Base Load""",
       """characterClass.baseHp""": """Base HP""",
       """characterClass.damageDice""": """Damage Dice""",

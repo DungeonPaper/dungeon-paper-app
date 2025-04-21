@@ -267,6 +267,9 @@ home:
       abilityScores: Pontuações de Habilidade
       customRolls: Botões de Rolagem Rápida
       theme: Tema do Personagem
+      # TODO translate
+      settings: View Settings
+    favoritesView: Change Favorites View
     bio: Biografia do Personagem
     debilities: Debilidades
   emptyState:
@@ -327,6 +330,10 @@ character:
     _defaultTheme(String type): Tema padrão $type
     defaultLight: "${_defaultTheme('claro')}"
     defaultDark: "${_defaultTheme('escuro')}"
+  # TODO translate
+  favoritesView:
+    cards: Cards View
+    list: List View
 
 characterClass:
   baseLoad: Carga Base

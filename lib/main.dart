@@ -37,6 +37,7 @@ void main() async {
       options.dsn = secrets.sentryDsn;
       options.tracesSampleRate = kDebugMode ? 1.0 : 0.0;
       options.environment = kDebugMode ? 'development' : 'release';
+      options.debug = false;
     },
     appRunner: _init,
   );

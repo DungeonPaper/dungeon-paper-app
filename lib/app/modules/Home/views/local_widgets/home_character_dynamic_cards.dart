@@ -1,3 +1,4 @@
+import 'package:dungeon_paper/app/data/models/character_settings.dart';
 import 'package:dungeon_paper/app/data/models/item.dart';
 import 'package:dungeon_paper/app/data/models/meta.dart';
 import 'package:dungeon_paper/app/data/models/move.dart';
@@ -25,6 +26,7 @@ import 'package:dungeon_paper/app/widgets/cards/spell_card.dart';
 import 'package:dungeon_paper/app/widgets/cards/spell_card_mini.dart';
 import 'package:dungeon_paper/app/widgets/dialogs/confirm_delete_dialog.dart';
 import 'package:dungeon_paper/app/widgets/menus/entity_edit_menu.dart';
+import 'package:dungeon_paper/core/utils/list_utils.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:flutter/material.dart';
 
@@ -58,14 +60,14 @@ class HomeCharacterDynamicCards extends StatelessWidget
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ...{...controller.current.actionCategories, 'Note'}
-              .map((cat) => _buildList(context, controller, cat))
+              .map((cat) => _buildListByType(context, controller, cat))
               .reduce((value, element) => value + element),
         ],
       ),
     );
   }
 
-  List<Widget> _buildList(
+  List<Widget> _buildListByType(
     BuildContext context,
     CharacterProvider controller,
     String cat,
@@ -169,8 +171,9 @@ class HomeCharacterDynamicCards extends StatelessWidget
 
   List<Widget> classActionCards(
     BuildContext context,
-    CharacterProvider charProvider,
-  ) {
+    CharacterProvider charProvider, {
+    required bool expandable,
+  }) {
     final raceCard = RaceCard(
       race: char.race,
       onSave:
@@ -194,6 +197,8 @@ class HomeCharacterDynamicCards extends StatelessWidget
     );
     final alignmentCard = AlignmentValueCard(
       alignment: char.bio.alignment,
+      expandable: expandable,
+      initiallyExpanded: !expandable,
       actions: [
         EntityEditMenu(
           onDelete: null,
@@ -225,376 +230,373 @@ class HomeCharacterDynamicCards extends StatelessWidget
     }, T);
   }
 
-  List<Widget> _notesList(BuildContext context, CharacterProvider controller) {
+  List<Widget> _listViewBuilder<T extends WithMeta>(
+    BuildContext context,
+    CharacterProvider controller, {
+    required List<T> list,
+    required Widget Function(BuildContext, LibraryProvider, T) cardBuilder,
+    required Widget Function(BuildContext, LibraryProvider, T, VoidCallback)
+    cardMiniBuilder,
+    required Widget Function(BuildContext, LibraryProvider, T)
+    expandedCardBuilder,
+    required String title,
+  }) {
+    if (list.isEmpty) {
+      return [];
+    }
     return [
-      if (notes.isNotEmpty) ...[
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(tr.home.categories.notes),
-        ),
-      ],
-      HorizontalCardListView<Note>(
-        cardSize: cardSize,
-        items: notes,
-        cardBuilder:
-            (context, note, index, onTap) => NoteCardMini(
-              note: notes[index],
-              onTap: onTap,
-              onSave:
-                  (note) => controller.updateCharacter(
-                    CharacterUtils.updateNotes(controller.current, [note]),
-                  ),
-            ),
-        expandedCardBuilder:
-            (context, note, index) =>
-                notes.isNotEmpty && index < notes.length
-                    ? NoteCard(
-                      maxContentHeight: maxContentHeight(context),
-                      expandable: false,
-                      initiallyExpanded: true,
-                      note: notes[index],
-                      actions: [
-                        EntityEditMenu(
-                          onEdit:
-                              () => ModelPages.openNotePage(
-                                context,
-                                note: notes[index],
-                                onSave:
-                                    (note) => controller.updateCharacter(
-                                      CharacterUtils.updateNotes(
-                                        controller.current,
-                                        [note],
-                                      ),
-                                    ),
-                              ),
-                          onDelete: _delete(
-                            context,
-                            note,
-                            note.title,
-                            tn(Note),
-                            () => controller.updateCharacter(
-                              CharacterUtils.removeNotes(controller.current, [
-                                note,
-                              ]),
-                            ),
-                          ),
-                        ),
-                      ],
-                      onSave: (note) {
-                        controller.updateCharacter(
-                          CharacterUtils.updateNotes(controller.current, [
-                            note,
-                          ]),
-                        );
-                        if (!note.favorite) {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    )
-                    : const SizedBox.shrink(),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 10),
+        child: Text(title),
       ),
-    ];
-  }
-
-  List<Widget> _movesList(BuildContext context, CharacterProvider controller) {
-    return [
-      if (moves.isNotEmpty)
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(tr.home.categories.moves),
-        ),
       Builder(
         builder: (context) {
-          return HorizontalCardListView<Move>(
+          if (char.settings.favoritesView == FavoritesView.list) {
+            return Column(
+              children: [
+                for (final item in list)
+                  Padding(
+                padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                    child: LibraryProvider.consumer(
+                      (context, library, _) =>
+                          cardBuilder(context, library, item),
+                    ),
+                  ),
+              ],
+            );
+          }
+          return HorizontalCardListView<T>(
             cardSize: cardSize,
-            items: moves,
+            items: list,
             cardBuilder:
-                (context, move, index, onTap) => MoveCardMini(
-                  move: moves[index],
-                  onTap: onTap,
-                  onSave:
-                      (move) => controller.updateCharacter(
-                        CharacterUtils.updateMoves(controller.current, [move]),
-                      ),
-                  abilityScores: controller.current.abilityScores,
+                (context, item, index, onTap) => LibraryProvider.consumer(
+                  (context, library, _) =>
+                      cardMiniBuilder(context, library, item, onTap),
                 ),
             expandedCardBuilder:
-                (context, move, index) =>
-                    LibraryProvider.consumer((context, library, _) {
-                      return moves.isNotEmpty && index < moves.length
-                          ? MoveCard(
-                            maxContentHeight: maxContentHeight(context),
-                            expandable: false,
-                            initiallyExpanded: true,
-                            move: moves[index],
-                            abilityScores: controller.current.abilityScores,
-                            actions: [
-                              EntityEditMenu(
-                                onEdit:
-                                    () => ModelPages.openMovePage(
-                                      context,
-                                      abilityScores:
-                                          controller.current.abilityScores,
-                                      move: moves[index],
-                                      onSave:
-                                          (move) => library.upsertToCharacter(
-                                            [move],
-                                            forkBehavior:
-                                                ForkBehavior.increaseVersion,
-                                          ),
-                                    ),
-                                onDelete: _delete(
-                                  context,
-                                  move,
-                                  move.name,
-                                  tn(Move),
-                                  () => controller.updateCharacter(
-                                    CharacterUtils.removeMoves(
-                                      controller.current,
-                                      [move],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                            onSave: (move) {
-                              controller.updateCharacter(
-                                CharacterUtils.updateMoves(controller.current, [
-                                  move,
-                                ]),
-                              );
-                              if (!move.favorite) {
-                                Navigator.of(context).pop();
-                              }
-                            },
-                          )
-                          : const SizedBox.shrink();
-                    }),
-            // leading: raceCardMini != null &&
-            //         controller.current.settings.racePosition ==
-            //             RacePosition.start
-            //     ? [raceCardMini]
-            //     : [],
-            // trailing: raceCardMini != null &&
-            //         controller.current.settings.racePosition ==
-            //             RacePosition.end
-            //     ? [raceCardMini]
-            //     : [],
+                (context, item, index) => LibraryProvider.consumer(
+                  (context, library, _) =>
+                      list.isNotEmpty && index < list.length
+                          ? expandedCardBuilder(context, library, item)
+                          : SizedBox.shrink(),
+                ),
           );
         },
       ),
     ];
   }
 
-  List<Widget> _spellsList(BuildContext context, CharacterProvider controller) {
-    return [
-      if (spells.isNotEmpty) ...[
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(tr.home.categories.spells),
+  List<Widget> _notesList(BuildContext context, CharacterProvider controller) {
+    onSave(Note note) => controller.updateCharacter(
+      CharacterUtils.updateNotes(controller.current, [note]),
+    );
+    actions(LibraryProvider library, Note note) => [
+      EntityEditMenu(
+        onEdit:
+            () => ModelPages.openNotePage(context, note: note, onSave: onSave),
+        onDelete: _delete(
+          context,
+          note,
+          note.title,
+          tn(Note),
+          () => controller.updateCharacter(
+            CharacterUtils.removeNotes(controller.current, [note]),
+          ),
         ),
-      ],
-      HorizontalCardListView<Spell>(
-        cardSize: cardSize,
-        items: spells,
-        cardBuilder:
-            (context, spell, index, onTap) => SpellCardMini(
-              spell: spells[index],
-              onTap: onTap,
-              onSave:
-                  (spell) => controller.updateCharacter(
-                    CharacterUtils.updateSpells(controller.current, [spell]),
-                  ),
-              abilityScores: controller.current.abilityScores,
-            ),
-        expandedCardBuilder:
-            (context, spell, index) =>
-                spells.isNotEmpty && index < spells.length
-                    ? SpellCard(
-                      maxContentHeight: maxContentHeight(context),
-                      expandable: false,
-                      initiallyExpanded: true,
-                      spell: spells[index],
-                      abilityScores: controller.current.abilityScores,
-                      actions: [
-                        EntityEditMenu(
-                          onEdit:
-                              () => ModelPages.openSpellPage(
-                                context,
-                                abilityScores: controller.current.abilityScores,
-                                classKeys: spells[index].classKeys,
-                                spell: spells[index],
-                                onSave:
-                                    (spell) => controller.updateCharacter(
-                                      CharacterUtils.updateSpells(
-                                        controller.current,
-                                        [spell],
-                                      ),
-                                    ),
-                              ),
-                          onDelete: _delete(
-                            context,
-                            spell,
-                            spell.name,
-                            tn(Spell),
-                            () => controller.updateCharacter(
-                              CharacterUtils.removeSpells(controller.current, [
-                                spell,
-                              ]),
-                            ),
-                          ),
-                        ),
-                      ],
-                      onSave: (spell) {
-                        controller.updateCharacter(
-                          CharacterUtils.updateSpells(controller.current, [
-                            spell,
-                          ]),
-                        );
-                        if (!spell.prepared) {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    )
-                    : const SizedBox.shrink(),
       ),
     ];
+
+    return _listViewBuilder<Note>(
+      context,
+      controller,
+      title: tr.home.categories.notes,
+      list: notes,
+      cardMiniBuilder:
+          (context, library, note, onTap) =>
+              NoteCardMini(note: note, onTap: onTap, onSave: onSave),
+      cardBuilder:
+          (context, library, note) => NoteCard(
+            note: note,
+            onSave: onSave,
+            actions: actions(library, note),
+          ),
+      expandedCardBuilder:
+          (context, library, note) => NoteCard(
+            maxContentHeight: maxContentHeight(context),
+            expandable: false,
+            initiallyExpanded: true,
+            note: note,
+            actions: actions(library, note),
+            onSave: (note) {
+              onSave(note);
+              if (!note.favorite) {
+                Navigator.of(context).pop();
+              }
+            },
+          ),
+    );
+  }
+
+  List<Widget> _movesList(BuildContext context, CharacterProvider controller) {
+    onSave(Move move) => controller.updateCharacter(
+      CharacterUtils.updateMoves(controller.current, [move]),
+    );
+    actions(LibraryProvider library, Move move) => [
+      EntityEditMenu(
+        onEdit:
+            () => ModelPages.openMovePage(
+              context,
+              abilityScores: controller.current.abilityScores,
+              move: move,
+              onSave: onSave,
+            ),
+        onDelete: _delete(
+          context,
+          move,
+          move.name,
+          tn(Move),
+          () => controller.updateCharacter(
+            CharacterUtils.removeMoves(controller.current, [move]),
+          ),
+        ),
+      ),
+    ];
+    return _listViewBuilder<Move>(
+      context,
+      controller,
+      title: tr.home.categories.moves,
+      list: moves,
+      cardMiniBuilder:
+          (context, library, move, onTap) => MoveCardMini(
+            move: move,
+            onTap: onTap,
+            onSave: onSave,
+            abilityScores: controller.current.abilityScores,
+          ),
+      cardBuilder:
+          (context, library, move) => MoveCard(
+            move: move,
+            onSave: onSave,
+            abilityScores: controller.current.abilityScores,
+            actions: actions(library, move),
+          ),
+      expandedCardBuilder:
+          (context, library, move) => MoveCard(
+            maxContentHeight: maxContentHeight(context),
+            expandable: false,
+            initiallyExpanded: true,
+            move: move,
+            abilityScores: controller.current.abilityScores,
+            actions: actions(library, move),
+            onSave: (move) {
+              controller.updateCharacter(
+                CharacterUtils.updateMoves(controller.current, [move]),
+              );
+              if (!move.favorite) {
+                Navigator.of(context).pop();
+              }
+            },
+          ),
+    );
+  }
+
+  List<Widget> _spellsList(BuildContext context, CharacterProvider controller) {
+    onSave(Spell spell) => controller.updateCharacter(
+      CharacterUtils.updateSpells(controller.current, [spell]),
+    );
+    actions(LibraryProvider library, Spell spell) => [
+      EntityEditMenu(
+        onEdit:
+            () => ModelPages.openSpellPage(
+              context,
+              abilityScores: controller.current.abilityScores,
+              classKeys: spell.classKeys,
+              spell: spell,
+              onSave: onSave,
+            ),
+        onDelete: _delete(
+          context,
+          spell,
+          spell.name,
+          tn(Spell),
+          () => controller.updateCharacter(
+            CharacterUtils.removeSpells(controller.current, [spell]),
+          ),
+        ),
+      ),
+    ];
+    return _listViewBuilder<Spell>(
+      context,
+      controller,
+      title: tr.home.categories.spells,
+      list: spells,
+      cardMiniBuilder:
+          (context, library, spell, onTap) => SpellCardMini(
+            spell: spell,
+            onTap: onTap,
+            onSave: onSave,
+            abilityScores: controller.current.abilityScores,
+          ),
+      cardBuilder:
+          (context, library, spell) => SpellCard(
+            spell: spell,
+            onSave: onSave,
+            abilityScores: controller.current.abilityScores,
+            actions: actions(library, spell),
+          ),
+      expandedCardBuilder:
+          (context, library, spell) => SpellCard(
+            maxContentHeight: maxContentHeight(context),
+            expandable: false,
+            initiallyExpanded: true,
+            spell: spell,
+            abilityScores: controller.current.abilityScores,
+            actions: actions(library, spell),
+            onSave: (spell) {
+              onSave(spell);
+              if (!spell.prepared) {
+                Navigator.of(context).pop();
+              }
+            },
+          ),
+    );
   }
 
   List<Widget> _itemsList(BuildContext context, CharacterProvider controller) {
-    return [
-      if (items.isNotEmpty) ...[
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(tr.home.categories.items),
-        ),
-      ],
-      HorizontalCardListView<Item>(
-        cardSize: cardSize,
-        items: items,
-        cardBuilder:
-            (context, item, index, onTap) => ItemCardMini(
-              item: items[index],
-              onTap: onTap,
+    onSave(Item item) => controller.updateCharacter(
+      CharacterUtils.updateItems(controller.current, [item]),
+    );
+
+    actions(LibraryProvider library, Item item) => [
+      EntityEditMenu(
+        onEdit:
+            () => ModelPages.openItemPage(
+              context,
+              item: item,
               onSave:
-                  (item) => controller.updateCharacter(
-                    CharacterUtils.updateItems(controller.current, [item]),
-                  ),
+                  (item) => library.upsertToCharacter([
+                    item,
+                  ], forkBehavior: ForkBehavior.increaseVersion),
             ),
-        expandedCardBuilder:
-            (context, item, index) =>
-                items.isNotEmpty && index < items.length
-                    ? ItemCard(
-                      maxContentHeight: maxContentHeight(context),
-                      expandable: false,
-                      initiallyExpanded: true,
-                      item: items[index],
-                      actions: [
-                        EntityEditMenu(
-                          onEdit:
-                              () => ModelPages.openItemPage(
-                                context,
-                                item: items[index],
-                                onSave:
-                                    (item) => controller.updateCharacter(
-                                      CharacterUtils.updateItems(
-                                        controller.current,
-                                        [item],
-                                      ),
-                                    ),
-                              ),
-                          onDelete: _delete(
-                            context,
-                            item,
-                            item.name,
-                            tn(Item),
-                            () => controller.updateCharacter(
-                              CharacterUtils.removeItems(controller.current, [
-                                item,
-                              ]),
-                            ),
-                          ),
-                          leading: [
-                            ChecklistMenuEntry(
-                              value: 'countArmor',
-                              checked: item.settings.countArmor,
-                              label: Text(tr.items.settings.countArmor),
-                              onChanged:
-                                  (value) => controller.updateCharacter(
-                                    CharacterUtils.updateItems(
-                                      controller.current,
-                                      [
-                                        item.copyWithInherited(
-                                          settings: item.settings.copyWith(
-                                            countArmor: value!,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                            ),
-                            ChecklistMenuEntry(
-                              value: 'countDamage',
-                              checked: item.settings.countDamage,
-                              label: Text(tr.items.settings.countDamage),
-                              onChanged:
-                                  (value) => controller.updateCharacter(
-                                    CharacterUtils.updateItems(
-                                      controller.current,
-                                      [
-                                        item.copyWithInherited(
-                                          settings: item.settings.copyWith(
-                                            countDamage: value!,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                            ),
-                            ChecklistMenuEntry(
-                              value: 'countWeight',
-                              checked: item.settings.countWeight,
-                              label: Text(tr.items.settings.countWeight),
-                              onChanged:
-                                  (value) => controller.updateCharacter(
-                                    CharacterUtils.updateItems(
-                                      controller.current,
-                                      [
-                                        item.copyWithInherited(
-                                          settings: item.settings.copyWith(
-                                            countWeight: value!,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
-                      onSave: (item) {
-                        controller.updateCharacter(
-                          CharacterUtils.updateItems(controller.current, [
-                            item,
-                          ]),
-                        );
-                        if (!item.equipped) {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    )
-                    : const SizedBox.shrink(),
+        onDelete: _delete(
+          context,
+          item,
+          item.name,
+          tn(Item),
+          () => controller.updateCharacter(
+            CharacterUtils.removeItems(controller.current, [item]),
+          ),
+        ),
+        leading: [
+          ChecklistMenuEntry(
+            value: 'countArmor',
+            checked: item.settings.countArmor,
+            label: Text(tr.items.settings.countArmor),
+            onChanged:
+                (value) => controller.updateCharacter(
+                  CharacterUtils.updateItems(controller.current, [
+                    item.copyWithInherited(
+                      settings: item.settings.copyWith(countArmor: value!),
+                    ),
+                  ]),
+                ),
+          ),
+          ChecklistMenuEntry(
+            value: 'countDamage',
+            checked: item.settings.countDamage,
+            label: Text(tr.items.settings.countDamage),
+            onChanged:
+                (value) => controller.updateCharacter(
+                  CharacterUtils.updateItems(controller.current, [
+                    item.copyWithInherited(
+                      settings: item.settings.copyWith(countDamage: value!),
+                    ),
+                  ]),
+                ),
+          ),
+          ChecklistMenuEntry(
+            value: 'countWeight',
+            checked: item.settings.countWeight,
+            label: Text(tr.items.settings.countWeight),
+            onChanged:
+                (value) => controller.updateCharacter(
+                  CharacterUtils.updateItems(controller.current, [
+                    item.copyWithInherited(
+                      settings: item.settings.copyWith(countWeight: value!),
+                    ),
+                  ]),
+                ),
+          ),
+        ],
       ),
     ];
+
+    return _listViewBuilder<Item>(
+      context,
+      controller,
+      title: tr.home.categories.items,
+      list: items,
+      cardMiniBuilder:
+          (context, library, item, onTap) =>
+              ItemCardMini(item: item, onTap: onTap, onSave: onSave),
+      cardBuilder:
+          (context, library, item) => ItemCard(
+            item: item,
+            onSave: onSave,
+            actions: actions(library, item),
+          ),
+      expandedCardBuilder:
+          (context, library, item) => ItemCard(
+            maxContentHeight: maxContentHeight(context),
+            expandable: false,
+            initiallyExpanded: true,
+            item: item,
+            actions: actions(library, item),
+            onSave: (item) {
+              controller.updateCharacter(
+                CharacterUtils.updateItems(controller.current, [item]),
+              );
+              if (!item.equipped) {
+                Navigator.of(context).pop();
+              }
+            },
+          ),
+    );
   }
 
   List<Widget> _classActionsList(
     BuildContext context,
     CharacterProvider controller,
   ) {
+    if (controller.current.classActions.isEmpty) {
+      return [];
+    }
+    if (controller.current.settings.favoritesView == FavoritesView.list) {
+      return [
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(tr.home.categories.classActions),
+        ),
+        Column(
+          children: [
+            for (final item in enumerate(classActions))
+              Padding(
+                padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                child: LibraryProvider.consumer(
+                  (context, library, _) =>
+                      classActionCards(
+                        context,
+                        controller,
+                        expandable: true,
+                      )[item.index],
+                ),
+              ),
+          ],
+        ),
+      ];
+    }
+
     return [
       const SizedBox(height: 10),
       Padding(
@@ -609,7 +611,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
                 classActionCardsMini(context, controller)[index],
         expandedCardBuilder:
             (context, item, index) =>
-                classActionCards(context, controller)[index],
+                classActionCards(context, controller, expandable: false)[index],
       ),
     ];
   }

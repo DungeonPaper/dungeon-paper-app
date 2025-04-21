@@ -247,6 +247,8 @@ home:
       abilityScores: Ability Scores
       customRolls: Quick-Roll Buttons
       theme: Character Theme
+      settings: View Settings
+      favoritesView: Change Favorites View
     bio: Character Biography
     debilities: Debilities
   emptyState:
@@ -307,6 +309,9 @@ character:
     _defaultTheme(String type): Default $type theme
     defaultLight: "${_defaultTheme('light')}"
     defaultDark: "${_defaultTheme('dark')}"
+  favoritesView:
+    cards: Cards View
+    list: List View
 
 characterClass:
   baseLoad: Base Load

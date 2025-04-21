@@ -1255,6 +1255,11 @@ class MenuHomeMessagesPtBR extends MenuHomeMessages {
       CharacterMenuHomeMessagesPtBR(this);
 
   /// ```dart
+  /// "Change Favorites View"
+  /// ```
+  String get favoritesView => """Change Favorites View""";
+
+  /// ```dart
   /// "Biografia do Personagem"
   /// ```
   String get bio => """Biografia do Personagem""";
@@ -1293,6 +1298,11 @@ class CharacterMenuHomeMessagesPtBR extends CharacterMenuHomeMessages {
   /// "Tema do Personagem"
   /// ```
   String get theme => """Tema do Personagem""";
+
+  /// ```dart
+  /// "View Settings"
+  /// ```
+  String get settings => """View Settings""";
 }
 
 class EmptyStateHomeMessagesPtBR extends EmptyStateHomeMessages {
@@ -1488,6 +1498,8 @@ class CharacterMessagesPtBR extends CharacterMessages {
   /// ```
   String get noCategory => """Sem Categoria""";
   ThemeCharacterMessagesPtBR get theme => ThemeCharacterMessagesPtBR(this);
+  FavoritesViewCharacterMessagesPtBR get favoritesView =>
+      FavoritesViewCharacterMessagesPtBR(this);
 }
 
 class DataCharacterMessagesPtBR extends DataCharacterMessages {
@@ -1590,6 +1602,22 @@ class ThemeCharacterMessagesPtBR extends ThemeCharacterMessages {
   /// "${_defaultTheme('escuro')}"
   /// ```
   String get defaultDark => """${_defaultTheme('escuro')}""";
+}
+
+class FavoritesViewCharacterMessagesPtBR
+    extends FavoritesViewCharacterMessages {
+  final CharacterMessagesPtBR _parent;
+  const FavoritesViewCharacterMessagesPtBR(this._parent) : super(_parent);
+
+  /// ```dart
+  /// "Cards View"
+  /// ```
+  String get cards => """Cards View""";
+
+  /// ```dart
+  /// "List View"
+  /// ```
+  String get list => """List View""";
 }
 
 class CharacterClassMessagesPtBR extends CharacterClassMessages {
@@ -4302,6 +4330,8 @@ Map<String, String> get messagesPtBRMap => {
       """home.menu.character.abilityScores""": """Pontuações de Habilidade""",
       """home.menu.character.customRolls""": """Botões de Rolagem Rápida""",
       """home.menu.character.theme""": """Tema do Personagem""",
+      """home.menu.character.settings""": """View Settings""",
+      """home.menu.favoritesView""": """Change Favorites View""",
       """home.menu.bio""": """Biografia do Personagem""",
       """home.menu.debilities""": """Debilidades""",
       """home.emptyState.guest.title""": """Entre para obter mais recursos""",
@@ -4345,6 +4375,8 @@ Map<String, String> get messagesPtBRMap => {
       """character.header.separator""": """ ∙ """,
       """character.noCategory""": """Sem Categoria""",
       """character.theme.title""": """Tema do Personagem""",
+      """character.favoritesView.cards""": """Cards View""",
+      """character.favoritesView.list""": """List View""",
       """characterClass.baseLoad""": """Carga Base""",
       """characterClass.baseHp""": """HP Base""",
       """characterClass.damageDice""": """Dados de Dano""",
