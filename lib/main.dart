@@ -88,10 +88,10 @@ class DungeonPaperApp extends StatelessWidget {
         themeCollection: themeCollection,
         defaultThemeId: prefs.getInt(PrefKeys.selectedThemeId) ?? defaultTheme,
         builder: (context, theme) => MaterialApp(
+          key: appGlobalKey,
           scrollBehavior: MultiPlatformScrollBehavior(),
           title: tr.app.name,
           theme: theme,
-          key: appGlobalKey,
           onGenerateRoute: AppPages.onGenerateRoute,
           initialRoute: AppPages.initial,
           navigatorKey: navigatorKey,

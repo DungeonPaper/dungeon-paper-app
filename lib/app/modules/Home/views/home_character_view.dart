@@ -21,18 +21,16 @@ class HomeCharacterView extends StatelessWidget with HomeCharacterPaddingMixin {
 
   @override
   Widget build(BuildContext context) {
-    return CharacterProvider.consumer(
-      (context, controller, _) {
-        final char = controller.maybeCurrent;
-        if (char == null) {
-          return Container();
-        }
-        return HomeCharacterLayout(
-          leftCol: _buildLeftCol(context, controller),
-          rightCol: const HomeCharacterDynamicCards(),
-        );
-      },
-    );
+    return CharacterProvider.consumer((context, controller, _) {
+      final char = controller.maybeCurrent;
+      if (char == null) {
+        return Container();
+      }
+      return HomeCharacterLayout(
+        leftCol: _buildLeftCol(context, controller),
+        rightCol: const HomeCharacterDynamicCards(),
+      );
+    });
   }
 
   List<Widget> _buildLeftCol(
@@ -45,111 +43,122 @@ class HomeCharacterView extends StatelessWidget with HomeCharacterPaddingMixin {
     return [
       pad(const HomeCharacterHeaderView()),
       const SizedBox(height: 8),
-      pad(Text(
-        char.displayName,
-        textScaler: const TextScaler.linear(1.4),
-        textAlign: TextAlign.center,
-      )),
+      pad(
+        Text(
+          char.displayName,
+          textScaler: const TextScaler.linear(1.4),
+          textAlign: TextAlign.center,
+        ),
+      ),
       CharacterSubtitle(character: char),
       const SizedBox(height: 4),
       pad(const HomeCharacterExtras()),
       pad(const SizedBox(height: 4)),
       pad(
         const Center(
-          child: SizedBox(
-            width: 500,
-            child: HomeCharacterHpExpView(),
-          ),
+          child: SizedBox(width: 500, child: HomeCharacterHpExpView()),
         ),
         8,
       ),
-      pad(Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            PrimaryChip(
-              icon: const Icon(DwIcons.swords),
-              // visualDensity: VisualDensity.compact,
-              label: char.damageDice.toString(),
-              tooltip: tr.character.data.damageDice,
-              onPressed: () => showDialog(
-                context: context,
-                builder: (context) => DamageDiceDialog(
-                  damage: char.stats.damageDice,
-                  defaultDamage: char.defaultDamageDice,
-                  abilityScores: char.abilityScores,
-                  onChanged: (damage) => controller.updateCharacter(
-                    char.copyWith(
-                      stats: char.stats.copyWithDamageDice(damage),
+      pad(
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              PrimaryChip(
+                icon: const Icon(DwIcons.swords),
+                // visualDensity: VisualDensity.compact,
+                label: char.damageDice.toString(),
+                tooltip: tr.character.data.damageDice,
+                onPressed:
+                    () => showDialog(
+                      context: context,
+                      builder:
+                          (context) => DamageDiceDialog(
+                            damage: char.stats.damageDice,
+                            defaultDamage: char.defaultDamageDice,
+                            abilityScores: char.abilityScores,
+                            onChanged:
+                                (damage) => controller.updateCharacter(
+                                  char.copyWith(
+                                    stats: char.stats.copyWithDamageDice(
+                                      damage,
+                                    ),
+                                  ),
+                                ),
+                          ),
                     ),
-                  ),
-                ),
               ),
-            ),
-            const SizedBox(width: 8),
-            PrimaryChip(
-              tooltip: tr.armor.title,
-              icon: const Icon(DwIcons.armor),
-              // visualDensity: VisualDensity.compact,
-              label: char.armor.toString(),
-              onPressed: () => showDialog(
-                context: context,
-                builder: (context) => ArmorDialog(
-                  armor: char.stats.armor,
-                  defaultArmor: char.defaultArmor,
-                  onChanged: (armor) => controller.updateCharacter(
-                    char.copyWith(
-                      stats: char.stats.copyWithArmor(armor),
+              const SizedBox(width: 8),
+              PrimaryChip(
+                tooltip: tr.armor.title,
+                icon: const Icon(DwIcons.armor),
+                // visualDensity: VisualDensity.compact,
+                label: char.armor.toString(),
+                onPressed:
+                    () => showDialog(
+                      context: context,
+                      builder:
+                          (context) => ArmorDialog(
+                            armor: char.stats.armor,
+                            defaultArmor: char.defaultArmor,
+                            onChanged:
+                                (armor) => controller.updateCharacter(
+                                  char.copyWith(
+                                    stats: char.stats.copyWithArmor(armor),
+                                  ),
+                                ),
+                          ),
                     ),
-                  ),
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      )),
+      ),
       pad(const SizedBox(height: 12)),
-      pad(Center(
-        child: AbilityScoresGrid(abilityScores: abilityScores),
-      )),
+      pad(Center(child: AbilityScoresGrid(abilityScores: abilityScores))),
       pad(const SizedBox(height: 16)),
-      pad(Center(
-        child: IconTheme(
-          data: IconTheme.of(context).copyWith(size: 16),
-          child: SizedBox(
-            width: 500,
-            height: 48,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () => DiceUtils.openRollDialog(
-                      context,
-                      char.rollButtons[0].diceFor(char),
+      pad(
+        Center(
+          child: IconTheme(
+            data: IconTheme.of(context).copyWith(size: 16),
+            child: SizedBox(
+              width: 500,
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed:
+                          () => DiceUtils.openRollDialog(
+                            context,
+                            char.rollButtons[0].diceFor(char),
+                          ),
+                      style: ButtonThemes.primaryElevated(context),
+                      label: Text(char.rollButtons[0].label),
+                      icon: const Icon(DwIcons.dice_d6),
                     ),
-                    style: ButtonThemes.primaryElevated(context),
-                    label: Text(char.rollButtons[0].label),
-                    icon: const Icon(DwIcons.dice_d6),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () => DiceUtils.openRollDialog(
-                      context,
-                      char.rollButtons[1].diceFor(char),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed:
+                          () => DiceUtils.openRollDialog(
+                            context,
+                            char.rollButtons[1].diceFor(char),
+                          ),
+                      style: ButtonThemes.primaryElevated(context),
+                      label: Text(char.rollButtons[1].label),
+                      icon: const Icon(DwIcons.dice_d6),
                     ),
-                    style: ButtonThemes.primaryElevated(context),
-                    label: Text(char.rollButtons[1].label),
-                    icon: const Icon(DwIcons.dice_d6),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      )),
+      ),
     ];
   }
 }
@@ -174,6 +183,13 @@ class HomeCharacterLayout extends StatelessWidget
         final width = constraints.maxWidth;
         final isWide = width > 1100;
         if (isWide) {
+          final leftChild = Row(
+            children: [Expanded(child: Container()), Column(children: leftCol)],
+          );
+          final leftContainer =
+              width > 1600
+                  ? Expanded(child: leftChild)
+                  : SizedBox(width: 600, child: leftChild);
           final row = SizedBox(
             width: width,
             child: Row(
@@ -181,23 +197,14 @@ class HomeCharacterLayout extends StatelessWidget
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(child: Container()),
-                      Column(children: leftCol),
-                    ],
-                  ),
-                ),
+                leftContainer,
                 const SizedBox(width: 16),
                 Expanded(child: rightCol),
               ],
             ),
           );
           if (scrollable) {
-            return SingleChildScrollView(
-              child: row,
-            );
+            return SingleChildScrollView(child: row);
           }
           return row;
         }
@@ -214,7 +221,7 @@ class HomeCharacterLayout extends StatelessWidget
           return Column(
             children: [
               for (final i in range(builder.itemCount))
-                builder.itemBuilder(context, i)
+                builder.itemBuilder(context, i),
             ],
           );
         }
@@ -231,7 +238,7 @@ class HomeCharacterLayout extends StatelessWidget
 
 mixin HomeCharacterPaddingMixin {
   Widget pad(Widget child, [double? amount]) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: amount ?? 16),
-        child: child,
-      );
+    padding: EdgeInsets.symmetric(horizontal: amount ?? 16),
+    child: child,
+  );
 }
