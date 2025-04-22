@@ -3,7 +3,7 @@ import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
 import 'package:dungeon_paper/i18n.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:path/path.dart' as path;
 
@@ -49,19 +49,16 @@ Future<CroppedFile?> _pickAndCrop(BuildContext context) async {
     ),
     WebUiSettings(context: context),
   ];
-  final res = await FlutterFileDialog.pickFile(
-    params: const OpenFileDialogParams(
-      dialogType: OpenFileDialogType.image,
-      fileExtensionsFilter: ['png', 'jpg', 'jpeg', 'gif'],
-      mimeTypesFilter: ['image/*'],
-    ),
+  final res = await FilePicker.platform.pickFiles(
+    // allowedExtensions: ['png', 'jpg', 'jpeg', 'gif'],
+    type: FileType.image,
   );
   if (res == null) {
     return null;
   }
 
   final cropped = await ImageCropper().cropImage(
-    sourcePath: res,
+    sourcePath: res.files.first.path!,
     aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
     compressQuality: 100,
     compressFormat: ImageCompressFormat.png,
@@ -72,7 +69,7 @@ Future<CroppedFile?> _pickAndCrop(BuildContext context) async {
 }
 
 Future<Reference> Function(CroppedFile file, String uploadPath)
-    _uploadPhotoFactory(BuildContext context) {
+_uploadPhotoFactory(BuildContext context) {
   return (file, uploadPath) async {
     final userProvider = UserProvider.of(context);
     assert(userProvider.current.isLoggedIn);
@@ -81,8 +78,9 @@ Future<Reference> Function(CroppedFile file, String uploadPath)
     if (!uploadPath.startsWith('/')) {
       uploadPath = '/$uploadPath';
     }
-    final ref = FirebaseStorage.instance
-        .ref(userProvider.current.fileStoragePath! + uploadPath + ext);
+    final ref = FirebaseStorage.instance.ref(
+      userProvider.current.fileStoragePath! + uploadPath + ext,
+    );
     await ref.putData(await file.readAsBytes());
     return ref;
   };
@@ -104,6 +102,7 @@ Future<UploadResponse?> cropAndUploadPhoto(
     settings.onUploadFile?.call(file);
   } catch (e) {
     CustomSnackBar.show(content: tr.errors.uploadError);
+    debugPrint('Error while uploading photo: $e');
     settings.onError?.call(e);
     return null;
   }
@@ -116,10 +115,8 @@ Future<UploadResponse?> cropAndUploadPhoto(
 
     settings.onSuccess?.call(downloadURL);
   } catch (e) {
-    CustomSnackBar.show(
-      content:
-          'Error while uploading photo. Try again later, or contact support using the "About" page.',
-    );
+    CustomSnackBar.show(content: tr.errors.uploadError);
+    debugPrint('Error while uploading photo: $e');
 
     settings.onError?.call(e);
     return null;

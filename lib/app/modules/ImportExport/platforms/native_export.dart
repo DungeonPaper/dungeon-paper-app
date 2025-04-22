@@ -4,8 +4,8 @@ import 'dart:typed_data';
 import 'package:dungeon_paper/app/modules/ImportExport/platforms/abstract_export.dart';
 import 'package:dungeon_paper/app/widgets/atoms/custom_snack_bar.dart';
 import 'package:dungeon_paper/i18n.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
@@ -17,9 +17,8 @@ class Exporter extends AbstractExporter {
     final tmpFile = File(path.join(tmp.path, filename));
     await tmpFile.writeAsBytes(data, mode: FileMode.writeOnly);
 
-    final params = SaveFileDialogParams(sourceFilePath: tmpFile.path);
     try {
-      final path = await FlutterFileDialog.saveFile(params: params);
+      final path = await FilePicker.platform.saveFile(bytes: tmpFile.readAsBytesSync());
       if (path == null) {
         CustomSnackBar.show(
           title: tr.backup.exporting.error.title,
