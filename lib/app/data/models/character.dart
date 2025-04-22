@@ -183,7 +183,7 @@ class Character with WithIcon implements WithMeta<Character, CharacterMeta> {
       ];
 
   // TODO make enum
-  static const allActionCategories = {'ClassAction', 'Move', 'Spell', 'Item'};
+  static const allActionCategories = {'ClassAction', 'Move', 'Spell', 'Item', 'Note'};
 
   @override
   Character copyWith({

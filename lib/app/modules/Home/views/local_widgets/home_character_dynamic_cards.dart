@@ -59,7 +59,7 @@ class HomeCharacterDynamicCards extends StatelessWidget
       (context, controller, _) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ...{...controller.current.actionCategories, 'Note'}
+          ...controller.current.actionCategories
               .map((cat) => _buildListByType(context, controller, cat))
               .reduce((value, element) => value + element),
         ],
