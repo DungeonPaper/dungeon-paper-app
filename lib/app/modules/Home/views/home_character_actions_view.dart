@@ -42,19 +42,15 @@ class HomeCharacterActionsView extends StatelessWidget
   Widget build(BuildContext context) {
     return PageStorage(
       bucket: PageStorageBucket(),
-      child: CharacterProvider.consumer(
-        (context, controller, _) {
-          if (controller.maybeCurrent == null) {
-            return Container();
-          }
-          final builder = _getBuilder(controller);
-          return SizedBox(
-            child: builder.asListView(
-              padding: const EdgeInsets.only(bottom: 16),
-            ),
-          );
-        },
-      ),
+      child: CharacterProvider.consumer((context, controller, _) {
+        if (controller.maybeCurrent == null) {
+          return Container();
+        }
+        final builder = _getBuilder(controller);
+        return SizedBox(
+          child: builder.asListView(padding: const EdgeInsets.only(bottom: 16)),
+        );
+      }),
     );
   }
 
@@ -97,20 +93,22 @@ class HomeCharacterActionsView extends StatelessWidget
     }
     final raceCard = RaceCard(
       race: char.race,
-      onSave: (race) => controller.updateCharacter(
-        char.copyWithInherited(race: race),
-      ),
+      onSave:
+          (race) =>
+              controller.updateCharacter(char.copyWithInherited(race: race)),
       actions: [
         EntityEditMenu(
           onDelete: null,
-          onEdit: () => ModelPages.openRacePage(
-            context,
-            race: char.race,
-            abilityScores: char.abilityScores,
-            onSave: (race) => controller.updateCharacter(
-              char.copyWithInherited(race: race),
-            ),
-          ),
+          onEdit:
+              () => ModelPages.openRacePage(
+                context,
+                race: char.race,
+                abilityScores: char.abilityScores,
+                onSave:
+                    (race) => controller.updateCharacter(
+                      char.copyWithInherited(race: race),
+                    ),
+              ),
         ),
       ],
     );
@@ -119,10 +117,11 @@ class HomeCharacterActionsView extends StatelessWidget
       actions: [
         EntityEditMenu(
           onDelete: null,
-          onEdit: () => Navigator.of(context).pushNamed(
-            Routes.bio,
-            arguments: BioFormArguments(character: char),
-          ),
+          onEdit:
+              () => Navigator.of(context).pushNamed(
+                Routes.bio,
+                arguments: BioFormArguments(character: char),
+              ),
         ),
         ElevatedButton(
           onPressed: () => CharacterUtils.addXP(context, char, 1),
@@ -130,10 +129,7 @@ class HomeCharacterActionsView extends StatelessWidget
         ),
       ],
     );
-    final list = [
-      raceCard,
-      alignmentCard,
-    ];
+    final list = [raceCard, alignmentCard];
     final index = char.actionCategories.toList().indexOf('ClassAction');
     return CategorizedList(
       initiallyExpanded: true,
@@ -143,19 +139,17 @@ class HomeCharacterActionsView extends StatelessWidget
           index: index,
           totalItemCount: Character.allActionCategories.length,
           onReorder: _onReorder,
-        )
+        ),
       ],
       itemPadding: const EdgeInsets.only(bottom: 8),
       children: [
-        ...list.map(
-          (obj) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              key: PageStorageKey('type-ClassAction-${obj.key}'),
-              child: obj,
-            );
-          },
-        ),
+        ...list.map((obj) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            key: PageStorageKey('type-ClassAction-${obj.key}'),
+            child: obj,
+          );
+        }),
       ],
     );
   }
@@ -176,18 +170,14 @@ class HomeCharacterActionsView extends StatelessWidget
             Expanded(
               child: ElevatedButton(
                 onPressed: () => _openBasicMoves(context),
-                child: Text(
-                  tr.actions.moves.basic,
-                ),
+                child: Text(tr.actions.moves.basic),
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: ElevatedButton(
                 onPressed: () => _openSpecialMoves(context),
-                child: Text(
-                  tr.actions.moves.special,
-                ),
+                child: Text(tr.actions.moves.special),
               ),
             ),
           ],
@@ -202,49 +192,56 @@ class HomeCharacterActionsView extends StatelessWidget
           MenuEntry(
             value: 'move_to_start',
             label: Text(tr.sort.moveEntityToTop(tr.entity(tn(Race)))),
-            onSelect: () => controller.updateCharacter(
-              char.copyWith(
-                settings:
-                    char.settings.copyWith(racePosition: RacePosition.start),
-              ),
-            ),
+            onSelect:
+                () => controller.updateCharacter(
+                  char.copyWith(
+                    settings: char.settings.copyWith(
+                      racePosition: RacePosition.start,
+                    ),
+                  ),
+                ),
           ),
         if (char.settings.racePosition != RacePosition.end)
           // Move to end of list
           MenuEntry(
             value: 'move_to_end',
             label: Text(tr.sort.moveEntityToBottom(tr.entity(tn(Race)))),
-            onSelect: () => controller.updateCharacter(
-              char.copyWith(
-                settings:
-                    char.settings.copyWith(racePosition: RacePosition.end),
-              ),
-            ),
+            onSelect:
+                () => controller.updateCharacter(
+                  char.copyWith(
+                    settings: char.settings.copyWith(
+                      racePosition: RacePosition.end,
+                    ),
+                  ),
+                ),
           ),
       ],
-      addPageArguments: ({required onSelected}) => MoveLibraryListArguments(
-        character: char,
-        onSelected: onSelected,
-        preSelections: char.moves,
-      ),
-      cardBuilder: (move, {required onSave, required onDelete}) => MoveCard(
-        reorderablePadding: true,
-        move: move,
-        advancedLevelDisplay: AdvancedLevelDisplay.none,
-        abilityScores: char.abilityScores,
-        actions: [
-          EntityEditMenu(
-            onDelete: onDelete,
-            onEdit: () => ModelPages.openMovePage(
-              context,
-              move: move,
-              abilityScores: char.abilityScores,
-              onSave: onSave(true),
-            ),
+      addPageArguments:
+          ({required onSelected}) => MoveLibraryListArguments(
+            character: char,
+            onSelected: onSelected,
+            preSelections: char.moves,
           ),
-        ],
-        onSave: onSave(false),
-      ),
+      cardBuilder:
+          (move, {required onSave, required onDelete}) => MoveCard(
+            reorderablePadding: true,
+            move: move,
+            advancedLevelDisplay: AdvancedLevelDisplay.none,
+            abilityScores: char.abilityScores,
+            actions: [
+              EntityEditMenu(
+                onDelete: onDelete,
+                onEdit:
+                    () => ModelPages.openMovePage(
+                      context,
+                      move: move,
+                      abilityScores: char.abilityScores,
+                      onSave: onSave(true),
+                    ),
+              ),
+            ],
+            onSave: onSave(false),
+          ),
     );
   }
 
@@ -258,29 +255,32 @@ class HomeCharacterActionsView extends StatelessWidget
       onReorder: _onReorder,
       list: char.spells,
       route: Routes.spells,
-      addPageArguments: ({required onSelected}) => SpellLibraryListArguments(
-        character: char,
-        onSelected: onSelected,
-        preSelections: char.spells,
-      ),
-      cardBuilder: (spell, {required onSave, required onDelete}) => SpellCard(
-        reorderablePadding: true,
-        spell: spell,
-        abilityScores: char.abilityScores,
-        actions: [
-          EntityEditMenu(
-            onDelete: onDelete,
-            onEdit: () => ModelPages.openSpellPage(
-              context,
-              spell: spell,
-              classKeys: spell.classKeys,
-              abilityScores: char.abilityScores,
-              onSave: onSave(true),
-            ),
+      addPageArguments:
+          ({required onSelected}) => SpellLibraryListArguments(
+            character: char,
+            onSelected: onSelected,
+            preSelections: char.spells,
           ),
-        ],
-        onSave: onSave(false),
-      ),
+      cardBuilder:
+          (spell, {required onSave, required onDelete}) => SpellCard(
+            reorderablePadding: true,
+            spell: spell,
+            abilityScores: char.abilityScores,
+            actions: [
+              EntityEditMenu(
+                onDelete: onDelete,
+                onEdit:
+                    () => ModelPages.openSpellPage(
+                      context,
+                      spell: spell,
+                      classKeys: spell.classKeys,
+                      abilityScores: char.abilityScores,
+                      onSave: onSave(true),
+                    ),
+              ),
+            ],
+            onSave: onSave(false),
+          ),
     );
   }
 
@@ -294,64 +294,78 @@ class HomeCharacterActionsView extends StatelessWidget
       onReorder: _onReorder,
       list: char.items,
       route: Routes.items,
-      addPageArguments: ({required onSelected}) => ItemLibraryListArguments(
-        onSelected: (items) => onSelected(
-          items
-              .map(
-                (x) =>
-                    x.copyWithInherited(amount: x.amount == 0 ? 1 : x.amount),
-              )
-              .toList(),
-        ),
-        preSelections: char.items,
-      ),
-      cardBuilder: (item, {required onSave, required onDelete}) => ItemCard(
-        reorderablePadding: true,
-        item: item,
-        actions: [
-          EntityEditMenu(
-            onDelete: onDelete,
-            onEdit: () => ModelPages.openItemPage(
-              context,
-              item: item,
-              onSave: onSave(true),
-            ),
-            leading: [
-              ChecklistMenuEntry(
-                value: 'countArmor',
-                checked: item.settings.countArmor,
-                label: Text(tr.items.settings.countArmor),
-                onChanged: (value) => onSave(false)(
-                  item.copyWithInherited(
-                    settings: item.settings.copyWith(countArmor: value!),
-                  ),
+      addPageArguments:
+          ({required onSelected}) => ItemLibraryListArguments(
+            onSelected:
+                (items) => onSelected(
+                  items
+                      .map(
+                        (x) => x.copyWithInherited(
+                          amount: x.amount == 0 ? 1 : x.amount,
+                        ),
+                      )
+                      .toList(),
                 ),
-              ),
-              ChecklistMenuEntry(
-                value: 'countDamage',
-                checked: item.settings.countDamage,
-                label: Text(tr.items.settings.countDamage),
-                onChanged: (value) => onSave(false)(
-                  item.copyWithInherited(
-                    settings: item.settings.copyWith(countDamage: value!),
+            preSelections: char.items,
+          ),
+      cardBuilder:
+          (item, {required onSave, required onDelete}) => ItemCard(
+            reorderablePadding: true,
+            item: item,
+            actions: [
+              EntityEditMenu(
+                onDelete: onDelete,
+                onEdit:
+                    () => ModelPages.openItemPage(
+                      context,
+                      item: item,
+                      onSave: onSave(true),
+                    ),
+                leading: [
+                  ChecklistMenuEntry(
+                    value: 'countArmor',
+                    checked: item.settings.countArmor,
+                    label: Text(tr.items.settings.countArmor),
+                    onChanged:
+                        (value) => onSave(false)(
+                          item.copyWithInherited(
+                            settings: item.settings.copyWith(
+                              countArmor: value!,
+                            ),
+                          ),
+                        ),
                   ),
-                ),
-              ),
-              ChecklistMenuEntry(
-                value: 'countWeight',
-                checked: item.settings.countWeight,
-                label: Text(tr.items.settings.countWeight),
-                onChanged: (value) => onSave(false)(
-                  item.copyWithInherited(
-                    settings: item.settings.copyWith(countWeight: value!),
+                  ChecklistMenuEntry(
+                    value: 'countDamage',
+                    checked: item.settings.countDamage,
+                    label: Text(tr.items.settings.countDamage),
+                    onChanged:
+                        (value) => onSave(false)(
+                          item.copyWithInherited(
+                            settings: item.settings.copyWith(
+                              countDamage: value!,
+                            ),
+                          ),
+                        ),
                   ),
-                ),
+                  ChecklistMenuEntry(
+                    value: 'countWeight',
+                    checked: item.settings.countWeight,
+                    label: Text(tr.items.settings.countWeight),
+                    onChanged:
+                        (value) => onSave(false)(
+                          item.copyWithInherited(
+                            settings: item.settings.copyWith(
+                              countWeight: value!,
+                            ),
+                          ),
+                        ),
+                  ),
+                ],
               ),
             ],
+            onSave: onSave(false),
           ),
-        ],
-        onSave: onSave(false),
-      ),
     );
   }
 
@@ -375,20 +389,18 @@ class HomeCharacterActionsView extends StatelessWidget
   }
 
   void _openBasicMoves(BuildContext context) {
-    ModelPages.openMovesList(
+    ModelPages.openStandardMovesList(
       context,
       category: MoveCategory.basic,
-      initialTab: FiltersGroup.playbook,
-      abilityScores: char.abilityScores,
+      character: char,
     );
   }
 
   void _openSpecialMoves(BuildContext context) {
-    ModelPages.openMovesList(
+    ModelPages.openStandardMovesList(
       context,
       category: MoveCategory.special,
-      initialTab: FiltersGroup.playbook,
-      abilityScores: char.abilityScores,
+      character: char,
     );
   }
 }
@@ -416,17 +428,19 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
   final List<Widget> trailing;
   final LibraryListArguments<T, EntityFilters<T>> Function({
     required void Function(Iterable<T> obj) onSelected,
-  }) addPageArguments;
+  })
+  addPageArguments;
   final Widget Function(
     T object, {
     required void Function() onDelete,
     required void Function(T object) Function(bool fork) onSave,
     // required void Function() onEdit,
-  }) cardBuilder;
+  })
+  cardBuilder;
   final List<T> list;
   final int index;
   final void Function(BuildContext context, int oldIndex, int newIndex)
-      onReorder;
+  onReorder;
   final List<MenuEntry<String>> menuLeading;
   final List<MenuEntry<String>> menuTrailing;
 
@@ -435,7 +449,8 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
     return CharacterProvider.consumer((context, controller, _) {
       debugPrint('ActionsCardList rebuild');
       debugPrint(
-          'Character items: \n${controller.current.items.map((e) => '- ${e.displayName}').join('\n')}');
+        'Character items: \n${controller.current.items.map((e) => '- ${e.displayName}').join('\n')}',
+      );
       return CategorizedList(
         initiallyExpanded: true,
         title: Text(tr.entityPlural(typeName)),
@@ -443,14 +458,18 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
         titleTrailing: [
           LibraryProvider.consumer(
             (context, library, _) => TextButton.icon(
-              onPressed: () => Navigator.pushNamed(
-                context,
-                route,
-                arguments: addPageArguments(
-                  onSelected: (items) => library.upsertToCharacter(items,
-                      forkBehavior: ForkBehavior.fork),
-                ),
-              ),
+              onPressed:
+                  () => Navigator.pushNamed(
+                    context,
+                    route,
+                    arguments: addPageArguments(
+                      onSelected:
+                          (items) => library.upsertToCharacter(
+                            items,
+                            forkBehavior: ForkBehavior.fork,
+                          ),
+                    ),
+                  ),
               label: Text(tr.generic.addEntity(tr.entityPlural(typeName))),
               icon: const Icon(Icons.add),
             ),
@@ -461,40 +480,45 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
             onReorder: onReorder,
             leading: menuLeading,
             trailing: menuTrailing,
-          )
+          ),
         ],
         leading: leading.map((obj) => _wrapChild(child: obj)).toList(),
         trailing: trailing.map((obj) => _wrapChild(child: obj)).toList(),
         children: [
-          ...list.map(
-            (obj) {
-              return _wrapChild(
-                key: PageStorageKey('type-$T-${obj.key}'),
-                child: cardBuilder(
-                  obj,
-                  onDelete: _confirmDeleteDlg(context, obj, obj.displayName),
-                  onSave: (fork) => (obj) {
-                    final library = LibraryProvider.of(context);
-                    library.upsertToCharacter([obj],
-                        forkBehavior: ForkBehavior.none);
-                  },
-                ),
-              );
-            },
-          ),
+          ...list.map((obj) {
+            return _wrapChild(
+              key: PageStorageKey('type-$T-${obj.key}'),
+              child: cardBuilder(
+                obj,
+                onDelete: _confirmDeleteDlg(context, obj, obj.displayName),
+                onSave:
+                    (fork) => (obj) {
+                      final library = LibraryProvider.of(context);
+                      library.upsertToCharacter([
+                        obj,
+                      ], forkBehavior: ForkBehavior.none);
+                    },
+              ),
+            );
+          }),
         ],
-        onReorder: (oldIndex, newIndex) => controller.updateCharacter(
-            CharacterUtils.reorderByType<T>(
-                controller.current, oldIndex, newIndex)),
+        onReorder:
+            (oldIndex, newIndex) => controller.updateCharacter(
+              CharacterUtils.reorderByType<T>(
+                controller.current,
+                oldIndex,
+                newIndex,
+              ),
+            ),
       );
     });
   }
 
   Widget _wrapChild({Key? key, required Widget child}) => Padding(
-        key: key,
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: child,
-      );
+    key: key,
+    padding: const EdgeInsets.symmetric(vertical: 4),
+    child: child,
+  );
 
   void Function() _confirmDeleteDlg(
     BuildContext context,
@@ -505,8 +529,9 @@ class ActionsCardList<T extends WithMeta> extends StatelessWidget
       awaitDeleteConfirmation<T>(
         context,
         name,
-        () => charProvider
-            .updateCharacter(CharacterUtils.removeByType<T>(char, [object])),
+        () => charProvider.updateCharacter(
+          CharacterUtils.removeByType<T>(char, [object]),
+        ),
       );
     };
   }

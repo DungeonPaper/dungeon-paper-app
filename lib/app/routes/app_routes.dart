@@ -40,6 +40,9 @@ abstract class Routes {
   /// `/library/moves`
   static const moves = _Paths.library + _Paths.moves;
 
+  /// `/library/standard-moves`
+  static const standardMoves = _Paths.library + _Paths.standardMoves;
+
   /// `/library/moves/edit`
   static const editMove = _Paths.library + _Paths.moves + _Paths.edit;
 
@@ -220,6 +223,9 @@ abstract class _Paths {
 
   /// `/moves`
   static const moves = '/moves';
+
+  /// `/standard-moves`
+  static const standardMoves = '/standard-moves';
 
   /// `/spells`
   static const spells = '/spells';

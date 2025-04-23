@@ -16,6 +16,7 @@ import 'package:dungeon_paper/app/modules/LibraryList/views/moves_library_list_v
 import 'package:dungeon_paper/app/modules/LibraryList/views/notes_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/races_library_list_view.dart';
 import 'package:dungeon_paper/app/modules/LibraryList/views/spells_library_list_view.dart';
+import 'package:dungeon_paper/app/modules/StandardMoves/controllers/standard_moves_list_controller.dart';
 import 'package:dungeon_paper/app/routes/app_pages.dart';
 import 'package:dungeon_paper/app/widgets/forms/character_class_form.dart';
 import 'package:dungeon_paper/app/widgets/forms/item_form.dart';
@@ -118,6 +119,21 @@ class ModelPages with LibraryProviderMixin, CharacterProviderMixin {
         preSelections: char?.moves ?? [],
         abilityScores: abilityScores,
         classKeys: classKeys,
+      ),
+    );
+  }
+
+  static void openStandardMovesList(
+    BuildContext context, {
+    required Character character,
+    required MoveCategory category,
+  }) {
+    final char = character;
+    Navigator.of(context).pushNamed(
+      Routes.standardMoves,
+      arguments: StandardMovesArgs(
+        category: category,
+        character: char,
       ),
     );
   }

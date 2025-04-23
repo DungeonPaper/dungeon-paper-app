@@ -1,3 +1,5 @@
+import 'package:dungeon_paper/app/modules/StandardMoves/controllers/standard_moves_list_controller.dart';
+import 'package:dungeon_paper/app/modules/StandardMoves/views/standard_moves_list.dart';
 import 'package:dungeon_paper/app/widgets/atoms/platform_scaffold_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -194,6 +196,11 @@ class AppPages {
     Routes.moves: (context) => ChangeNotifierProvider(
           create: (_) => LibraryListController<Move, MoveFilters>(context),
           child: const MovesLibraryListView(),
+        ),
+
+    Routes.standardMoves: (context) => ChangeNotifierProvider(
+          create: (_) => StandardMovesListController(context),
+          child: const StandardMovesListView(),
         ),
 
     Routes.editMove: (context) => ChangeNotifierProvider(
