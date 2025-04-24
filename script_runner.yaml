@@ -1,16 +1,16 @@
-run_cond shell: /bin/zsh
+shell: /bin/zsh
 scripts:
   # ===============================================================================================
   # Android
   # ===============================================================================================
   - name: android:build:apk
-    cmd: build android --build --apk
+    cmd: build android --apk
     description: Build Android APK only
   - name: android:build:bundle
-    cmd: build android --build --aab
+    cmd: build android --aab
     description: Build Android unified bundle (for Play Store release)
   - name: android:build:all
-    cmd: build android --build --apk --aab
+    cmd: build android --build
     description: Build Android unified bundle + standalone APK
   - name: android:push
     description: Push APK to ADB-connected device
@@ -28,15 +28,12 @@ scripts:
   # ===============================================================================================
   # iOS
   # ===============================================================================================
-  - name: ios:build:app
-    cmd: build ios --build --app
-    description: Build iOS APP file
-  - name: ios:build:bundle
+  - name: ios:build:ipa
     cmd: build ios --build --ipa
     description: Build iOS IPA file
   - name: ios:build:all
-    cmd: build ios --build --app --ipa
-    description: Build iOS IPA + APP
+    cmd: build ios --build --ipa
+    description: Build iOS IPA (only IPA supported)
   - name: ios:pod:update
     cmd: build ios --repo-update
     description: Install Pods for iOS
@@ -51,7 +48,7 @@ scripts:
     cmd: build macos --build
     description: Build macOS App
   - name: macos:build:all
-    cmd: macos:build:app
+    cmd: scr macos:build:app
     description: 'Alias for: Build macOS App'
   - name: macos:pod:update
     cmd: build macos --repo-update
@@ -60,7 +57,7 @@ scripts:
     cmd: build macos --build --pack
     description: Builds, and places the output in release/ dir.
   - name: macos:pack
-    description: Package macOS app into pkg file
+    description: Package macOS app into DMG file
     cmd: build macos --pack
 
   # ===============================================================================================
@@ -80,19 +77,19 @@ scripts:
   # All
   # ===============================================================================================
   - name: build:all
-    cmd: android:build:all && ios:build:all && macos:build:all && web:build:all
+    cmd: scr android:build:all && scr ios:build:all && scr macos:build:all && scr web:build
   - name: release:all
-    cmd: android:release && ios:release && macos:release && web:release
+    cmd: scr android:release && scr ios:release && scr macos:release && scr web:release
     description: Build for all platforms
   - name: apple:pod:update
-    cmd: macos:pod:update && ios:pod:update
+    cmd: scr macos:pod:update && scr ios:pod:update
     description: Install Pods for macOS & iOS
 
   # ===============================================================================================
   # Utils
   # ===============================================================================================
   - name: build
-    cmd: . tool/build.sh
+    cmd: dart run tool/build.dart
   - name: format
     cmd: dart format --line-length 120
     description: Format all Dart files
@@ -119,7 +116,7 @@ scripts:
     description: Build i18n files
   - name: intl:watch
     cmd: runner watch -d
-    description: Build u18n files in watch mode
+    description: Build i18n files in watch mode
   - name: runner
     cmd: dart run build_runner
     description: Run Build Runner
