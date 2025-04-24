@@ -79,8 +79,10 @@ scripts:
   # ===============================================================================================
   # All
   # ===============================================================================================
-  - name: build
+  - name: build:all
     cmd: android:build:all && ios:build:all && macos:build:all && web:build:all
+  - name: release:all
+    cmd: android:release && ios:release && macos:release && web:release
     description: Build for all platforms
   - name: apple:pod:update
     cmd: macos:pod:update && ios:pod:update

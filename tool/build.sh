@@ -303,7 +303,7 @@ run_cond() {
 # main
 if [[ $# -gt 0 ]]; then
   case $1 in
-  "android")
+  android)
     shift
     while [[ $# -gt 0 ]]; do
       case $1 in
@@ -324,7 +324,7 @@ if [[ $# -gt 0 ]]; then
         aab=1
         ;;
       --symbols) symbols=1 ;;
-      --gh-release) gh_release=1 ;;
+      --gh-release | --gh) gh_release=1 ;;
       *) echo "Unknown command or option: android $1. Available flags: --build, --apk, --aap, --push, --install, --release, --gh-release" ;;
       esac
       shift
